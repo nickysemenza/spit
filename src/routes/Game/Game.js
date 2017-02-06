@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import { Grid, Row, Col, Panel } from 'react-bootstrap';
+import {SOCKET_ADDRESS} from '../../config';
 export default class Game extends Component {
   constructor(props) {
     super(props);
@@ -12,8 +13,7 @@ export default class Game extends Component {
   componentDidMount () {
     // this.props.loadData()
     let self = this;
-    let url = "localhost:8080";//+"/"+this.props.params.game_id;
-    this.websocket = new WebSocket(`ws://${url}`);
+    this.websocket = new WebSocket(`ws://${SOCKET_ADDRESS}`);
     // this.dispatcher = dispatcher
     this.websocket.onmessage = (event) => {
       let split = event.data.split(" ");

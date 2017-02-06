@@ -1,6 +1,5 @@
-// import { API_BASE_URL } from 'config';
+import { API_BASE_URL } from '../config';
 
-const API_BASE_URL = 'http://localhost:3004';
 export const REQUEST_LEADERBOARD = 'REQUEST_LEADERBOARD';
 export const RECEIVE_LEADERBOARD = 'RECEIVE_LEADERBOARD';
 

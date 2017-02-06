@@ -1,3 +1,10 @@
+backend/config.js
+src/config.js
+
+
+
+
+
 # Logs
 logs
 *.log*
@@ -40,4 +47,3 @@ dist
 .DS_Store
 
 
-backend/config/config.json

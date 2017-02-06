@@ -3,12 +3,13 @@ let app = require('../app');
 let http = require('http');
 const WebSocket = require('ws');
 let mongoose = require('mongoose');
+let config = require('../config');
 
 /**
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3004');
+const port = normalizePort(process.env.PORT || config.BACKEND_PORT);
 app.set('port', port);
 /**
  * Create HTTP server.
@@ -16,7 +17,7 @@ app.set('port', port);
 const server = http.createServer(app);
 
 
-mongoose.connect('mongodb://localhost/spit');
+mongoose.connect(config.MONGO_DB);
 
 
   /**
@@ -29,11 +30,7 @@ mongoose.connect('mongodb://localhost/spit');
   server.on('listening', onListening);
 
 
-
-
-// MongoClient.connect('mongodb://localhost/test', (err, database) => {
-
-  let wss = new WebSocket.Server({server: server, path: '/', clientTracking: true, maxPayload: 1024, port: 8080});
+  let wss = new WebSocket.Server({server: server, path: '/', clientTracking: true, maxPayload: 1024, port: config.SOCKET_PORT});
 
   let s = require('./sock.js');
   let Client = require('./Client').Client;
@@ -51,7 +48,6 @@ mongoose.connect('mongodb://localhost/spit');
 
     ws.send('server says hi');
   });
-// });
 
 /**
  * Normalize a port into a number, string, or false.
