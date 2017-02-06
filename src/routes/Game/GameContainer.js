@@ -1,17 +1,19 @@
 import { connect } from 'react-redux';
-import { fetchLeaderboard } from '../../actions/leaderboardActions';
+import {receiveGameState } from '../../actions/gameActions';
+
 import Game from './Game';
 
 function mapStateToProps (state) {
   return {
-    leaderboard: state.leaderboard
+    leaderboard: state.leaderboard,
+    game: state.game
   };
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  // loadLeaderboard: () => {
-  //   dispatch(fetchLeaderboard());
-  // }
+  receiveGameState: (json) => {
+    dispatch(receiveGameState(json));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

@@ -6,7 +6,7 @@ export default class Leaderboard extends Component {
   render () {
 
     let ranking = this.props.leaderboard.ranking;
-    let list = Object.keys(ranking).map(key=><li key={key}>{key} - {ranking[key]}</li>)
+    let list = Object.keys(ranking).map(key=><li key={key}>{key} - {ranking[key]}</li>);
     return (<div style={{background: "grey"}}>
         <h3>leaderboard</h3>
         <ul>{list}</ul>

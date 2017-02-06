@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import GameContainer from './GameContainer';
 class GamePage extends Component {
+  componentDidMount() {
+
+  }
   render () {
     return (
       <div className="container-fluid">
-        <GameContainer game_id={this.props.params.game_id} />
+        <GameContainer game_id={this.props.params.game_id}/>
       </div>
     );
   }

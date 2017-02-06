@@ -20,7 +20,6 @@ app.set('port', port);
  */
 const server = http.createServer(app);
 
-models.sequelize.sync().then(() => {
   /**
    * Listen on provided port, on all network interfaces.
    */
@@ -29,6 +28,27 @@ models.sequelize.sync().then(() => {
   });
   server.on('error', onError);
   server.on('listening', onListening);
+
+
+const WebSocket = require('ws');
+
+let wss = new WebSocket.Server({ server: server, path: '/', clientTracking: true, maxPayload: 1024,port: 8080 });
+
+let s = require('./sock.js');
+let Client = require('./Client').Client;
+let Game = require('./Game').Game;
+let g = new Game("test");
+s.test1();
+wss.on('connection', (ws) => {
+  let c = new Client(ws);
+  s.clients.push(c);
+  ws.on('message', (message) => {
+    console.log('received: %s', message);
+    console.log('from '+c.name);
+    c.processMessage(message);
+  });
+
+  ws.send('server says hi');
 });
 
 /**
