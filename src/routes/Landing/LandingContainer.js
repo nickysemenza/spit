@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchLeaderboard } from '../../actions/leaderboardActions';
+import { createUser } from '../../actions/userActions';
 import Landing from './Landing';
 
 function mapStateToProps (state) {
@@ -12,6 +13,9 @@ function mapStateToProps (state) {
 const mapDispatchToProps = (dispatch) => ({
   loadLeaderboard: () => {
     dispatch(fetchLeaderboard());
+  },
+  createUser: (username) => {
+    dispatch(createUser(username));
   }
 });
 
