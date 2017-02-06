@@ -31,6 +31,9 @@ export default class Game extends Component {
       this.websocket.send('JOIN-GAME '+this.props.game_id);
     };
   }
+  sendMove(move) {
+    this.websocket.send('MOVE '+move);
+  }
   render () {
     return (<div>
         <Grid>

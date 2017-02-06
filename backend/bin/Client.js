@@ -30,8 +30,13 @@ class Client {
         this.sendMessage("ERROR NO-AUTH");
         return;
       }
-      let game_id = 'test';//parts[1];
+      let game_id = parts[1];
       let game = gameList[game_id];
+      if(game==undefined)
+      {
+        //auto create new game?
+        game = new Game(game_id);
+      }
       game.join(this);
       //user wants to join game
     }

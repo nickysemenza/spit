@@ -9,7 +9,7 @@ function test1() {
       c.sendGameUpdate();
       // c.send(JSON.stringify(c));
     });
-  },1000);
+  },2000);
 }
 
 module.exports = {
