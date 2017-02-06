@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { Router, Route, Link, browserHistory } from 'react-router';
 import { Grid, Row, Col, Panel } from 'react-bootstrap';
 import {SOCKET_ADDRESS} from '../../config';
+import Card from './Card';
+
 export default class Game extends Component {
   constructor(props) {
     super(props);
@@ -37,6 +37,10 @@ export default class Game extends Component {
   render () {
     return (<div>
         <Grid>
+
+          <Card type={1} />
+
+
           <Row className="show-grid">
             <Col lg={6} md={6}>
               this is a game page
