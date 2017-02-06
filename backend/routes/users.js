@@ -1,13 +1,17 @@
-let models  = require('../models');
 let express = require('express');
 let router  = express.Router();
-
+let User = require('../models/user');
 
 router.get('/', (req, res) => {
-  models.User.findAll()
-    .then((users) => {
-    res.json(users);
+  User.find(function(err, threads) {
+    res.json(threads);
   });
+});
+
+router.post('/signup', (req, res) => {
+  //temp
+  console.log(req.body);
+  new User({username: req.body.username}).save(res.json('ok'));
 });
 
 module.exports = router;

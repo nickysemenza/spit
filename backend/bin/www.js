@@ -1,13 +1,8 @@
 #!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
 let app = require('../app');
-// var debug = require('debug')('express-sequelize');
 let http = require('http');
-let models = require('../models');
+const WebSocket = require('ws');
+let mongoose = require('mongoose');
 
 /**
  * Get port from environment and store in Express.
@@ -20,6 +15,10 @@ app.set('port', port);
  */
 const server = http.createServer(app);
 
+
+mongoose.connect('mongodb://localhost/spit');
+
+
   /**
    * Listen on provided port, on all network interfaces.
    */
@@ -30,26 +29,29 @@ const server = http.createServer(app);
   server.on('listening', onListening);
 
 
-const WebSocket = require('ws');
 
-let wss = new WebSocket.Server({ server: server, path: '/', clientTracking: true, maxPayload: 1024,port: 8080 });
 
-let s = require('./sock.js');
-let Client = require('./Client').Client;
-let Game = require('./Game').Game;
-let g = new Game("test");
-s.test1();
-wss.on('connection', (ws) => {
-  let c = new Client(ws);
-  s.clients.push(c);
-  ws.on('message', (message) => {
-    console.log('received: %s', message);
-    console.log('from '+c.name);
-    c.processMessage(message);
+// MongoClient.connect('mongodb://localhost/test', (err, database) => {
+
+  let wss = new WebSocket.Server({server: server, path: '/', clientTracking: true, maxPayload: 1024, port: 8080});
+
+  let s = require('./sock.js');
+  let Client = require('./Client').Client;
+  let Game = require('./Game').Game;
+  let g = new Game("test");
+  s.test1();
+  wss.on('connection', (ws) => {
+    let c = new Client(ws);
+    s.clients.push(c);
+    ws.on('message', (message) => {
+      console.log('received: %s', message);
+      console.log('from ' + c.name);
+      c.processMessage(message);
+    });
+
+    ws.send('server says hi');
   });
-
-  ws.send('server says hi');
-});
+// });
 
 /**
  * Normalize a port into a number, string, or false.

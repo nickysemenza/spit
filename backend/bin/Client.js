@@ -25,9 +25,20 @@ class Client {
     let parts = message.split(" ");
     if(parts[0]=="JOIN-GAME")
     {
+      if(!this.authenticated) {
+        this.sendMessage("ERROR NO-AUTH");
+        return;
+      }
       let game_id = parts[1];
       //user wants to join game
-
+    }
+    if(parts[0]=="AUTH")
+    {
+      let secret = parts[1];
+      if(secret=="test") {
+        this.authenticated = true;
+        //todo: set userid, check in DB, etc
+      }
     }
   }
   sendGameUpdate() {

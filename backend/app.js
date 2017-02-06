@@ -8,6 +8,9 @@ let cors = require('cors');
 
 let app = express();
 
+
+
+
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(cors());
