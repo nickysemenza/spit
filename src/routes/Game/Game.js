@@ -27,6 +27,7 @@ export default class Game extends Component {
       this.state.socketLog.push(event);
     };
     this.websocket.onopen = () => {
+      this.websocket.send('AUTH test');
       this.websocket.send('JOIN-GAME '+this.props.game_id);
     };
   }

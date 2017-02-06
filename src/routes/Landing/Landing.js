@@ -8,6 +8,9 @@ export default class Dashboard extends Component {
 
     return (<div>
         landing page yay
+
+        <pre>{JSON.stringify(this.props.user, null, 2)}</pre>
+        <hr/>
         <button onClick={this.props.loadLeaderboard}>Reload leaderboard from backend</button>
         <Leaderboard leaderboard={this.props.leaderboard}/>
 

@@ -4,7 +4,8 @@ import Landing from './Landing';
 
 function mapStateToProps (state) {
   return {
-    leaderboard: state.leaderboard
+    leaderboard: state.leaderboard,
+    user: state.user
   };
 }
 

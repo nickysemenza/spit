@@ -9,6 +9,7 @@ class Client {
     let self = this;
     self.socket = socket;
     self.name = "anon";
+    self.game_id = null;
     self.authenticated = false;
   }
 
@@ -29,14 +30,17 @@ class Client {
         this.sendMessage("ERROR NO-AUTH");
         return;
       }
-      let game_id = parts[1];
+      let game_id = 'test';//parts[1];
+      let game = gameList[game_id];
+      game.join(this);
       //user wants to join game
     }
-    if(parts[0]=="AUTH")
+    else if(parts[0]=="AUTH")
     {
       let secret = parts[1];
       if(secret=="test") {
         this.authenticated = true;
+        this.sendMessage("AUTH OK");
         //todo: set userid, check in DB, etc
       }
     }
