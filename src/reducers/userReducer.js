@@ -16,7 +16,8 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         id: action.data.id,
-        token: action.data.token
+        token: action.data.token,
+        username: action.data.username
       };
     default:
       return state;

@@ -11,15 +11,17 @@ router.get('/', (req, res) => {
 
 router.post('/signup', (req, res) => {
   //temp
-  console.log(req.body);
-  if(req.body.username==null) {
+  // console.log(req.body);
+  let username = req.body.username;
+  if(username==null) {
     res.json('error username required');
     return;
   }
-  new User({username: req.body.username}).save((err, user) => {
+  //todo: check for unique
+  new User({username}).save((err, user) => {
     if(err) res.json(err);
     let token = jwt.sign({ id: user._id }, config.JWT_SECRET);
-    res.json({id: user._id, token});
+    res.json({id: user._id, token, username});
   });
 });
 

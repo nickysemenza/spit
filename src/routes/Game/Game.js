@@ -7,8 +7,22 @@ export default class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      socketLog: []
+      socketLog: [],
+      moveBox: ""
     };
+    this.handleMoveBoxChange = this.handleMoveBoxChange.bind(this);
+    this.sendMoveDebug = this.sendMoveDebug.bind(this);
+  }
+  handleMoveBoxChange(event) {
+    this.setState({moveBox: event.target.value});
+  }
+  sendMoveDebug() {
+    let move = this.state.moveBox;
+    this.sendMove(move);
+  }
+  sendMove(move) {
+    console.log("SENDING MOVE",move);
+    this.websocket.send('MOVE '+move);
   }
   componentDidMount () {
     // this.props.loadData()
@@ -31,12 +45,12 @@ export default class Game extends Component {
       this.websocket.send('JOIN-GAME '+this.props.game_id);
     };
   }
-  sendMove(move) {
-    this.websocket.send('MOVE '+move);
-  }
   render () {
     return (<div>
         <Grid>
+
+          <input type="text" value={this.state.moveBox} onChange={this.handleMoveBoxChange} />
+          <button onClick={this.sendMoveDebug}>send move</button>
 
           <Card type={1} />
 
