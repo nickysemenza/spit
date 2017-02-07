@@ -15,6 +15,7 @@ class Game {
 
   /**
    * Makes all players spit
+   * command: MOVE SPIT
    */
   spit() {
     console.log('spitting');
@@ -29,6 +30,7 @@ class Game {
 
   /**
    * Plays a card from your hand to a pile
+   * command: PLAY-CARD index1 index2
    * @param client
    * @param src the index of your hand
    * @param dest the index of the piles array
@@ -39,6 +41,7 @@ class Game {
   }
   /**
    * Moves a card within your hand
+   * command: COMBINE-HANDS index1 index2
    * @param client
    * @param src the index of your hand
    * @param dest the index of your hand
@@ -51,6 +54,7 @@ class Game {
 
   /**
    * Pops your deck and adds it to the first available spot in your hand
+   * command: MOVE POP-DECK
    * @param client
    */
   popDeck(client) {

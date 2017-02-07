@@ -19,6 +19,7 @@ browserSync({
   ui: {
     port: 3001
   },
+  ghostMode: false,
   server: {
     baseDir: 'src',
 
