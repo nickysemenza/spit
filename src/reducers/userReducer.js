@@ -17,7 +17,8 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         id: action.data.id,
         token: action.data.token,
-        username: action.data.username
+        username: action.data.username,
+        authenticated: true
       };
     default:
       return state;

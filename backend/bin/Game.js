@@ -17,6 +17,14 @@ class Game {
    * Makes all players spit
    */
   spit() {
+    console.log('spitting');
+    this.clients.forEach((c,index) => {
+      let pCard = this.gameState.decks[c.name].pop();
+      if(pCard!= undefined) {
+        this.gameState.piles[index].push(pCard);
+      }
+
+    });
   }
 
   /**
@@ -73,14 +81,22 @@ class Game {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
     let parts = moveCmd.split(" ");
     let move = parts[0];
-    if(move=="POP-DECK") {
-      this.popDeck(client);
-    }
-    else if(move=="COMBINE-HANDS") {
-      this.combineHands(client,parts[1],parts[2]);
-    }
-    else if(move=="PLAY-CARD") {
-      this.playCard(client,parts[1],parts[2]);
+    switch (move) {
+      case "POP-DECK":
+        this.popDeck(client);
+        break;
+
+      case "SPIT":
+        this.spit();
+        break;
+
+      case "COMBINE-HANDS":
+        this.combineHands(client, parts[1], parts[2]);
+        break;
+
+      case "PLAY-CARD":
+        this.playCard(client, parts[1], parts[2]);
+        break;
     }
 
   }
@@ -112,8 +128,12 @@ class Game {
     return Game.shuffle(cards);
   }
   getGameState(username) {
+    // console.log(username);
     //todo: make sure user is in game
     let clients = this.clients.map((c)=>c.name);
+
+    if(!clients.includes(username) || username=="anon")
+      return {error: "not in game"};
 
     let state = {
       clients,

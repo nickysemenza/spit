@@ -48,6 +48,7 @@ export default class Game extends Component {
   render () {
     return (<div>
         <h1>Game #{this.props.game_id}</h1>
+        <h2>Hello, {this.props.user.username}</h2>
 
         <input type="text" value={this.state.moveBox} onChange={this.handleMoveBoxChange} />
         <button onClick={this.sendMoveDebug}>send move</button>
