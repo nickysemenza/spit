@@ -102,6 +102,8 @@ class Game {
   }
   addPlayer(client) {
     //todo: check eligibility
+    if(this.started)//can't join a started game
+      return;
     console.log(client.name+' joining game '+this.id);
     this.clients.push(client);
   }
