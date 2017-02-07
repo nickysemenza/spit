@@ -76,7 +76,7 @@ class Game {
         this.gameState.hands[client.name][index].push(topCard);
         this.gameState.decks[client.name].pop();
       }
-    })
+    });
 
 
 
@@ -123,7 +123,7 @@ class Game {
       this.gameState.decks[c.name].push(51);
       this.gameState.decks[c.name].push(20);
       this.gameState.hands[c.name]=[[4],[23,11],[12],[0]];
-      this.gameState.piles = new Array(numPlayers).fill([0])
+      this.gameState.piles = new Array(numPlayers).fill([0]);
     });
     // console.log(this.gameState.decks);
 

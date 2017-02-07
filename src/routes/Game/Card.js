@@ -17,4 +17,4 @@ export default class Card extends Component {
 Card.propTypes = {
   // if needed, add validation
   type: PropTypes.number.isRequired
-}
+};

@@ -32,7 +32,7 @@ export default class Dashboard extends Component {
         <pre>{JSON.stringify(this.props.user, null, 2)}</pre>
         <hr/>
         <button onClick={this.props.loadLeaderboard}>Reload leaderboard from backend</button>
-        <button onClick={()=>{this.props.createUser("aa")}}>test</button>
+        <button onClick={()=>{this.props.createUser("aa");}}>test</button>
         <Leaderboard leaderboard={this.props.leaderboard}/>
 
 

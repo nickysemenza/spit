@@ -4,7 +4,7 @@ let User = require('../models/user');
 let jwt = require('jsonwebtoken');
 let config = require('../config');
 router.get('/', (req, res) => {
-  User.find(function(err, threads) {
+  User.find((err, threads) => {
     res.json(threads);
   });
 });

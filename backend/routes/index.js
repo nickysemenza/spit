@@ -14,7 +14,7 @@ router.get('/clients', (req, res) => {
       in_game: c.game !== null,
       authenticated: c.authenticated,
       killed: c.killed
-    }
+    };
   });
   res.json(clients);
 });

@@ -20,7 +20,7 @@ class Client {
     socket.on('message', (message) => {
       self.processMessage(message);
     });
-    socket.on('close', function close() {
+    socket.on('close', () => {
       self.killMe();
       console.log('disconnected');
     });
