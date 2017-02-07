@@ -67,14 +67,18 @@ class Game {
     if(topCard==undefined)//nothing left in pile
       return;
 
+    let done = false;//only want to pop once
+
     myHands.forEach((hand,index)=>{
-      if(hand==0) {
+      if(hand==0 && !done) {
         this.gameState.hands[client.name][index] = [topCard];
         this.gameState.decks[client.name].pop();
+        done = true;
       }
-      else if(hand[0]%13==topCard || topCard%13==hand[0]) {
+      else if((hand[0]%13==topCard || topCard%13==hand[0]) && !done) {
         this.gameState.hands[client.name][index].push(topCard);
         this.gameState.decks[client.name].pop();
+        done = true;
       }
     });
 
@@ -119,19 +123,17 @@ class Game {
   seed() {
     let numPlayers = this.clients.length;
     this.clients.forEach((c) => {
-      this.gameState.decks[c.name]=Game.getShuffledDeck();
-      this.gameState.decks[c.name].push(51);
-      this.gameState.decks[c.name].push(20);
-      this.gameState.hands[c.name]=[[4],[23,11],[12],[0]];
+      this.gameState.decks[c.name]=this.getShuffledDeck();
+      // this.gameState.decks[c.name].push(51);
+      // this.gameState.decks[c.name].push(20);
+      this.gameState.hands[c.name]=[[0],[0],[0],[0]];
       this.gameState.piles = new Array(numPlayers).fill([0]);
     });
     // console.log(this.gameState.decks);
-
-
   }
-  static getShuffledDeck() {
+  getShuffledDeck() {
     let cards = [...Array(52).keys()].map(x => ++x);
-    return Game.shuffle(cards);
+    return this.shuffle(cards.slice(0));
   }
   getGameState(username) {
     // console.log(username);
@@ -148,8 +150,14 @@ class Game {
     if(!this.started)
       return state;
 
+    let decks = {};
+    this.clients.forEach((c)=>{
+      decks[c.name] = this.gameState.decks[c.name].length;
+    });
+
     let myDeck = this.gameState.decks[username];
     return {
+      decks,
       clients,
       started: this.started,
       piles: this.gameState.piles,
@@ -157,23 +165,13 @@ class Game {
         topCard: myDeck[myDeck.length-1],
         count: myDeck.length
       },
-      // hand: this.gameState.hands[username],
+      hand: this.gameState.hands[username],
       hands: this.gameState.hands,
-
-
     };
-    // return {
-    //   numPlayers: 2,
-    //   deck: {count: 4, topCard: 11},
-    //   hand: [[4,18],[23],[rand],[9,12]],
-    //   center: [23,42,19,3],
-    //   playerHands: 'todo',
-    //   playerCounts: 'todo'
-    // };
   }
 
 
-  static shuffle(array) {
+  shuffle(array) {
   let counter = array.length;
 
   // While there are elements in the array
