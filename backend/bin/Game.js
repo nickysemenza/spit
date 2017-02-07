@@ -152,12 +152,19 @@ class Game {
 
     let decks = {};
     this.clients.forEach((c)=>{
-      decks[c.name] = this.gameState.decks[c.name].length;
+      if(c.name != username)//don't need to display client's own decks here, they use `deck` prop
+        decks[c.name] = this.gameState.decks[c.name].length;
+    });
+
+    let hands = {};
+    this.clients.forEach((c)=>{
+      if(c.name != username)//don't need to display client's own decks here, they use `hand` prop
+        hands[c.name] = this.gameState.hands[c.name];
     });
 
     let myDeck = this.gameState.decks[username];
     return {
-      decks,
+      id: this.id,
       clients,
       started: this.started,
       piles: this.gameState.piles,
@@ -165,8 +172,9 @@ class Game {
         topCard: myDeck[myDeck.length-1],
         count: myDeck.length
       },
+      decks,
       hand: this.gameState.hands[username],
-      hands: this.gameState.hands,
+      hands,
     };
   }
 
