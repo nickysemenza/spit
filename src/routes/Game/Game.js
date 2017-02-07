@@ -12,7 +12,7 @@ export default class Game extends Component {
       selectedHand: null
     };
     this.handleMoveBoxChange = this.handleMoveBoxChange.bind(this);
-    this.sendMoveDebug = this.sendMoveDebug.bind(this);
+    this.sendCommandDebug = this.sendCommandDebug.bind(this);
     this.startGame = this.startGame.bind(this);
     this.changeSelectedHand = this.changeSelectedHand.bind(this);
     this.popDeck = this.popDeck.bind(this);
@@ -38,22 +38,26 @@ export default class Game extends Component {
   handleMoveBoxChange(event) {
     this.setState({moveBox: event.target.value});
   }
-  sendMoveDebug() {
+  sendCommandDebug() {
     let move = this.state.moveBox;
-    this.sendMove(move);
+    this.sendCommand(move);
   }
   startGame() {
-    this.sendMove("START-GAME "+this.props.game_id);
+    this.sendCommand("START-GAME "+this.props.game_id);
   }
-  sendMove(move) {
-    console.log("SENDING CMD",move);
+  sendCommand(move) {
+    console.log("SENDING CMD: ",move);
     this.websocket.send(move);
   }
   changeSelectedHand(ind) {
     this.setState({selectedHand: ind});
   }
+  placeCardOnPile(whichPile) {
+    //the number keys are 1 indexed, but our data is 0 indexed.
+    this.sendCommand(`MOVE PLAY-CARD ${this.state.selectedHand-1} ${whichPile}`);
+  }
   popDeck() {
-    this.sendMove("MOVE POP-DECK");
+    this.sendCommand("MOVE POP-DECK");
   }
 
   render () {
@@ -69,7 +73,7 @@ export default class Game extends Component {
 
 
         <input type="text" value={this.state.moveBox} onChange={this.handleMoveBoxChange} />
-        <button onClick={this.sendMoveDebug}>send move</button>
+        <button onClick={this.sendCommandDebug}>send command</button>
         <button onClick={this.startGame}>start game</button>
 
         {/*<Card type={1} />*/}
