@@ -185,13 +185,9 @@ array-union@^1.0.1:
   dependencies:
     array-uniq "^1.0.1"
 
-array-uniq@1.0.2:
+array-uniq@1.0.2, array-uniq@^1.0.1, array-uniq@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.2.tgz#5fcc373920775723cfd64d65c64bef53bf9eba6d"
-
-array-uniq@^1.0.1, array-uniq@^1.0.2:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.3.tgz#af6ac877a25cc7f74e058894753858dfdb24fdb6"
 
 array-unique@^0.2.1:
   version "0.2.1"
@@ -2551,7 +2547,7 @@ execSync@1.0.2:
   dependencies:
     temp "~0.5.1"
 
-exenv@1.2.0:
+exenv@1.2.0, exenv@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.0.tgz#3835f127abf075bfe082d0aed4484057c78e3c89"
 
@@ -3930,6 +3926,10 @@ kareem@1.2.0:
 keycode@^2.1.2:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.1.8.tgz#94d2b7098215eff0e8f9a8931d5a59076c4532fb"
+
+keycodes@^0.2.3:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/keycodes/-/keycodes-0.2.4.tgz#6342c050f6023c5c4651d4a3e9670aff0721bda0"
 
 keypress@^0.2.1:
   version "0.2.1"
@@ -5657,6 +5657,13 @@ react-dom@15.4.1:
 "react-dom@^0.14.0 || <15.4.0":
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.2.tgz#c46b0aa5380d7b838e7a59c4a7beff2ed315531f"
+
+react-key-handler@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-key-handler/-/react-key-handler-0.3.0.tgz#ce5b20e04139b3179798e5d7adc1c211016bda39"
+  dependencies:
+    exenv "^1.2.0"
+    keycodes "^0.2.3"
 
 react-modal@^1.4.0:
   version "1.6.5"
