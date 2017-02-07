@@ -7,7 +7,7 @@ class Game {
     self.clients = [];
     self.gameState = {
       hands: {},//the 4x cards
-      piles: [],
+      piles: {},
       decks: {}
     };
     gameList[id] = self;
@@ -21,8 +21,11 @@ class Game {
     console.log('spitting');
     this.clients.forEach((c,index) => {
       let pCard = this.gameState.decks[c.name].pop();
+      console.log("spit->"+c.name+"..."+index+" card is: "+pCard);
       if(pCard!= undefined) {
-        this.gameState.piles[index].push(pCard);
+        this.gameState.piles[c.name].push(pCard);
+        console.log(`putting card ${pCard} on pile#${index}`);
+        console.log(this.gameState.piles);
       }
 
     });
@@ -127,7 +130,7 @@ class Game {
       // this.gameState.decks[c.name].push(51);
       // this.gameState.decks[c.name].push(20);
       this.gameState.hands[c.name]=[[0],[0],[0],[0]];
-      this.gameState.piles = new Array(numPlayers).fill([0]);
+      this.gameState.piles[c.name] = [0];// = new Array(numPlayers).fill([0]);
     });
     // console.log(this.gameState.decks);
   }
@@ -162,12 +165,19 @@ class Game {
         hands[c.name] = this.gameState.hands[c.name];
     });
 
+    let peekPiles = {};
+    this.clients.forEach((c)=>{
+      //TODO: maybe sort it so that `username` entry is first for UI purposes
+      let pile = this.gameState.piles[c.name];
+      peekPiles[c.name] = pile[pile.length-1];
+    });
     let myDeck = this.gameState.decks[username];
     return {
       id: this.id,
       clients,
       started: this.started,
       piles: this.gameState.piles,
+      peekPiles,
       deck: {
         topCard: myDeck[myDeck.length-1],
         count: myDeck.length
