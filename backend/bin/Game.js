@@ -12,6 +12,9 @@ class Game {
     };
     gameList[id] = self;
   }
+  spit() {
+    //makes all players spit
+  }
   playCard(client,src,dest) {
     console.log(`Game ${this.id}: move: client:${client}`);
     //moves a card from self.gameState.hands[username][loc]

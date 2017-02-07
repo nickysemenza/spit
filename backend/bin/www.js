@@ -39,14 +39,14 @@ mongoose.connect(config.MONGO_DB);
   s.test1();
   wss.on('connection', (ws) => {
     let c = new Client(ws);
-    s.clients.push(c);
-    ws.on('message', (message) => {
-      console.log('received: %s', message);
-      console.log('from ' + c.name);
-      c.processMessage(message);
-    });
+    s.connectedClients[c.getUID()]=c;
+    // ws.on('message', (message) => {
+    //   console.log('received: %s', message);
+    //   console.log('from ' + c.name);
+    //   c.processMessage(message);
+    // });
 
-    ws.send('server says hi');
+    // ws.send('server says hi');
   });
 
 /**

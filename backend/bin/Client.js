@@ -5,18 +5,43 @@ let Game = require('./Game').Game;
 let gameList = require('./Game').gameList;
 let jwt = require('jsonwebtoken');
 let User = require('../models/user');
+let randomstring = require("randomstring");
 class Client {
   constructor(socket) {
     let self = this;
+    self.uid = randomstring.generate();
     self.socket = socket;
     self.name = "anon";
     self.game = null;
     self.authenticated = false;
+    self.killed = false;
+
+
+    socket.on('message', (message) => {
+      // console.log('DERPreceived: %s from '+self.name, message);
+      self.processMessage(message);
+    });
+    socket.on('close', function close() {
+      self.killMe();
+      console.log('disconnected');
+    });
+
+  }
+  getUID() {
+    return this.uid;
+  }
+  killMe() {
+    console.log("killing client uid "+this.uid);
+    this.killed = true;
   }
 
   //Write data to the client
   sendMessage(message) {
     console.log("Sending message to socket <"+this.name+">\n\t"+message);
+    if(this.killed) {
+      console.log("socket " + this.uid + " is dead");
+      return;
+    }
     this.socket.send(message, (err) => {
       if(err) console.log(err);
     });
