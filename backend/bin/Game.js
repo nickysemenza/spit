@@ -12,24 +12,76 @@ class Game {
     };
     gameList[id] = self;
   }
+
+  /**
+   * Makes all players spit
+   */
   spit() {
-    //makes all players spit
   }
+
+  /**
+   * Plays a card from your hand to a pile
+   * @param client
+   * @param src the index of your hand
+   * @param dest the index of the piles array
+   */
   playCard(client,src,dest) {
     //moves a card from self.gameState.hands[username][loc]
     //to self.piles[loc2]
   }
+  /**
+   * Moves a card within your hand
+   * @param client
+   * @param src the index of your hand
+   * @param dest the index of your hand
+   */
   combineHands(client, src, dest) {
     //moves a card within a player's hand
     //i.e. moves self.gameState.hands[username][2]
     //        to self.gameState.hands[username][3]
   }
+
+  /**
+   * Pops your deck and adds it to the first available spot in your hand
+   * @param client
+   */
   popDeck(client) {
+    console.log('popdeck, user:'+client.name);
     //pops a card from self.gameState.decks[username]
     //places a card on first available self.gameState.hands[username]
+    let myDeck = this.gameState.decks[client.name];
+    let myHands = this.gameState.hands[client.name];
+    let topCard = myDeck[myDeck.length-1];
+    if(topCard==undefined)//nothing left in pile
+      return;
+
+    myHands.forEach((hand,index)=>{
+      if(hand==0) {
+        this.gameState.hands[client.name][index] = [topCard];
+        this.gameState.decks[client.name].pop();
+      }
+      else if(hand[0]%13==topCard || topCard%13==hand[0]) {
+        this.gameState.hands[client.name][index].push(topCard);
+        this.gameState.decks[client.name].pop();
+      }
+    })
+
+
+
   }
   makeMove(client, moveCmd) {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
+    let parts = moveCmd.split(" ");
+    let move = parts[0];
+    if(move=="POP-DECK") {
+      this.popDeck(client);
+    }
+    else if(move=="COMBINE-HANDS") {
+      this.combineHands(client,parts[1],parts[2]);
+    }
+    else if(move=="PLAY-CARD") {
+      this.playCard(client,parts[1],parts[2]);
+    }
 
   }
   addPlayer(client) {
@@ -46,6 +98,8 @@ class Game {
     let numPlayers = this.clients.length;
     this.clients.forEach((c) => {
       this.gameState.decks[c.name]=Game.getShuffledDeck();
+      this.gameState.decks[c.name].push(51);
+      this.gameState.decks[c.name].push(20);
       this.gameState.hands[c.name]=[[4],[23,11],[12],[0]];
       this.gameState.piles = new Array(numPlayers).fill([0])
     });
