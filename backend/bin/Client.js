@@ -50,48 +50,61 @@ class Client {
   processMessage(message) {
     console.log("msg received from <"+this.name+">\n\t"+message);
     let parts = message.split(" ");
-    if(parts[0]=="JOIN-GAME")
-    {
-      if(!this.authenticated) {
-        this.sendMessage("ERROR NO-AUTH");
-        return;
-      }
-      let game_id = parts[1];
-      let game = gameList[game_id];
-      if(game==undefined)
-      {
-        //auto create new game?
-        game = new Game(game_id);
-      }
-      game.join(this);
-      this.game = game;
-      //user wants to join game
-    }
-    else if(parts[0]=="START-GAME") {
-      let game_id = parts[1];
-      let game = gameList[game_id];
-      game.start();
-    }
-    else if(parts[0]=="AUTH")
-    {
-      let token = parts[1];
-      let decoded = jwt.decode(token, {complete: true});
-      if(decoded) {
-        User.findById(decoded.payload.id, (err, user) => {
-          if (user) {
-            this.authenticated = true;
-            this.name = user.username;
-            this.sendMessage("AUTH-OK");
-            //todo: set userid, check in DB, etc
-          }
-          else {
-            this.sendMessage("AUTH-ERROR");
-          }
-        });
-      }
-      else
-        this.sendMessage("AUTH-ERROR");
+    switch (parts[0]) {
+      case "JOIN-GAME":
+        if (!this.authenticated) {
+          this.sendMessage("ERROR NO-AUTH");
+          return;
+        }
+        const game_id = parts[1];
+        let game = gameList[game_id];
+        if (game == undefined) {
+          //auto create new game?
+          game = new Game(game_id);
+        }
 
+        game.addPlayer(this);
+        this.game = game;
+        //user wants to join game
+        break;
+
+      case "START-GAME":
+        if(!this.game) {
+          //can't start a game if you aren't in it
+          break;
+        }
+        this.game.start();
+        break;
+      case "MOVE":
+        if(!this.game) {
+          //can't make a move without a game
+          break;
+        }
+        let client = this;
+        let movecmd = message.substr(message.indexOf(' ')+1);
+        this.game.makeMove(client,movecmd);
+        break;
+
+
+      case "AUTH":
+        let token = parts[1];
+        let decoded = jwt.decode(token, {complete: true});
+        if (decoded) {
+          User.findById(decoded.payload.id, (err, user) => {
+            if (user) {
+              this.authenticated = true;
+              this.name = user.username;
+              this.sendMessage("AUTH-OK");
+              //todo: set userid, check in DB, etc
+            }
+            else {
+              this.sendMessage("AUTH-ERROR");
+            }
+          });
+        }
+        else
+          this.sendMessage("AUTH-ERROR");
+        break;
     }
   }
   sendGameUpdate() {

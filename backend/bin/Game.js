@@ -16,7 +16,6 @@ class Game {
     //makes all players spit
   }
   playCard(client,src,dest) {
-    console.log(`Game ${this.id}: move: client:${client}`);
     //moves a card from self.gameState.hands[username][loc]
     //to self.piles[loc2]
   }
@@ -25,11 +24,15 @@ class Game {
     //i.e. moves self.gameState.hands[username][2]
     //        to self.gameState.hands[username][3]
   }
-  topDeck(client) {
+  popDeck(client) {
     //pops a card from self.gameState.decks[username]
     //places a card on first available self.gameState.hands[username]
   }
-  join(client) {
+  makeMove(client, moveCmd) {
+    console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
+
+  }
+  addPlayer(client) {
     //todo: check eligibility
     console.log(client.name+' joining game '+this.id);
     this.clients.push(client);
@@ -44,8 +47,9 @@ class Game {
     this.clients.forEach((c) => {
       this.gameState.decks[c.name]=Game.getShuffledDeck();
       this.gameState.hands[c.name]=[[4],[23,11],[12],[0]];
+      this.gameState.piles = new Array(numPlayers).fill([0])
     });
-    console.log(this.gameState.decks);
+    // console.log(this.gameState.decks);
 
 
   }
@@ -54,8 +58,7 @@ class Game {
     return Game.shuffle(cards);
   }
   getGameState(username) {
-    //temp test
-    // return this.gameState;
+    //todo: make sure user is in game
     let clients = this.clients.map((c)=>c.name);
 
     let state = {
