@@ -35,18 +35,11 @@ mongoose.connect(config.MONGO_DB);
   let s = require('./sock.js');
   let Client = require('./Client').Client;
   let Game = require('./Game').Game;
-  let g = new Game("test");
   s.test1();
   wss.on('connection', (ws) => {
     let c = new Client(ws);
     s.connectedClients[c.getUID()]=c;
-    // ws.on('message', (message) => {
-    //   console.log('received: %s', message);
-    //   console.log('from ' + c.name);
-    //   c.processMessage(message);
-    // });
-
-    // ws.send('server says hi');
+    ws.send('server says hi');
   });
 
 /**

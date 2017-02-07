@@ -18,7 +18,6 @@ class Client {
 
 
     socket.on('message', (message) => {
-      // console.log('DERPreceived: %s from '+self.name, message);
       self.processMessage(message);
     });
     socket.on('close', function close() {
@@ -33,6 +32,7 @@ class Client {
   killMe() {
     console.log("killing client uid "+this.uid);
     this.killed = true;
+    //todo: to something to the active game this client is in
   }
 
   //Write data to the client
