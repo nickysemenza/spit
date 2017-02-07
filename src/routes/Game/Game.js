@@ -7,11 +7,11 @@ export default class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      socketLog: [],
       moveBox: ""
     };
     this.handleMoveBoxChange = this.handleMoveBoxChange.bind(this);
     this.sendMoveDebug = this.sendMoveDebug.bind(this);
+    this.startGame = this.startGame.bind(this);
   }
   handleMoveBoxChange(event) {
     this.setState({moveBox: event.target.value});
@@ -20,15 +20,15 @@ export default class Game extends Component {
     let move = this.state.moveBox;
     this.sendMove(move);
   }
+  startGame() {
+    this.sendMove("START-GAME "+this.props.game_id);
+  }
   sendMove(move) {
-    console.log("SENDING MOVE",move);
-    this.websocket.send('MOVE '+move);
+    console.log("SENDING CMD",move);
+    this.websocket.send(move);
   }
   componentDidMount () {
-    // this.props.loadData()
-    let self = this;
     this.websocket = new WebSocket(`ws://${SOCKET_ADDRESS}`);
-    // this.dispatcher = dispatcher
     this.websocket.onmessage = (event) => {
       let split = event.data.split(" ");
       if(split[0]=="GAME-STATE") {
@@ -36,37 +36,25 @@ export default class Game extends Component {
         console.log(data);
         this.props.receiveGameState(data);
       }
+      else if(split[0]=="AUTH-OK")
+        this.websocket.send('JOIN-GAME '+this.props.game_id);
       else
         console.log(event.data);
-      this.state.socketLog.push(event);
     };
     this.websocket.onopen = () => {
-      this.websocket.send('AUTH test');
-      this.websocket.send('JOIN-GAME '+this.props.game_id);
+      this.websocket.send('AUTH '+this.props.user.token);
     };
   }
   render () {
     return (<div>
-        <Grid>
+        <h1>Game #{this.props.game_id}</h1>
 
-          <input type="text" value={this.state.moveBox} onChange={this.handleMoveBoxChange} />
-          <button onClick={this.sendMoveDebug}>send move</button>
+        <input type="text" value={this.state.moveBox} onChange={this.handleMoveBoxChange} />
+        <button onClick={this.sendMoveDebug}>send move</button>
+        <button onClick={this.startGame}>start game</button>
 
-          <Card type={1} />
-
-
-          <Row className="show-grid">
-            <Col lg={6} md={6}>
-              this is a game page
-              <pre>game_id is {this.props.game_id}, as from the url bar</pre>
-            </Col>
-            <Col lg={6} md={6}>
-              log: {this.state.socketLog.length}
-              <pre>{JSON.stringify(this.props.game, null, 2)}</pre>
-              {/*<ul>{log}</ul>*/}
-            </Col>
-          </Row>
-        </Grid>
+        <Card type={1} />
+        <pre>{JSON.stringify(this.props.game.state, null, 2)}</pre>
     </div>
     );
   }

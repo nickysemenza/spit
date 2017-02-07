@@ -6,7 +6,8 @@ import Game from './Game';
 function mapStateToProps (state) {
   return {
     leaderboard: state.leaderboard,
-    game: state.game
+    game: state.game,
+    user: state.user
   };
 }
 
