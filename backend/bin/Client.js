@@ -37,7 +37,7 @@ class Client {
 
   //Write data to the client
   sendMessage(message) {
-    console.log("Sending message to socket <"+this.name+">\n\t"+message);
+    // console.log("Sending message to socket <"+this.name+">\n\t"+message);
     if(this.killed) {
       console.log("socket " + this.uid + " is dead");
       return;

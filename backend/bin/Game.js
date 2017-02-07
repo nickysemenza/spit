@@ -1,4 +1,5 @@
 let gameList = {};
+let utils = require('./utils');
 class Game {
   constructor(id) {
     let self = this;
@@ -82,7 +83,7 @@ class Game {
         this.gameState.decks[client.name].pop();
         done = true;
       }
-      else if((hand[0]%13==topCard || topCard%13==hand[0]) && !done) {
+      else if(utils.areCardsSameNumber(hand[0],topCard) && !done) {
         this.gameState.hands[client.name][index].push(topCard);
         this.gameState.decks[client.name].pop();
         done = true;
