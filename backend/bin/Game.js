@@ -11,6 +11,14 @@ class Game {
       decks: {}
     };
     gameList[id] = self;
+    self.stateSnapshots = [];
+  }
+
+  /**
+   * Takes a snapshot of the game state
+   */
+  snapshot() {
+    this.stateSnapshots.push(this.gameState);
   }
 
   /**
@@ -19,15 +27,11 @@ class Game {
    */
   spit() {
     console.log('spitting');
-    this.clients.forEach((c,index) => {
+    this.clients.forEach((c) => {
       let pCard = this.gameState.decks[c.name].pop();
-      console.log("spit->"+c.name+"..."+index+" card is: "+pCard);
       if(pCard!= undefined) {
         this.gameState.piles[c.name].push(pCard);
-        console.log(`putting card ${pCard} on pile#${index}`);
-        console.log(this.gameState.piles);
       }
-
     });
   }
 
@@ -92,6 +96,7 @@ class Game {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
     let parts = moveCmd.split(" ");
     let move = parts[0];
+    this.snapshot();
     switch (move) {
       case "POP-DECK":
         this.popDeck(client);
@@ -174,6 +179,7 @@ class Game {
     let myDeck = this.gameState.decks[username];
     return {
       id: this.id,
+      numMoves: this.stateSnapshots.length,
       clients,
       started: this.started,
       piles: this.gameState.piles,
