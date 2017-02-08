@@ -130,10 +130,21 @@ class Game {
   }
   addPlayer(client) {
     //todo: check eligibility
+    let eligible = true;
     if(this.started)//can't join a started game
-      return;
-    console.log(client.name+' joining game '+this.id);
-    this.clients.push(client);
+      eligible = false;
+
+    this.clients.forEach((c)=>{
+      if(c.name==client.name) {
+        //user is already in game
+        console.log(c.name+" is already in this game");
+        eligible = false;
+      }
+    });
+    if(eligible) {
+      console.log(client.name + ' joining game ' + this.id);
+      this.clients.push(client);
+    }
   }
   start() {
     console.log("time to start game "+this.id);

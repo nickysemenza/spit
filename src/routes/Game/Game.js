@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Grid, Row, Col, Panel } from 'react-bootstrap';
-import {SOCKET_ADDRESS} from '../../config';
+import {SOCKET_ADDRESS} from 'config';
 import Card from './Card';
 import KeyHandler, {KEYPRESS} from 'react-key-handler';
 
