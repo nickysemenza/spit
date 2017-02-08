@@ -66,7 +66,7 @@ class Game {
     //        to self.gameState.hands[username][3]
 
 
-    if(src.length>1&&(src[src.length-1]%13==dest[dest.length-1]%13)){
+    if(src.length>1&&dest.length>1&&(src[src.length-1]%13==dest[dest.length-1]%13)){
       dest.push(src.pop());
     }
   }
