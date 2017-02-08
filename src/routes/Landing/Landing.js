@@ -9,15 +9,15 @@ export default class Dashboard extends Component {
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.registerUser = this.registerUser.bind(this);
   }
+  componentDidMount () {
+    this.props.loadLeaderboard();
+  }
   handleUsernameChange(event) {
     this.setState({usernameBox: event.target.value});
   }
   registerUser() {
     let username = this.state.usernameBox;
     this.props.createUser(username);
-  }
-  componentDidMount () {
-    this.props.loadLeaderboard();
   }
 
   render () {
