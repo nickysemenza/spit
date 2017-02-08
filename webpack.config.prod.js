@@ -6,7 +6,7 @@ import WebpackMd5Hash from 'webpack-md5-hash';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import path from 'path';
-
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'),
   __DEV__: false
@@ -59,7 +59,7 @@ export default {
       // To track JavaScript errors via TrackJS, sign up for a free trial at TrackJS.com and enter your token below.
       trackJSToken: ''
     }),
-
+    new CopyWebpackPlugin([{ from: 'src/assets' ,to: 'assets'}]),
     // Eliminate duplicate packages when generating bundle
     new webpack.optimize.DedupePlugin(),
 
