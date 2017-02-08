@@ -10,6 +10,7 @@ class Game {
       hands: {},//the 4x cards
       piles: {},
       decks: {}
+      //cardsLeft = decks.length+hands[1-4].length-4
     };
     gameList[id] = self;
     self.stateSnapshots = [];
@@ -46,6 +47,11 @@ class Game {
   playCard(client,src,dest) {
     //moves a card from self.gameState.hands[username][loc]
     //to self.piles[loc2]
+
+
+    if(src.length>1&&((src[src.length-1]%13==(dest[dest.length-1]-1)%13)||(src[src.length-1]%13==(dest[dest.length-1]+1)%13))){
+      dest.push(src.pop());
+    }
   }
   /**
    * Moves a card within your hand
@@ -58,6 +64,11 @@ class Game {
     //moves a card within a player's hand
     //i.e. moves self.gameState.hands[username][2]
     //        to self.gameState.hands[username][3]
+
+
+    if(src.length>1&&(src[src.length-1]%13==dest[dest.length-1]%13)){
+      dest.push(src.pop());
+    }
   }
 
   /**
@@ -137,6 +148,9 @@ class Game {
       // this.gameState.decks[c.name].push(20);
       this.gameState.hands[c.name]=[[0],[0],[0],[0]];
       this.gameState.piles[c.name] = [0];// = new Array(numPlayers).fill([0]);
+
+      //pop top 4 to hand slots
+      //this.gameState.hands[c.name]=[[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()]];
     });
     // console.log(this.gameState.decks);
   }
