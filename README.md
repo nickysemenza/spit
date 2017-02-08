@@ -1,4 +1,5 @@
 #spit
+[![Build Status](https://travis-ci.com/nickysemenza/spit.svg?token=942LyUtynXskaQCAHN6N&branch=master)](https://travis-ci.com/nickysemenza/spit)
 ##Installation
 * Install MongoDB
 * Install [Yarn](https://yarnpkg.com/docs/install/) (and node)
