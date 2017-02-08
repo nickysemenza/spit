@@ -8,9 +8,7 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
 export default {
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
-    root:
-      path.resolve('./src')
-
+    root: path.resolve('./src')
   },
   debug: true,
   devtool: 'eval-source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
