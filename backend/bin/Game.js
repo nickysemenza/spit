@@ -17,6 +17,13 @@ class Game {
   }
 
   /**
+   * Persists the game to mongoDB
+   */
+  saveGave() {
+    //save this.gameState, this.id, etc
+  }
+
+  /**
    * Takes a snapshot of the game state
    */
   snapshot() {

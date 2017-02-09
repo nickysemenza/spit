@@ -112,8 +112,10 @@ class Client {
   sendGameUpdate() {
     //get current game, and send the board
     let name = this.name;
-    if(this.game)
-      this.sendMessage("GAME-STATE "+JSON.stringify(this.game.getGameState(name)));
+    if(this.game) {
+      this.sendMessage("GAME-STATE " + JSON.stringify(this.game.getGameState(name)));
+      this.game.saveGame();
+    }
   }
 }
 
