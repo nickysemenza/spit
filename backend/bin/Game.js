@@ -1,5 +1,9 @@
 let gameList = {};
 let utils = require('./utils');
+let mongoose = require('mongoose');
+//var opts = { server: { auto_reconnect: false }, user: 'username', pass: 'mypassword' }
+db = mongoose.createConnection('localhost', 'test', 27017)
+
 class Game {
   constructor(id) {
     let self = this;
