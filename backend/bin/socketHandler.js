@@ -1,15 +1,15 @@
 
 let connectedClients = {};
-function test1() {
+function tickHandler() {
   setInterval(()=>{
     // console.log("tick");
     Object.keys(connectedClients).forEach(key=>{
       connectedClients[key].sendGameUpdate();
     });
-  },2000);
+  },1000);
 }
 
 module.exports = {
   connectedClients,
-  test1
+  tickHandler
 };

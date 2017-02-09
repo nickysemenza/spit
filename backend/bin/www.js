@@ -5,42 +5,36 @@ const WebSocket = require('ws');
 let mongoose = require('mongoose');
 let config = require('../config');
 
+let socketHandler = require('./socketHandler.js');
+let Client = require('./Client').Client;
+let Game = require('./Game').Game;
 /**
  * Get port from environment and store in Express.
  */
 
 const port = normalizePort(process.env.PORT || config.BACKEND_PORT);
 app.set('port', port);
-/**
- * Create HTTP server.
- */
 const server = http.createServer(app);
-
 
 mongoose.connect(config.MONGO_DB);
 
+server.listen(port, () => {
+  console.log(`Express server listening on port ${server.address().port}`);
+});
 
-  /**
-   * Listen on provided port, on all network interfaces.
-   */
-  server.listen(port, () => {
-    console.log(`Express server listening on port ${server.address().port}`);
-  });
-  server.on('error', onError);
-  server.on('listening', onListening);
+server.on('error', onError);
+// server.on('listening', onListening);
 
+let wss = new WebSocket.Server({server: server, path: '/', clientTracking: true, maxPayload: 1024, port: config.SOCKET_PORT});
+console.log(`Websocket server listening on port ${config.SOCKET_PORT}`);
+socketHandler.tickHandler();
 
-  let wss = new WebSocket.Server({server: server, path: '/', clientTracking: true, maxPayload: 1024, port: config.SOCKET_PORT});
+wss.on('connection', (ws) => {
+  let c = new Client(ws);
+  socketHandler.connectedClients[c.getUID()]=c;
+  // ws.send('server says hi');
+});
 
-  let s = require('./sock.js');
-  let Client = require('./Client').Client;
-  let Game = require('./Game').Game;
-  s.test1();
-  wss.on('connection', (ws) => {
-    let c = new Client(ws);
-    s.connectedClients[c.getUID()]=c;
-    ws.send('server says hi');
-  });
 
 /**
  * Normalize a port into a number, string, or false.

@@ -13,7 +13,7 @@ describe('Game::initial state', () => {
   expect(g.started).to.equal(false);
   expect(g.id).to.equal("game1");
 });
-describe('Game::seeding', () => {
+describe('Game::joining and seeding', () => {
   let g2 = new Game("game2");
   let c1sock = new WSClientMock();
   let c1 = new Client(c1sock);
