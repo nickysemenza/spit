@@ -7,9 +7,9 @@ let mongoose = require('mongoose')
 
 let gameSchema = new Schema({
     url: {type: String, required: true, unique: true},
-    players: [{type: ObjectId, ref: 'User' , required: true}],
+    players: [{type: Schema.Types.ObjectId, ref: 'User' , required: true}],
     totalMoves: {type: Number},
-    winner: {type: ObjectId, ref: 'User'},
+    winner: {type: Schema.Types.ObjectId, ref: 'User'},
     moves: [{type: {
      player: {type: String, required: true},
       card: {type: Number, required: true},
