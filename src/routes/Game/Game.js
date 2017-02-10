@@ -84,10 +84,9 @@ export default class Game extends Component {
         <PlayerSection card1={1} card2={1} card3={1} card4={1}/>
 
 
-       <pre>{JSON.stringify(this.props.game.state, null, 2)}</pre>
         {/*<Card type={1} />*/}
         <pre>Currently selected hand index (from numkeys): {this.state.selectedHand}</pre>
-        <pre>{JSON.stringify(this.props.game.state, null, 2)}</pre>
+        <pre>{JSON.stringify(this.props.game, null, 2)}</pre>
     </div>
     );
   }

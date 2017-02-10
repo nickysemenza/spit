@@ -135,6 +135,10 @@ class Game {
   }
   makeMove(client, moveCmd) {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
+    if(!this.started) {
+      //can't make a move yet
+      return;
+    }
     let parts = moveCmd.split(" ");
     let move = parts[0];
     this.snapshot();

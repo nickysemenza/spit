@@ -114,7 +114,7 @@ class Client {
     let name = this.name;
     if(this.game) {
       this.sendMessage("GAME-STATE " + JSON.stringify(this.game.getGameState(name)));
-      this.game.saveGame();
+      // this.game.saveGame();
     }
   }
 }
