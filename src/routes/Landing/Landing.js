@@ -22,9 +22,13 @@ export default class Dashboard extends Component {
   render () {
 
     return (<div>
-        <h2>User</h2>
-        <input type="text" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
-        <button onClick={this.registerUser}>register?</button>
+      <h2 className="titleText" >\(^__^)/ \(^_^)/</h2>
+      <h2 className="titleText" margin="0px">-----Spit-----</h2>
+      <h2 className="funText" >\(^__^)/ \(^_^)/</h2>
+
+        <h2 className="headText" >Nickname</h2>
+        <input type="text" className="nickNameText" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
+        <button className="userNameText" onClick={this.registerUser}>register?</button>
 
         <pre>{JSON.stringify(this.props.user, null, 2)}</pre>
         <hr/>
