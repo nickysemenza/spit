@@ -219,7 +219,6 @@ class Game {
 
     let decks = {};
     this.clients.forEach((c)=>{
-      if(c.name != username)//don't need to display client's own decks here, they use `deck` prop
         decks[c.name] = this.gameState.decks[c.name].length;
     });
 

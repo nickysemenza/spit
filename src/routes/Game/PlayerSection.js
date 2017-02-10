@@ -13,6 +13,13 @@ export default class PlayerSection extends Component {
     let card2 = (this.props.card2 && this.props.card2.length !=0) ? this.props.card2[0] : 0;
     let card3 = (this.props.card3 && this.props.card3.length !=0) ? this.props.card3[0] : 0;
     let card4 = (this.props.card4 && this.props.card4.length !=0) ? this.props.card4[0] : 0;
+
+    let decks = this.props.decks ? this.props.decks : {};
+    let gameLB = Object.keys(decks).map(k=>
+      <tr key={k}>
+      <td>{k}</td>
+      <td>{this.props.decks[k]}</td>
+    </tr>);
     return (
       <div>
 
@@ -46,22 +53,7 @@ export default class PlayerSection extends Component {
 
         <div className="mainLB">
           <table>
-            <tr>
-              <td>Marty</td>
-              <td>5</td>
-            </tr>
-            <tr>
-              <td>Nicky</td>
-              <td>11</td>
-            </tr>
-            <tr>
-              <td>Byron</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <td>Austin</td>
-              <td>23</td>
-            </tr>
+            {gameLB}
           </table>
         </div>
       </div>
@@ -74,5 +66,6 @@ PlayerSection.propTypes = {
   card2: PropTypes.array.isRequired,
   card3: PropTypes.array.isRequired,
   card4: PropTypes.array.isRequired,
+  decks: PropTypes.object.isRequired,
   selectedHand: PropTypes.number
 }
