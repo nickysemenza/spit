@@ -3,8 +3,12 @@ let utils = require('./utils');
 let gameSchema = require('../models/game.js');
 let mongoose = require('mongoose');
 //var opts = { server: { auto_reconnect: false }, user: 'username', pass: 'mypassword' }
-db = mongoose.createConnection('localhost', 'test', 27017);
+let db = mongoose.createConnection('localhost', 'games', 27017);
 
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
 
 class Game {
   constructor(id) {
@@ -27,8 +31,18 @@ class Game {
    */
   saveGave() {
     //save this.gameState, this.id, etc
+    let gameJSON = new gameSchema({
+      id: this.id,
+      //url: this.url,
+      //players: self.clients.names
+      totalMoves: this.stateSnapshots.length,
+      //winner: this.winner,
+      state: this.stateSnapshots
+    });
 
-
+    gameJSON.save(function (err, g) {
+      if (err) return console.error(err);
+    });
   }
 
   /**
