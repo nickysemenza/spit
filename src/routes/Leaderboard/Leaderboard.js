@@ -12,7 +12,7 @@ export default class Leaderboard extends Component {
 
   render () {
     let ranking = this.props.leaderboard.ranking;
-    let list = ranking.map(row=><tr>
+    let list = ranking.map(row=><tr key={row.username}>
       <td>{row.username}</td>
       <td>{row.win}</td>
       <td>{row.loss}</td>
