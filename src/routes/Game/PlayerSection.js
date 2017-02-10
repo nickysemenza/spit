@@ -21,22 +21,22 @@ export default class PlayerSection extends Component {
         <div className="hands">
           <div className="card">
             <img className="cardimg" src={`../../assets/cards/${this.props.card1}.png`} />
-            <div className="cardButton">1</div>
+            <div className={this.props.selectedHand == 1 ? 'cardButton cardButton-selected' : 'cardButton'}>1</div>
           </div>
 
           <div className="card">
             <img className="cardimg" src={`../../assets/cards/${this.props.card2}.png`} />
-              <div className="cardButton">1</div>
+              <div className={this.props.selectedHand == 2 ? 'cardButton cardButton-selected' : 'cardButton'}>2</div>
           </div>
 
           <div className="card">
             <img className="cardimg" src={`../../assets/cards/${this.props.card3}.png`} />
-              <div className="cardButton">2</div>
+              <div className={this.props.selectedHand == 3 ? 'cardButton cardButton-selected' : 'cardButton'}>3</div>
           </div>
 
           <div className="card">
             <img className="cardimg" src={`../../assets/cards/${this.props.card4}.png`} />
-              <div className="cardButton">4</div>
+              <div className={this.props.selectedHand == 4 ? 'cardButton cardButton-selected' : 'cardButton'}>4</div>
           </div>
         </div>
 
@@ -65,11 +65,10 @@ export default class PlayerSection extends Component {
   );
   }
 }
-
-
 PlayerSection.propTypes = {
   card1: PropTypes.number.isRequired,
   card2: PropTypes.number.isRequired,
   card3: PropTypes.number.isRequired,
-  card4: PropTypes.number.isRequired
+  card4: PropTypes.number.isRequired,
+  selectedHand: PropTypes.number
 }

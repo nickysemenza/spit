@@ -81,7 +81,7 @@ export default class Game extends Component {
 
         <Opponents/>
         <Piles/>
-        <PlayerSection card1={1} card2={1} card3={1} card4={1}/>
+        <PlayerSection card1={1} card2={1} card3={1} card4={1} selectedHand={this.state.selectedHand}/>
 
 
         {/*<Card type={1} />*/}
