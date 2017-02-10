@@ -1,4 +1,15 @@
 let gameList = {};
+let utils = require('./utils');
+let gameSchema = require('../models/game.js');
+let mongoose = require('mongoose');
+//var opts = { server: { auto_reconnect: false }, user: 'username', pass: 'mypassword' }
+let db = mongoose.createConnection('localhost', 'games', 27017);
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
+
 class Game {
   constructor(id) {
     let self = this;
@@ -7,28 +18,57 @@ class Game {
     self.clients = [];
     self.gameState = {
       hands: {},//the 4x cards
-      piles: [],
+      piles: {},
       decks: {}
+      //cardsLeft = decks.length+hands[1-4].length-4
     };
     gameList[id] = self;
+    self.stateSnapshots = [];
+  }
+
+  /**
+   * Persists the game to mongoDB
+   */
+  saveGave() {
+    //save this.gameState, this.id, etc
+    let gameJSON = new gameSchema({
+      id: this.id,
+      //url: this.url,
+      //players: self.clients.names
+      totalMoves: this.stateSnapshots.length,
+      //winner: this.winner,
+      state: this.stateSnapshots
+    });
+
+    gameJSON.save(function (err, g) {
+      if (err) return console.error(err);
+    });
+  }
+
+  /**
+   * Takes a snapshot of the game state
+   */
+  snapshot() {
+    this.stateSnapshots.push(this.gameState);
   }
 
   /**
    * Makes all players spit
+   * command: MOVE SPIT
    */
   spit() {
     console.log('spitting');
-    this.clients.forEach((c,index) => {
+    this.clients.forEach((c) => {
       let pCard = this.gameState.decks[c.name].pop();
       if(pCard!= undefined) {
-        this.gameState.piles[index].push(pCard);
+        this.gameState.piles[c.name].push(pCard);
       }
-
     });
   }
 
   /**
    * Plays a card from your hand to a pile
+   * command: PLAY-CARD index1 index2
    * @param client
    * @param src the index of your hand
    * @param dest the index of the piles array
@@ -36,9 +76,15 @@ class Game {
   playCard(client,src,dest) {
     //moves a card from self.gameState.hands[username][loc]
     //to self.piles[loc2]
+
+
+    if(src.length>1&&((src[src.length-1]%13==(dest[dest.length-1]-1)%13)||(src[src.length-1]%13==(dest[dest.length-1]+1)%13))){
+      dest.push(src.pop());
+    }
   }
   /**
    * Moves a card within your hand
+   * command: COMBINE-HANDS index1 index2
    * @param client
    * @param src the index of your hand
    * @param dest the index of your hand
@@ -47,10 +93,16 @@ class Game {
     //moves a card within a player's hand
     //i.e. moves self.gameState.hands[username][2]
     //        to self.gameState.hands[username][3]
+
+
+    if(src.length>1&&dest.length>1&&(src[src.length-1]%13==dest[dest.length-1]%13)){
+      dest.push(src.pop());
+    }
   }
 
   /**
    * Pops your deck and adds it to the first available spot in your hand
+   * command: MOVE POP-DECK
    * @param client
    */
   popDeck(client) {
@@ -63,16 +115,20 @@ class Game {
     if(topCard==undefined)//nothing left in pile
       return;
 
+    let done = false;//only want to pop once
+
     myHands.forEach((hand,index)=>{
-      if(hand==0) {
+      if(hand==0 && !done) {
         this.gameState.hands[client.name][index] = [topCard];
         this.gameState.decks[client.name].pop();
+        done = true;
       }
-      else if(hand[0]%13==topCard || topCard%13==hand[0]) {
+      else if(utils.areCardsSameNumber(hand[0],topCard) && !done) {
         this.gameState.hands[client.name][index].push(topCard);
         this.gameState.decks[client.name].pop();
+        done = true;
       }
-    })
+    });
 
 
 
@@ -81,6 +137,7 @@ class Game {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
     let parts = moveCmd.split(" ");
     let move = parts[0];
+    this.snapshot();
     switch (move) {
       case "POP-DECK":
         this.popDeck(client);
@@ -102,10 +159,21 @@ class Game {
   }
   addPlayer(client) {
     //todo: check eligibility
+    let eligible = true;
     if(this.started)//can't join a started game
-      return;
-    console.log(client.name+' joining game '+this.id);
-    this.clients.push(client);
+      eligible = false;
+
+    this.clients.forEach((c)=>{
+      if(c.name==client.name) {
+        //user is already in game
+        console.log(c.name+" is already in this game");
+        eligible = false;
+      }
+    });
+    if(eligible) {
+      console.log(client.name + ' joining game ' + this.id);
+      this.clients.push(client);
+    }
   }
   start() {
     console.log("time to start game "+this.id);
@@ -115,19 +183,20 @@ class Game {
   seed() {
     let numPlayers = this.clients.length;
     this.clients.forEach((c) => {
-      this.gameState.decks[c.name]=Game.getShuffledDeck();
-      this.gameState.decks[c.name].push(51);
-      this.gameState.decks[c.name].push(20);
-      this.gameState.hands[c.name]=[[4],[23,11],[12],[0]];
-      this.gameState.piles = new Array(numPlayers).fill([0])
+      this.gameState.decks[c.name]=this.getShuffledDeck();
+      // this.gameState.decks[c.name].push(51);
+      // this.gameState.decks[c.name].push(20);
+      this.gameState.hands[c.name]=[[0],[0],[0],[0]];
+      this.gameState.piles[c.name] = [0];// = new Array(numPlayers).fill([0]);
+
+      //pop top 4 to hand slots
+      //this.gameState.hands[c.name]=[[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()]];
     });
     // console.log(this.gameState.decks);
-
-
   }
-  static getShuffledDeck() {
+  getShuffledDeck() {
     let cards = [...Array(52).keys()].map(x => ++x);
-    return Game.shuffle(cards);
+    return this.shuffle(cards.slice(0));
   }
   getGameState(username) {
     // console.log(username);
@@ -144,32 +213,44 @@ class Game {
     if(!this.started)
       return state;
 
+    let decks = {};
+    this.clients.forEach((c)=>{
+      if(c.name != username)//don't need to display client's own decks here, they use `deck` prop
+        decks[c.name] = this.gameState.decks[c.name].length;
+    });
+
+    let hands = {};
+    this.clients.forEach((c)=>{
+      if(c.name != username)//don't need to display client's own decks here, they use `hand` prop
+        hands[c.name] = this.gameState.hands[c.name];
+    });
+
+    let peekPiles = {};
+    this.clients.forEach((c)=>{
+      //TODO: maybe sort it so that `username` entry is first for UI purposes
+      let pile = this.gameState.piles[c.name];
+      peekPiles[c.name] = pile[pile.length-1];
+    });
     let myDeck = this.gameState.decks[username];
     return {
+      id: this.id,
+      numMoves: this.stateSnapshots.length,
       clients,
       started: this.started,
       piles: this.gameState.piles,
+      peekPiles,
       deck: {
         topCard: myDeck[myDeck.length-1],
         count: myDeck.length
       },
-      // hand: this.gameState.hands[username],
-      hands: this.gameState.hands,
-
-
+      decks,
+      hand: this.gameState.hands[username],
+      hands,
     };
-    // return {
-    //   numPlayers: 2,
-    //   deck: {count: 4, topCard: 11},
-    //   hand: [[4,18],[23],[rand],[9,12]],
-    //   center: [23,42,19,3],
-    //   playerHands: 'todo',
-    //   playerCounts: 'todo'
-    // };
   }
 
 
-  static shuffle(array) {
+  shuffle(array) {
   let counter = array.length;
 
   // While there are elements in the array

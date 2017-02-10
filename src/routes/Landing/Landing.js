@@ -9,15 +9,15 @@ export default class Dashboard extends Component {
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.registerUser = this.registerUser.bind(this);
   }
+  componentDidMount () {
+    this.props.loadLeaderboard();
+  }
   handleUsernameChange(event) {
     this.setState({usernameBox: event.target.value});
   }
   registerUser() {
     let username = this.state.usernameBox;
     this.props.createUser(username);
-  }
-  componentDidMount () {
-    this.props.loadLeaderboard();
   }
 
   render () {
@@ -32,7 +32,7 @@ export default class Dashboard extends Component {
         <pre>{JSON.stringify(this.props.user, null, 2)}</pre>
         <hr/>
         <button onClick={this.props.loadLeaderboard}>Reload leaderboard from backend</button>
-        <button onClick={()=>{this.props.createUser("aa")}}>test</button>
+        <button onClick={()=>{this.props.createUser("aa");}}>test</button>
         <Leaderboard leaderboard={this.props.leaderboard}/>
 
 

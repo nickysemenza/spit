@@ -2,8 +2,9 @@ language: node_js
 cache: yarn
 node_js:
   - "6"
-  - "5"
-  - "4"
+before_script:
+  - cp src/config.example.js src/config.js
+  - cp backend/config.example.js backend/config.js
 after_success:
   # Send coverage data to coveralls.
   - yarn run test:cover:travis

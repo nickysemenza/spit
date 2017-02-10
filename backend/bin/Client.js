@@ -20,7 +20,7 @@ class Client {
     socket.on('message', (message) => {
       self.processMessage(message);
     });
-    socket.on('close', function close() {
+    socket.on('close', () => {
       self.killMe();
       console.log('disconnected');
     });
@@ -37,7 +37,7 @@ class Client {
 
   //Write data to the client
   sendMessage(message) {
-    console.log("Sending message to socket <"+this.name+">\n\t"+message);
+    // console.log("Sending message to socket <"+this.name+">\n\t"+message);
     if(this.killed) {
       console.log("socket " + this.uid + " is dead");
       return;
@@ -51,7 +51,7 @@ class Client {
     console.log("msg received from <"+this.name+">\n\t"+message);
     let parts = message.split(" ");
     switch (parts[0]) {
-      case "JOIN-GAME":
+      case "JOIN-GAME": {
         if (!this.authenticated) {
           this.sendMessage("ERROR NO-AUTH");
           return;
@@ -67,26 +67,27 @@ class Client {
         this.game = game;
         //user wants to join game
         break;
-
-      case "START-GAME":
-        if(!this.game) {
+      }
+      case "START-GAME": {
+        if (!this.game) {
           //can't start a game if you aren't in it
           break;
         }
         this.game.start();
         break;
-      case "MOVE":
-        if(!this.game) {
+      }
+      case "MOVE": {
+        if (!this.game) {
           //can't make a move without a game
           break;
         }
         let client = this;
-        let movecmd = message.substr(message.indexOf(' ')+1);
-        this.game.makeMove(client,movecmd);
+        let movecmd = message.substr(message.indexOf(' ') + 1);
+        this.game.makeMove(client, movecmd);
         break;
+      }
 
-
-      case "AUTH":
+      case "AUTH": {
         let token = parts[1];
         let decoded = jwt.decode(token, {complete: true});
         if (decoded) {
@@ -105,13 +106,16 @@ class Client {
         else
           this.sendMessage("AUTH-ERROR");
         break;
+      }
     }
   }
   sendGameUpdate() {
     //get current game, and send the board
     let name = this.name;
-    if(this.game)
-      this.sendMessage("GAME-STATE "+JSON.stringify(this.game.getGameState(name)));
+    if(this.game) {
+      this.sendMessage("GAME-STATE " + JSON.stringify(this.game.getGameState(name)));
+      this.game.saveGame();
+    }
   }
 }
 
