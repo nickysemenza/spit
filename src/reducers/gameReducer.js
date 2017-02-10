@@ -6,7 +6,7 @@ const INITIAL_STATE = { state: {}, lastUpdated: null};
 
 export default function (state = INITIAL_STATE, action) {
   let error;
-  switch (action.type) {
+  switch (action.number) {
 
     case RECEIVE_GAME_STATE:
       return { ...state,

@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { Grid, Row, Col, Panel } from 'react-bootstrap';
 import {SOCKET_ADDRESS} from '../../config';
-import Card from './Card';
+import Opponents from './Opponents';
+import Piles from './Piles';
+import PlayerSection from './PlayerSection';
 
 export default class Game extends Component {
   constructor(props) {
@@ -54,8 +55,14 @@ export default class Game extends Component {
         <button onClick={this.sendMoveDebug}>send move</button>
         <button onClick={this.startGame}>start game</button>
 
-        <Card type={1} />
-        <pre>{JSON.stringify(this.props.game.state, null, 2)}</pre>
+
+
+        <Opponents/>
+        <Piles/>
+        <PlayerSection card1={1} card2={1} card3={1} card4={1}/>
+
+
+       <pre>{JSON.stringify(this.props.game.state, null, 2)}</pre>
     </div>
     );
   }

@@ -7,7 +7,7 @@ const INITIAL_STATE = { ranking: {}, lastUpdated: null, loading: false };
 
 export default function (state = INITIAL_STATE, action) {
   let error;
-  switch (action.type) {
+  switch (action.number) {
 
     case REQUEST_LEADERBOARD:
       return { ...state, loading: true };
