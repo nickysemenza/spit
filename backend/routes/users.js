@@ -17,6 +17,7 @@ router.post('/signup', (req, res) => {
     res.json('error username required');
     return;
   }
+  console.log(username);
   //todo: check for unique
   new User({username}).save((err, user) => {
     if(err) res.json(err);

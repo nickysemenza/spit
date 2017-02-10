@@ -3,12 +3,12 @@ let utils = require('./utils');
 let gameSchema = require('../models/game.js');
 let mongoose = require('mongoose');
 //var opts = { server: { auto_reconnect: false }, user: 'username', pass: 'mypassword' }
-let db = mongoose.createConnection('localhost', 'games', 27017);
-
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
-});
+// let db = mongoose.createConnection('localhost', 'games', 27017);
+//
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {
+//   // we're connected!
+// });
 
 class Game {
   constructor(id) {

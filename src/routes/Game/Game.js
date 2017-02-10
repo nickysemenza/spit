@@ -62,9 +62,12 @@ export default class Game extends Component {
   }
 
   render () {
+    let handCard;
+    handCard = [[0],[0],[0],[0]];
+    if(this.props.game.state.started)
+      handCard = this.props.game.state.hand;
     return (<div>
-        <h1>Game #{this.props.game_id}</h1>
-        <h2>Hello, {this.props.user.username}</h2>
+        <h2>Game #{this.props.game_id}. Hello, {this.props.user.username}</h2>
 
         <KeyHandler keyEventName={KEYPRESS} keyValue="1" onKeyHandle={()=>{this.changeSelectedHand(1);}} />
         <KeyHandler keyEventName={KEYPRESS} keyValue="2" onKeyHandle={()=>{this.changeSelectedHand(2);}} />
@@ -81,12 +84,17 @@ export default class Game extends Component {
 
         <Opponents/>
         <Piles/>
-        <PlayerSection card1={1} card2={1} card3={1} card4={1} selectedHand={this.state.selectedHand}/>
+        <PlayerSection card1={handCard[0]}
+                       card2={handCard[1]}
+                       card3={handCard[2]}
+                       card4={handCard[3]}
+                       selectedHand={this.state.selectedHand}/>
 
 
         {/*<Card type={1} />*/}
         <pre>Currently selected hand index (from numkeys): {this.state.selectedHand}</pre>
-        <pre>{JSON.stringify(this.props.game, null, 2)}</pre>
+        {/*<pre>{JSON.stringify(handCard, null, 2)}</pre>*/}
+        {/*<pre>{JSON.stringify(this.props.game, null, 2)}</pre>*/}
     </div>
     );
   }

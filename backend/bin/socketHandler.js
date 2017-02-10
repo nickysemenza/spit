@@ -6,7 +6,7 @@ function tickHandler() {
     Object.keys(connectedClients).forEach(key=>{
       connectedClients[key].sendGameUpdate();
     });
-  },1000);
+  },300);
 }
 
 module.exports = {
