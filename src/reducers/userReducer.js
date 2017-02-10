@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 };
 
 export default function (state = INITIAL_STATE, action) {
-  switch (action.number) {
+  switch (action.type) {
     case CREATED_USER:
       return {
         ...state,

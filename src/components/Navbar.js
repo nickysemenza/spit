@@ -17,6 +17,7 @@ export default class Header extends Component {
           <Nav>
             <IndexLinkContainer to="/"><NavItem eventKey={3.1}>Landing Page</NavItem></IndexLinkContainer>
             <LinkContainer to="/game/123"><NavItem eventKey={3.2}>Example game page</NavItem></LinkContainer>
+            <LinkContainer to="/leaderboard"><NavItem eventKey={3.3}>leaderboard</NavItem></LinkContainer>
           </Nav>
           <Nav pullRight>
             <NavItem eventKey={1} href="#">Link Right</NavItem>
