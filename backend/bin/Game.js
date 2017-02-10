@@ -1,8 +1,10 @@
 let gameList = {};
 let utils = require('./utils');
+let gameSchema = require('../models/game.js');
 let mongoose = require('mongoose');
 //var opts = { server: { auto_reconnect: false }, user: 'username', pass: 'mypassword' }
-db = mongoose.createConnection('localhost', 'test', 27017)
+db = mongoose.createConnection('localhost', 'test', 27017);
+
 
 class Game {
   constructor(id) {
@@ -25,6 +27,8 @@ class Game {
    */
   saveGave() {
     //save this.gameState, this.id, etc
+
+
   }
 
   /**

@@ -10,11 +10,11 @@ let gameSchema = new Schema({
     players: [{type: Schema.Types.ObjectId, ref: 'User' , required: true}],
     totalMoves: {type: Number},
     winner: {type: Schema.Types.ObjectId, ref: 'User'},
-    moves: [{type: {
-     player: {type: String, required: true},
+    moves: [{
+      player: {type: String, required: true},
       card: {type: Number, required: true},
       location: {type: String, required: true}
-    }, required: true}],
+    }],
     state: {type: {}}
 });
 
