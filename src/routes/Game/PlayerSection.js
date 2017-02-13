@@ -68,4 +68,4 @@ PlayerSection.propTypes = {
   card4: PropTypes.array.isRequired,
   decks: PropTypes.object.isRequired,
   selectedHand: PropTypes.number
-}
+};

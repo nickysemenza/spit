@@ -40,7 +40,7 @@ class Game {
       state: this.stateSnapshots
     });
 
-    gameJSON.save(function (err, g) {
+    gameJSON.save((err, g) => {
       if (err) return console.error(err);
     });
   }
@@ -77,9 +77,18 @@ class Game {
     //moves a card from self.gameState.hands[username][loc]
     //to self.piles[loc2]
 
+    let handCard = this.gameState.hands[client.name][src][0];//todo: [0]??
+    console.log(`playCard: hand: ${handCard} to ${dest}`);
 
-    if(src.length>1&&((src[src.length-1]%13==(dest[dest.length-1]-1)%13)||(src[src.length-1]%13==(dest[dest.length-1]+1)%13))){
-      dest.push(src.pop());
+    let pile = this.gameState.piles[dest];
+    let destPileCard = pile[pile.length-1];
+    if(utils.areCardsSequential(handCard,destPileCard) || destPileCard==0) {
+      //push it on
+      this.gameState.piles[dest].push(handCard);
+      this.gameState.hands[client.name][src].pop();//pop off the handcard
+    }
+    else {
+      console.log('cant play that card');
     }
   }
   /**
