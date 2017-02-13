@@ -83,7 +83,7 @@ export default class Game extends Component {
 
 
         <Opponents/>
-        <Piles/>
+        <Piles piles={this.props.game.state.peekPiles}/>
         <PlayerSection card1={handCard[0]}
                        card2={handCard[1]}
                        card3={handCard[2]}
@@ -94,9 +94,9 @@ export default class Game extends Component {
 
 
         {/*<Card type={1} />*/}
-        <pre>Currently selected hand index (from numkeys): {this.state.selectedHand}</pre>
+        {/*<pre>Currently selected hand index (from numkeys): {this.state.selectedHand}</pre>*/}
         {/*<pre>{JSON.stringify(handCard, null, 2)}</pre>*/}
-        <pre>{JSON.stringify(this.props.game, null, 2)}</pre>
+        {/*<pre>{JSON.stringify(this.props.game, null, 2)}</pre>*/}
     </div>
     );
   }
