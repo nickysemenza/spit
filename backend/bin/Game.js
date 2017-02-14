@@ -24,6 +24,7 @@ class Game {
     };
     gameList[id] = self;
     self.stateSnapshots = [];
+    self.validMoves={} //1 if still has moves, 0 if no valid moves
   }
 
   /**
@@ -76,8 +77,6 @@ class Game {
   playCard(client,src,dest) {
     //moves a card from self.gameState.hands[username][loc]
     //to self.piles[loc2]
-
-
     if(src.length>1&&((src[src.length-1]%13==(dest[dest.length-1]-1)%13)||(src[src.length-1]%13==(dest[dest.length-1]+1)%13))){
       dest.push(src.pop());
     }
@@ -93,8 +92,6 @@ class Game {
     //moves a card within a player's hand
     //i.e. moves self.gameState.hands[username][2]
     //        to self.gameState.hands[username][3]
-
-
     if(src.length>1&&dest.length>1&&(src[src.length-1]%13==dest[dest.length-1]%13)){
       dest.push(src.pop());
     }
@@ -129,9 +126,25 @@ class Game {
         done = true;
       }
     });
+  }
+  endGame(client){
 
-
-
+  }
+  updateValidMoves(){
+    this.clients.forEach((c)=>{
+      var topHand = [];
+      topHand[0]=this.gameState.hands[c.name][0][this.gameState.hands[c.name][0].length]%13;
+      topHand[1]=this.gameState.hands[c.name][1][this.gameState.hands[c.name][1].length]%13;
+      topHand[2]=this.gameState.hands[c.name][2][this.gameState.hands[c.name][2].length]%13;
+      topHand[3]=this.gameState.hands[c.name][3][this.gameState.hands[c.name][3].length]%13;
+      if((new Set (topHand).size == topHand.length)){
+        this.validMoves[c.name]=1;
+      }
+      else{
+        this.validMoves[c.name]=0;
+      }
+    });
+    
   }
   makeMove(client, moveCmd) {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
@@ -192,6 +205,7 @@ class Game {
       // this.gameState.decks[c.name].push(20);
       this.gameState.hands[c.name]=[[0],[0],[0],[0]];
       this.gameState.piles[c.name] = [0];// = new Array(numPlayers).fill([0]);
+      this.validMoves[c.name]=1;
 
       //pop top 4 to hand slots
       //this.gameState.hands[c.name]=[[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()]];
