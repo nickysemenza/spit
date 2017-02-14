@@ -11,7 +11,9 @@ export default class Leaderboard extends Component {
   }
 
   render () {
-    let ranking = this.props.leaderboard.ranking;
+    let ranking = this.props.leaderboard ? this.props.leaderboard.ranking : [];
+    if(ranking==undefined)
+      ranking=[];
     var rank = 1;
     let list = ranking.map(row=><tr key={row.username}>
       <td>{rank++}</td>
