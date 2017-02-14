@@ -12,20 +12,36 @@ export default class Leaderboard extends Component {
 
   render () {
     let ranking = this.props.leaderboard.ranking;
+    var rank = 1;
     let list = ranking.map(row=><tr key={row.username}>
+      <td>{rank++}</td>
       <td>{row.username}</td>
       <td>{row.win}</td>
       <td>{row.loss}</td>
 
     </tr>);
-    return (<div>
-        <h2>Leaderboard</h2>
-        {/*<button onClick={this.props.loadLeaderboard}>Reload leaderboard from backend</button>*/}
-        {/*<pre>{JSON.stringify(this.props.leaderboard, null, 2)}</pre>*/}
-        <table>
-          {list}
-        </table>
+    return (
+      <div>
+
+        <img className="leftBanner" src="../../assets/Sidebar.png" />
+        <img className="rightBanner" src="../../assets/Sidebar.png" />
+        <div className="flex-leaderboard">
+          <div>
+            <h1>Leaderboard</h1>
+            <table className="leaderboard flex-vertical">
+              <tr>
+                <th></th>
+                <th>ID</th>
+                <th>W</th>
+                <th>L</th>
+              </tr>
+              {list}
+            </table>
+          </div>
+        </div>
       </div>
     );
+
+
   }
 }

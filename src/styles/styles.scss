@@ -6,6 +6,16 @@ body {
   background-color: #255364;
 }
 
+h1 {
+  font-family: 'SignPainter';
+  color: #F43C3A;
+  font-size: 55px;
+  text-align: center;
+}
+
+
+// --- Game Page --- //
+
 .opponents {
   margin-top: 10px;
   display: flex;
@@ -78,8 +88,6 @@ body {
 }
 
 .card {
-  // border: 1px solid blue;
-
   // put button under card
   flex-direction: column;
 }
@@ -97,16 +105,13 @@ body {
   border: 1px solid #979797;
   border-radius: 8px;
 
+  font-size: 30px;
   color: #EDF2F3;
 
   // center text
   text-align: center;
   vertical-align: middle;
   line-height: 50px;
-
-
-  // button font size
-  font-size: 30px;
 }
 .cardButton-selected {
   background-color: #000066;
@@ -117,13 +122,52 @@ body {
 }
 
 
-table {
+table.gameLeaderboard {
   width: 220px;
   margin: 0 40px;
 }
 
-td {
+table.gameLeaderboard > tr > td {
   padding: 5px;
   font-size: 20px;
   color: #D8D8D8;
+}
+
+
+// --- Leaderboard Page --- //
+
+.leftBanner {
+  position: fixed;
+  top:0;
+  left: 0;
+  height: 100vh;
+  width: auto;
+}
+
+.rightBanner {
+  position: fixed;
+  top:0;
+  right: 0;
+  height: 100vh;
+  width: auto;
+}
+
+.flex-leaderboard {
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+table.leaderboard > td,
+table.leaderboard > tr,
+table.leaderboard > tr > td,
+table.leaderboard > tr > th {
+  font-size: 28px;
+  text-align: left;
+  padding: 7px 30px 7px 25px;
+  color: #E5E6DA;
+}
+
+.flex-vertical {
+  flex-direction: column;
 }

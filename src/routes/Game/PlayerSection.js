@@ -52,7 +52,7 @@ export default class PlayerSection extends Component {
         </div>
 
         <div className="mainLB">
-          <table>
+          <table className="gameLeaderboard">
             {gameLB}
           </table>
         </div>
