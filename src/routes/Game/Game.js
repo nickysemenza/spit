@@ -17,6 +17,8 @@ export default class Game extends Component {
     this.startGame = this.startGame.bind(this);
     this.changeSelectedHand = this.changeSelectedHand.bind(this);
     this.popDeck = this.popDeck.bind(this);
+    this.placeCardOnPile = this.placeCardOnPile.bind(this);
+    this.combineHands = this.combineHands.bind(this);
   }
   componentDidMount () {
     this.websocket = new WebSocket(`ws://${SOCKET_ADDRESS}`);
@@ -60,6 +62,12 @@ export default class Game extends Component {
   popDeck() {
     this.sendCommand("MOVE POP-DECK");
   }
+  combineHands(whichHand){
+    this.sendCommand(`MOVE COMBINE-HANDS ${this.state.selectedHand-1} ${whichHand}`);
+  }
+  // clickedPile(aa) {
+  //   console.log(aa);
+  // }
 
   render () {
     let handCard;
@@ -83,18 +91,19 @@ export default class Game extends Component {
 
 
         <Opponents/>
-        <Piles/>
+        <Piles piles={this.props.game.state.peekPiles} clickedPile={this.placeCardOnPile}/>
         <PlayerSection card1={handCard[0]}
                        card2={handCard[1]}
                        card3={handCard[2]}
                        card4={handCard[3]}
-                       decks={ this.props.game && this.props.game.state.decks ? this.props.game.state.decks : {}}
+                       decks={this.props.game && this.props.game.state.decks ? this.props.game.state.decks : {}}
 
+                       clickedHand={this.combineHands}
                        selectedHand={this.state.selectedHand}/>
 
 
         {/*<Card type={1} />*/}
-        <pre>Currently selected hand index (from numkeys): {this.state.selectedHand}</pre>
+        {/*<pre>Currently selected hand index (from numkeys): {this.state.selectedHand}</pre>*/}
         {/*<pre>{JSON.stringify(handCard, null, 2)}</pre>*/}
         <pre>{JSON.stringify(this.props.game, null, 2)}</pre>
     </div>

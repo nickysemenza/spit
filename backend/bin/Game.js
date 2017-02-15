@@ -24,7 +24,7 @@ class Game {
     };
     gameList[id] = self;
     self.stateSnapshots = [];
-    self.validMoves={} //1 if still has moves, 0 if no valid moves
+    self.validMoves={}; //1 if still has moves, 0 if no valid moves
   }
 
   /**
@@ -41,7 +41,7 @@ class Game {
       state: this.stateSnapshots
     });
 
-    gameJSON.save(function (err, g) {
+    gameJSON.save((err, g) => {
       if (err) return console.error(err);
     });
   }
@@ -77,8 +77,24 @@ class Game {
   playCard(client,src,dest) {
     //moves a card from self.gameState.hands[username][loc]
     //to self.piles[loc2]
-    if(src.length>1&&((src[src.length-1]%13==(dest[dest.length-1]-1)%13)||(src[src.length-1]%13==(dest[dest.length-1]+1)%13))){
-      dest.push(src.pop());
+
+    //if(src.length>1&&((src[src.length-1]%13==(dest[dest.length-1]-1)%13)||(src[src.length-1]%13==(dest[dest.length-1]+1)%13))){
+    //  dest.push(src.pop());
+
+
+    //let handCard = this.gameState.hands[client.name][src][0];//todo: [0]??
+    let handCard = this.gameState.hands[client.name][src][this.gameState.hands[client.name][src].length-1];
+    console.log(`playCard: hand: ${handCard} to ${dest}`);
+
+    let pile = this.gameState.piles[dest];
+    let destPileCard = pile[pile.length-1];
+    if(utils.areCardsSequential(handCard,destPileCard) || destPileCard==0) {
+      //push it on
+      this.gameState.piles[dest].push(handCard);
+      this.gameState.hands[client.name][src].pop();//pop off the handcard
+    }
+    else {
+      console.log('cant play that card');
     }
   }
   /**
@@ -92,8 +108,11 @@ class Game {
     //moves a card within a player's hand
     //i.e. moves self.gameState.hands[username][2]
     //        to self.gameState.hands[username][3]
-    if(src.length>1&&dest.length>1&&(src[src.length-1]%13==dest[dest.length-1]%13)){
-      dest.push(src.pop());
+    console.log('combineHands: hand '+src+' to '+dest);
+    let s = this.gameState.hands[client.name][src];
+    let d = this.gameState.hands[client.name][dest];
+    if(s.length>1&&d.length>1&&(s[s.length-1]%13==d[d.length-1]%13)){
+      d.push(s.pop());
     }
   }
 
@@ -114,16 +133,23 @@ class Game {
 
     let done = false;//only want to pop once
 
-    myHands.forEach((hand,index)=>{
-      if(hand==0 && !done) {
-        this.gameState.hands[client.name][index] = [topCard];
-        this.gameState.decks[client.name].pop();
-        done = true;
-      }
-      else if(utils.areCardsSameNumber(hand[0],topCard) && !done) {
-        this.gameState.hands[client.name][index].push(topCard);
-        this.gameState.decks[client.name].pop();
-        done = true;
+    // myHands.forEach((hand,index)=>{
+    //   if(hand==0 && !done) {
+    //     this.gameState.hands[client.name][index] = [topCard];
+    //     this.gameState.decks[client.name].pop();
+    //     done = true;
+    //   }
+    //   else if(utils.areCardsSameNumber(hand[0],topCard) && !done) {
+    //     this.gameState.hands[client.name][index].push(topCard);
+    //     this.gameState.decks[client.name].pop();
+    //     done = true;
+    //   }
+    // });
+
+    myHands.forEach((hand)=>{
+      if(hand[hand.length-1]==0 && !done){
+        hand.push(this.gameState.decks[client.name].pop());
+        done=true;
       }
     });
   }
@@ -132,18 +158,53 @@ class Game {
   }
   updateValidMoves(){
     this.clients.forEach((c)=>{
-      var topHand = [];
-      topHand[0]=this.gameState.hands[c.name][0][this.gameState.hands[c.name][0].length]%13;
-      topHand[1]=this.gameState.hands[c.name][1][this.gameState.hands[c.name][1].length]%13;
-      topHand[2]=this.gameState.hands[c.name][2][this.gameState.hands[c.name][2].length]%13;
-      topHand[3]=this.gameState.hands[c.name][3][this.gameState.hands[c.name][3].length]%13;
-      if((new Set (topHand).size == topHand.length)){
+      let topHand = [];
+      let hand0=this.gameState.hands[c.name][0]; 
+      let hand1=this.gameState.hands[c.name][1];
+      let hand2=this.gameState.hands[c.name][2];
+      let hand3=this.gameState.hands[c.name][3];
+      let counter=0;
+      
+      if(hand0.length>1){
+        topHand[counter]=hand0[hand0.length-1]%13;
+        counter++;  
+      }
+      if(hand1.length>1){
+        topHand[counter]=hand1[hand1.length-1]%13;
+        counter++;  
+      }
+      if(hand2.length>1){
+        topHand[counter]=hand2[hand2.length-1]%13;
+        counter++;  
+      }
+      if(hand3.length>1){
+        topHand[counter]=hand3[hand3.length-1]%13;
+        counter++;  
+      }
+
+      if((hand0.length==1||hand1.length==1||hand2.length==1||hand3.length==1)&&this.gameState.decks[c.name].length>0){
+        this.validMoves[c.name]=1;
+      }
+      else if((new Set (topHand).size != topHand.length)){
         this.validMoves[c.name]=1;
       }
       else{
-        this.validMoves[c.name]=0;
+        let done=0;
+        topHand.forEach((c2)=>{
+          for (var c3 in this.gameState.piles){
+            //console.log('c2:'+c2);
+            if((c2==((c3[c3.length-1]-1)%13)||c2==((c3[c3.length-1]+1)%13))&&!done){
+              this.validMoves[c.name]=1;
+              done=1;
+            }
+          }
+        });
+        if(!done){
+          this.validMoves[c.name]=0;
+        }
       }
     });
+  
     
   }
   makeMove(client, moveCmd) {
@@ -172,7 +233,7 @@ class Game {
         this.playCard(client, parts[1], parts[2]);
         break;
     }
-
+    this.updateValidMoves();
   }
   addPlayer(client) {
     //todo: check eligibility
@@ -263,6 +324,7 @@ class Game {
       decks,
       hand: this.gameState.hands[username],
       hands,
+      validMoves: this.validMoves[username],
     };
   }
 

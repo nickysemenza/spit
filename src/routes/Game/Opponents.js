@@ -10,8 +10,7 @@ export default class Opponents extends Component {
   render() {
     return (
       <div className="opponents">
-        <div className="opponent">
-        </div>
+        <div className="opponent" />
         <div className="rotateleft">
           <img className="opdeckimg" src="https://goo.gl/II2O3o" />
 
@@ -76,8 +75,7 @@ export default class Opponents extends Component {
             </div>
           </div>
         </div>
-        <div className="opponent">
-        </div>
+        <div className="opponent" />
       </div>
 
     );
