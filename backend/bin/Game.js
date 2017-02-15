@@ -191,12 +191,12 @@ class Game {
       else{
         let done=0;
         topHand.forEach((c2)=>{
-          for (var c3 in this.gameState.piles){
-            //console.log('c2:'+c2);
-            if((c2==((c3[c3.length-1]-1)%13)||c2==((c3[c3.length-1]+1)%13))&&!done){
-              this.validMoves[c.name]=1;
-              done=1;
-            }
+          for (var key in this.gameState.piles){
+              var c3 = this.gameState.piles[key];
+              if((c2==((c3[c3.length-1]-1)%13)||c2==((c3[c3.length-1]+1)%13))&&!done){
+                this.validMoves[c.name]=1;
+                done=1;
+              }
           }
         });
         if(!done){

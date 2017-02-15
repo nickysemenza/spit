@@ -4,7 +4,7 @@ import KeyHandler, {KEYPRESS} from 'react-key-handler';
 import Opponents from './Opponents';
 import Piles from './Piles';
 import PlayerSection from './PlayerSection';
-
+import { Link } from 'react-router';
 export default class Game extends Component {
   constructor(props) {
     super(props);
@@ -74,9 +74,15 @@ export default class Game extends Component {
     handCard = [[0],[0],[0],[0]];
     if(this.props.game.state.started)
       handCard = this.props.game.state.hand;
-    return (<div>
-        <h2>Game #{this.props.game_id}. Hello, {this.props.user.username}</h2>
 
+    let loggedOutMessage = <div>
+      <h1>You aren't logged in right now!</h1>
+      <h1><Link to="/">Go register</Link></h1>
+    </div>
+
+    let gameView = (
+        <div>
+        <h2>Game #{this.props.game_id}. Hello, {this.props.user.username}</h2>
         <KeyHandler keyEventName={KEYPRESS} keyValue="1" onKeyHandle={()=>{this.changeSelectedHand(1);}} />
         <KeyHandler keyEventName={KEYPRESS} keyValue="2" onKeyHandle={()=>{this.changeSelectedHand(2);}} />
         <KeyHandler keyEventName={KEYPRESS} keyValue="3" onKeyHandle={()=>{this.changeSelectedHand(3);}} />
@@ -88,25 +94,26 @@ export default class Game extends Component {
         <button onClick={this.sendCommandDebug}>send command</button>
         <button onClick={this.startGame}>start game</button>
 
-
-
         <Opponents/>
         <Piles piles={this.props.game.state.peekPiles} clickedPile={this.placeCardOnPile}/>
         <PlayerSection card1={handCard[0]}
-                       card2={handCard[1]}
-                       card3={handCard[2]}
-                       card4={handCard[3]}
-                       decks={this.props.game && this.props.game.state.decks ? this.props.game.state.decks : {}}
+          card2={handCard[1]}
+          card3={handCard[2]}
+          card4={handCard[3]}
+          decks={this.props.game && this.props.game.state.decks ? this.props.game.state.decks : {}}
+          clickedHand={this.combineHands}
+          selectedHand={this.state.selectedHand}/>
 
-                       clickedHand={this.combineHands}
-                       selectedHand={this.state.selectedHand}/>
+          {/*<pre>Currently selected hand index (from numkeys): {this.state.selectedHand}</pre>*/}
+          {/*<pre>{JSON.stringify(handCard, null, 2)}</pre>*/}
+          <pre>{JSON.stringify(this.props.game, null, 2)}</pre>
+        </div>);
 
-
-        {/*<Card type={1} />*/}
-        {/*<pre>Currently selected hand index (from numkeys): {this.state.selectedHand}</pre>*/}
-        {/*<pre>{JSON.stringify(handCard, null, 2)}</pre>*/}
-        <pre>{JSON.stringify(this.props.game, null, 2)}</pre>
-    </div>
+    let loggedInView = this.props.game.state.started ? gameView : gameView;
+    return (
+      <div>
+        {this.props.user.authenticated ? loggedInView : loggedOutMessage}
+      </div>
     );
   }
 }

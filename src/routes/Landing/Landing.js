@@ -22,22 +22,21 @@ export default class Dashboard extends Component {
   render () {
 
     return (<div>
-      <div>
-        <h2 className="titleText" >\(^_^)/ \(^_^)/</h2>
-        <h2 className="titleText" margin="0px">------   Spit   -----</h2>
+      <div className="landingContain">
+        <h2 className="titleText" margin="0px">-----   Spit   -----</h2>
         <h2 className="funText" >\(^_^)/    \(^_^)/</h2>
         </div>
-        <h2 className="headText" >Nickname</h2>
-        <div>
+        <div className="landingContain">
+          <h2 className="headText" >Nickname</h2>
+        
           <input type="text" className="nickNameText" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
-          <button className="lobby1Text" onClick={this.registerUser}>Rando Lobby</button>
-          <button className="lobby2Text" onClick={this.registerUser}>Play with friends Lobby</button>
-          <button className="leaderboardText" onClick={this.registerUser}>leaderboard</button>
+          <div className="lbuttonFlex">
+            <button className="lobby1Text" onClick={this.registerUser}>Rando Lobby</button>
+            <button className="lobby2Text" onClick={this.registerUser}>Play with friends Lobby</button>
+            
+            </div>
+            <button className="leaderboardText" onClick={this.registerUser}>leaderboard</button>
           </div>
-        <pre>{JSON.stringify(this.props.user, null, 2)}</pre>
-        <hr/>
-        <button onClick={this.props.loadLeaderboard}>Reload leaderboard from backend</button>
-        <button onClick={()=>{this.props.createUser("aa");}}>test</button>
     </div>
     );
   }
