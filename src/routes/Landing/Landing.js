@@ -24,16 +24,16 @@ export default class Dashboard extends Component {
       <div>
 
         <div className="landingContain">
-        <img src="logo.PNG" className="logoIMG"></img>
+        <img src="../../assets/logo.PNG" className="logoIMG" alt="SpitON.US Logo"></img>
         </div>
         <div className="landingContain">
         
-          <input type="text" className="nickNameText" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
-          <button className="lobby1Text" onClick={this.registerUser}>Play Now</button>
-          <button className="lobby2Text" onClick={this.registerUser}>New Lobby</button>
+          <input type="text" className="usernameInput" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
+          <button className="playNowBttn" onClick={this.registerUser}>Play Now</button>
+          <button className="newLobbyBttn" onClick={this.registerUser}>New Lobby</button>
             
             
-            <button className="leaderboardText" onClick={this.registerUser}>leaderboard</button>
+            <button className="leaderboardBttn" onClick={this.registerUser}>leaderboard</button>
         </div>
       </div>
     );

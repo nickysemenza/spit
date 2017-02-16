@@ -135,7 +135,7 @@ table.gameLeaderboard > tr > td {
 // ---- Landing Page  -------//
 
 .landingContain {
-color: white;
+  color: white;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -151,7 +151,8 @@ color: white;
   justify-content: center 
 }
 
-.nickNameText {
+
+.usernameInput {
   display: flex;
   background: transparent;
   border: 2px solid;
@@ -172,7 +173,7 @@ color: white;
 
 }
 
-.lobby1Text {
+.playNowBttn {
   background: transparent;
   border: 2px solid;
   border-color: grey;
@@ -190,7 +191,7 @@ color: white;
   justify-content: center;
 }
 
-.lobby2Text {
+.newLobbyBttn {
   display: flex;
   background: transparent;
   border: 2px solid;
@@ -198,7 +199,7 @@ color: white;
   color: white;
   padding: 1em;
   font-family: Copperplate, "Copperplate Gothic Light", fantasy;
-  order: 2;
+  order: 3;
   margin: 10px;
   font-size: 20pt;
   padding-top: 5px;
@@ -210,7 +211,7 @@ color: white;
  
 }
 
-.leaderboardText {
+.leaderboardBttn {
   display: flex;
   background: transparent;
   border: 2px solid;
@@ -229,6 +230,11 @@ color: white;
   justify-content: center;
 
 }
+
+.newLobbyBttn:hover, .playNowBttn:hover, .leaderboardBttn:hover, .usernameInput:hover{
+  background: #204859
+}
+
 // --- Leaderboard Page --- //
 
 .leftBanner {
