@@ -1,17 +1,19 @@
 let express = require('express');
 let router  = express.Router();
 let mongoose = require('mongoose');
-let user = require('../models/user.js')
+let user = require('../models/user.js');
 
 
 router.get('/', (req, res) => {
-  /*user.find({ }).exec(function (err, users) {
-    if (err) return handleError(err);
+  user.find({ }).select('username totalScore').exec(function (err, users) {
+    if (err) {
+      console.log(err);
+    }
     console.log(users);// Space Ghost is a talk show host.
-  });*/
+  });
   res.json([
     {
-      username: "marty19010",
+      username: "marty17",
       win: 432,
       loss: 32
     },
