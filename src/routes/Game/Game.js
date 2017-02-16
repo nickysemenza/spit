@@ -104,12 +104,42 @@ export default class Game extends Component {
           clickedHand={this.combineHands}
           selectedHand={this.state.selectedHand}/>
 
-          {/*<pre>Currently selected hand index (from numkeys): {this.state.selectedHand}</pre>*/}
-          {/*<pre>{JSON.stringify(handCard, null, 2)}</pre>*/}
-          <pre>{JSON.stringify(this.props.game, null, 2)}</pre>
+
         </div>);
 
-    let loggedInView = this.props.game.state.started ? gameView : gameView;
+    let lobbyView = (
+      <div>
+        <img className="leftBanner" src="../../assets/Sidebar.png" />
+        <img className="rightBanner" src="../../assets/Sidebar.png" />
+        <div className="flex-leaderboard">
+          <div style={{textAlign: "center"}}>
+            <h1>Lobby</h1>
+
+            <table className="lobby flex-vertical">
+              <tr>
+                <td>Nicky</td>
+                <td>✅</td>
+              </tr>
+              <tr>
+                <td>Byron</td>
+                <td>✅</td>
+              </tr>
+              <tr>
+                <td>Nick</td>
+                <td>✅</td>
+              </tr>
+              <tr>
+                <td>Marty</td>
+                <td>✅</td>
+              </tr>
+            </table>
+            <span onClick={this.startGame} className="readyUp">Ready Up</span>
+          </div>
+        </div>
+      </div>
+    );
+
+    let loggedInView = this.props.game.state.started ? gameView : lobbyView;
     return (
       <div>
         {this.props.user.authenticated ? loggedInView : loggedOutMessage}
@@ -117,3 +147,9 @@ export default class Game extends Component {
     );
   }
 }
+
+/*
+
+ //{/*<pre>Currently selected hand index (from numkeys): {this.state.selectedHand}</pre>*///}
+//{/*<pre>{JSON.stringify(handCard, null, 2)}</pre>*/}
+//<pre>{JSON.stringify(this.props.game, null, 2)}</pre>

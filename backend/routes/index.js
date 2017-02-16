@@ -18,5 +18,8 @@ router.get('/clients', (req, res) => {
   });
   res.json(clients);
 });
+router.get('/lobbymatch', (req, res) => {
+  res.json({game_id: 513});
+});
 
 module.exports = router;
