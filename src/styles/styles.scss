@@ -1,9 +1,19 @@
+$primary-font: 'SignPainter';
+$secondary-font: 'Copperplate';
+$background-color: #255364;
+$card-color: #E5E6DA;
+
+
+
+
 * {
   font-family: "Copperplate";
+  color: $card-color;
+
 }
 
 body {
-  background-color: #255364;
+  background-color: $background-color;
 }
 
 h1 {
@@ -166,7 +176,7 @@ color: white;
   order: 0;
   display: flex;
   align-items: center;
-  justify-content: center 
+  justify-content: center
 }
 
 .nickNameText {
@@ -222,7 +232,7 @@ color: white;
   padding-right: 40px;
   align-items: center;
   justify-content: center;
- 
+
 }
 
 .leaderboardText {
@@ -242,7 +252,7 @@ color: white;
 
 }
 .titleText h2 {
-  margin: 100; 
+  margin: 100;
 }
 
 // --- Leaderboard Page --- //
@@ -276,9 +286,29 @@ table.leaderboard > tr > th {
   font-size: 28px;
   text-align: left;
   padding: 7px 30px 7px 25px;
-  color: #E5E6DA;
+  color: $card-color;
 }
 
 .flex-vertical {
   flex-direction: column;
+}
+
+
+
+// --- Lobby --- //
+
+.readyUp {
+  font-size: 30px;
+  text-align: center;
+  width: 100%;
+  font-weight: normal;
+}
+
+table.lobby > th,
+table.lobby > tr > td,
+table.lobby > tr > th {
+  padding: 3px 110px;
+  color: $card-color;
+  font-size: 28px;
+  text-align: left;
 }

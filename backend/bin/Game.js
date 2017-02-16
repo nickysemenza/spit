@@ -159,27 +159,27 @@ class Game {
   updateValidMoves(){
     this.clients.forEach((c)=>{
       let topHand = [];
-      let hand0=this.gameState.hands[c.name][0]; 
+      let hand0=this.gameState.hands[c.name][0];
       let hand1=this.gameState.hands[c.name][1];
       let hand2=this.gameState.hands[c.name][2];
       let hand3=this.gameState.hands[c.name][3];
       let counter=0;
-      
+
       if(hand0.length>1){
         topHand[counter]=hand0[hand0.length-1]%13;
-        counter++;  
+        counter++;
       }
       if(hand1.length>1){
         topHand[counter]=hand1[hand1.length-1]%13;
-        counter++;  
+        counter++;
       }
       if(hand2.length>1){
         topHand[counter]=hand2[hand2.length-1]%13;
-        counter++;  
+        counter++;
       }
       if(hand3.length>1){
         topHand[counter]=hand3[hand3.length-1]%13;
-        counter++;  
+        counter++;
       }
 
       if((hand0.length==1||hand1.length==1||hand2.length==1||hand3.length==1)&&this.gameState.decks[c.name].length>0){
@@ -203,7 +203,7 @@ class Game {
           this.validMoves[c.name]=0;
         }
       }
-    }); 
+    });
   }
   makeMove(client, moveCmd) {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
