@@ -133,7 +133,7 @@ export default class Game extends Component {
                 <td>✅</td>
               </tr>
             </table>
-            <span className="readyUp">Ready Up</span>
+            <span onClick={this.startGame} className="readyUp">Ready Up</span>
           </div>
         </div>
       </div>
