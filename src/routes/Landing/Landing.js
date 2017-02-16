@@ -29,14 +29,15 @@ export default class Dashboard extends Component {
       <div>
 
         <div className="landingContain">
-        <img src="logo.PNG" className="logoIMG"></img>
+        <img src="../../assets/Logo.png" className="logoIMG"></img>
         </div>
-        <div className="landingContain">        
+        <div className="landingContain">
+
           <input type="text" className="nickNameText" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
           <button className="lobby1Text" onClick={this.registerUser}>Play Now</button>
           <button className="lobby2Text" onClick={this.registerUser}>New Lobby</button>
-            
-            
+
+
             <button className="leaderboardText" onClick={this.registerUser}>leaderboard</button>
         </div>
       </div>
