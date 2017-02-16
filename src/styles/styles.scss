@@ -1,9 +1,19 @@
+$primary-font: 'SignPainter';
+$secondary-font: 'Copperplate';
+$background-color: #255364;
+$card-color: #E5E6DA;
+
+
+
+
 * {
   font-family: "Copperplate";
+  color: $card-color;
+
 }
 
 body {
-  background-color: #255364;
+  background-color: $background-color;
 }
 
 h1 {
@@ -148,7 +158,7 @@ table.gameLeaderboard > tr > td {
   width: 60%;
   margin-bottom: 40px;
   order: -1;
-  justify-content: center 
+  justify-content: center
 }
 
 
@@ -208,7 +218,7 @@ table.gameLeaderboard > tr > td {
   padding-right: 46px;
   align-items: center;
   justify-content: center;
- 
+
 }
 
 .leaderboardBttn {
@@ -234,6 +244,7 @@ table.gameLeaderboard > tr > td {
 .newLobbyBttn:hover, .playNowBttn:hover, .leaderboardBttn:hover, .usernameInput:hover{
   background: #204859
 }
+
 
 // --- Leaderboard Page --- //
 
@@ -266,9 +277,29 @@ table.leaderboard > tr > th {
   font-size: 28px;
   text-align: left;
   padding: 7px 30px 7px 25px;
-  color: #E5E6DA;
+  color: $card-color;
 }
 
 .flex-vertical {
   flex-direction: column;
+}
+
+
+
+// --- Lobby --- //
+
+.readyUp {
+  font-size: 30px;
+  text-align: center;
+  width: 100%;
+  font-weight: normal;
+}
+
+table.lobby > th,
+table.lobby > tr > td,
+table.lobby > tr > th {
+  padding: 3px 110px;
+  color: $card-color;
+  font-size: 28px;
+  text-align: left;
 }

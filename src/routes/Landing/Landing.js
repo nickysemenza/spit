@@ -7,6 +7,7 @@ export default class Dashboard extends Component {
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.registerUser = this.registerUser.bind(this);
+    this.joinRandomGame = this.joinRandomGame.bind(this);
   }
   componentDidMount () {
     this.props.loadLeaderboard();
@@ -18,13 +19,18 @@ export default class Dashboard extends Component {
     let username = this.state.usernameBox;
     this.props.createUser(username);
   }
+  joinRandomGame() {
+    this.props.joinLobbyGame();
+  }
+
   render () {
 
     return (
       <div>
 
         <div className="landingContain">
-        <img src="../../assets/logo.PNG" className="logoIMG" alt="SpitON.US Logo"></img>
+
+          <img src="../../assets/logo.png" className="logoIMG" alt="SpitON.US Logo"></img>
         </div>
         <div className="landingContain">
         
