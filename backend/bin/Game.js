@@ -1,4 +1,5 @@
 let gameList = {};
+let lobby = {};
 let utils = require('./utils');
 let gameSchema = require('../models/game.js');
 let mongoose = require('mongoose');
@@ -23,6 +24,7 @@ class Game {
       //cardsLeft = decks.length+hands[1-4].length-4
     };
     gameList[id] = self;
+    lobby[id] = self;
     self.stateSnapshots = [];
     self.validMoves={}; //1 if still has moves, 0 if no valid moves
   }
@@ -159,27 +161,27 @@ class Game {
   updateValidMoves(){
     this.clients.forEach((c)=>{
       let topHand = [];
-      let hand0=this.gameState.hands[c.name][0]; 
+      let hand0=this.gameState.hands[c.name][0];
       let hand1=this.gameState.hands[c.name][1];
       let hand2=this.gameState.hands[c.name][2];
       let hand3=this.gameState.hands[c.name][3];
       let counter=0;
-      
+
       if(hand0.length>1){
         topHand[counter]=hand0[hand0.length-1]%13;
-        counter++;  
+        counter++;
       }
       if(hand1.length>1){
         topHand[counter]=hand1[hand1.length-1]%13;
-        counter++;  
+        counter++;
       }
       if(hand2.length>1){
         topHand[counter]=hand2[hand2.length-1]%13;
-        counter++;  
+        counter++;
       }
       if(hand3.length>1){
         topHand[counter]=hand3[hand3.length-1]%13;
-        counter++;  
+        counter++;
       }
 
       if((hand0.length==1||hand1.length==1||hand2.length==1||hand3.length==1)&&this.gameState.decks[c.name].length>0){
@@ -204,8 +206,8 @@ class Game {
         }
       }
     });
-  
-    
+
+
   }
   makeMove(client, moveCmd) {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
@@ -238,25 +240,47 @@ class Game {
   addPlayer(client) {
     //todo: check eligibility
     let eligible = true;
-    if(this.started)//can't join a started game
+    if (this.started)//can't join a started game
+      eligible = false;
+    if(this.clients.length >= 4)//full game
       eligible = false;
 
-    this.clients.forEach((c)=>{
-      if(c.name==client.name) {
+    this.clients.forEach((c) => {
+      if (c.name == client.name) {
         //user is already in game
-        console.log(c.name+" is already in this game");
+        console.log(c.name + " is already in this game");
         eligible = false;
       }
     });
-    if(eligible) {
+    if (eligible) {
       console.log(client.name + ' joining game ' + this.id);
       this.clients.push(client);
     }
   }
+  startIfReady() {
+    console.log("tryna start if ready");
+    if(this.started)
+      return;
+    let shouldStart = false;
+    if(this.clients.length == 4 ) {
+      shouldStart = true;
+    }
+    //or if force start
+
+    if(shouldStart)
+      start();
+
+
+  }
+
+  /**
+   * Starts a game, removing it from the lobby list
+   */
   start() {
     console.log("time to start game "+this.id);
     this.seed();
     this.started=true;
+    delete lobby[this.id];//remove from active lobby
   }
   seed() {
     let numPlayers = this.clients.length;
@@ -353,4 +377,5 @@ class Game {
 module.exports = {
   Game,
   gameList,
+  lobby
 };

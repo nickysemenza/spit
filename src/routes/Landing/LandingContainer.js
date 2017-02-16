@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { fetchLeaderboard } from '../../actions/leaderboardActions';
 import { createUser } from '../../actions/userActions';
+import { joinLobbyGame } from '../../actions/gameActions';
 import Landing from './Landing';
 
 function mapStateToProps (state) {
@@ -16,6 +17,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   createUser: (username) => {
     dispatch(createUser(username));
+  },
+  joinLobbyGame: () => {
+    dispatch(joinLobbyGame());
   }
 });
 
