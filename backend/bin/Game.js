@@ -154,7 +154,7 @@ class Game {
     });
   }
   endGame(client){
-
+    console.log("END GAME");
   }
   updateValidMoves(){
     this.clients.forEach((c)=>{
@@ -237,7 +237,18 @@ class Game {
       shouldSpit+=this.validMoves[c.name];
     });
     if(!shouldSpit){
-      this.makeMove(client,"SPIT");
+      let end=0;
+      for (var key in this.gameState.decks){
+        var d = this.gameState.decks[key];
+        end+=d.length;
+      }
+      console.log(end);
+      if(!end){
+        this.endGame();
+      }
+      else{
+        this.makeMove(client,"SPIT");
+      }
     }
   }
   addPlayer(client) {
