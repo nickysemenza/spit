@@ -203,9 +203,7 @@ class Game {
           this.validMoves[c.name]=0;
         }
       }
-    });
-  
-    
+    }); 
   }
   makeMove(client, moveCmd) {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
@@ -234,6 +232,13 @@ class Game {
         break;
     }
     this.updateValidMoves();
+    let shouldSpit=0;
+    this.clients.forEach((c)=>{
+      shouldSpit+=this.validMoves[c.name];
+    });
+    if(!shouldSpit){
+      this.makeMove(client,"SPIT");
+    }
   }
   addPlayer(client) {
     //todo: check eligibility
@@ -255,8 +260,8 @@ class Game {
   }
   start() {
     console.log("time to start game "+this.id);
-    this.seed();
     this.started=true;
+    this.seed();
   }
   seed() {
     let numPlayers = this.clients.length;
@@ -267,9 +272,14 @@ class Game {
       this.gameState.hands[c.name]=[[0],[0],[0],[0]];
       this.gameState.piles[c.name] = [0];// = new Array(numPlayers).fill([0]);
       this.validMoves[c.name]=1;
-
-      //pop top 4 to hand slots
-      //this.gameState.hands[c.name]=[[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()],[this.gameState.decks[c.name].pop()]];
+    });
+    this.makeMove(this.clients[0],"SPIT");
+    this.clients.forEach((c) => {
+    //   //pop top 4 to hand slots
+       this.makeMove(c,"POP-DECK");
+       this.makeMove(c,"POP-DECK");
+       this.makeMove(c,"POP-DECK");
+       this.makeMove(c,"POP-DECK");
     });
     // console.log(this.gameState.decks);
   }
