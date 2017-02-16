@@ -5,8 +5,8 @@ let mongoose = require('mongoose')
 let userSchema = new Schema({
         username: {type: String, required: true, unique: true},
         password: {type: String, required: false},
-        gamesPlayed: {type: Number, required: false},
-        gamesWon: {type: Number, required: false}
+        gamesPlayed: {type: Number, default: 0},
+        gamesWon: {type: Number, default: 0}
     });
 
 module.exports = mongoose.model('User', userSchema);
