@@ -25,24 +25,21 @@ export default class Dashboard extends Component {
 
   render () {
 
-    return (<div>
-      <div className="landingContain">
-        <h2 className="titleText" margin="0px">-----   Spit   -----</h2>
-        <h2 className="funText" >\(^_^)/    \(^_^)/</h2>
-        </div>
+    return (
+      <div>
+
         <div className="landingContain">
-          <h2 className="headText" >Nickname</h2>
-
-          <input type="text" className="nickNameText" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
-          <div className="lbuttonFlex">
-            <button className="lobby1Text" onClick={this.registerUser}>Rando Lobby</button>
-            <button className="lobby2Text" onClick={this.registerUser}>Play with friends Lobby</button>
-
-            </div>
+        <img src="logo.PNG" className="logoIMG"></img>
+        </div>
+        <div className="landingContain">        
+          <input type="text" className="nickNameText" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
+          <button className="lobby1Text" onClick={this.registerUser}>Play Now</button>
+          <button className="lobby2Text" onClick={this.registerUser}>New Lobby</button>
+            
+            
             <button className="leaderboardText" onClick={this.registerUser}>leaderboard</button>
-            <button className="leaderboardText" onClick={this.joinRandomGame}>joinRandomGame</button>
-          </div>
-    </div>
+        </div>
+      </div>
     );
   }
 }

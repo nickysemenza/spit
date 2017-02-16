@@ -134,75 +134,57 @@ table.gameLeaderboard > tr > td {
 }
 // ---- Landing Page  -------//
 
-.titleText {
-  color: white;
-  font-size: 72px;
-  order: 1;
-  margins: 0px;
-  align-items: center;
-  justify-content: center;
-}
 .landingContain {
 color: white;
   display: flex;
   flex-wrap: wrap;
-  background: black;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.funText {
-  color: white;
-  font-size: 72px;
-  order: 2;
-  margin: 0px;
+.logoIMG {
   align-items: center;
-  justify-content: center;
-}
-.headText {
-  color: white;
-  font-size: 32px;
-  order: 0;
-  display: flex;
-  align-items: center;
+  width: 60%;
+  margin-bottom: 40px;
+  order: -1;
   justify-content: center 
 }
 
 .nickNameText {
   display: flex;
-  background: cream;
-  color: #255364;
-  font-size: 15pt;
-  order: 1;
-  border-radius: 1em;
-  padding: 1em;
-  align-items: center;
-  justify-content: center;
-
-}
-
-.lbuttonFlex {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  background: transparent;
+  border: 2px solid;
+  border-color: grey;
+  color: grey;
   text-align: center;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  font-size: 20pt;
+  order: 1;
+  padding: .75em;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-bottom: 40px;
+  align-items: center;
   justify-content: center;
-  order: 2;
 
 }
 
 .lobby1Text {
-
-  background: cream;
-  color: #255364;
-  font-size: 15pt;
-  border-radius: 1em;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 80px;
-  padding-right: 80px;
+  background: transparent;
+  border: 2px solid;
+  border-color: grey;
+  color: white;
+  font-size: 20pt;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 55px;
+  padding-right: 55px;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
   order: 2;
+  margin: 10px;
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -210,16 +192,19 @@ color: white;
 
 .lobby2Text {
   display: flex;
-  background: cream;
-  color: #255364;
-  font-size: 15pt;
-  border-radius: 1em;
+  background: transparent;
+  border: 2px solid;
+  border-color: grey;
+  color: white;
   padding: 1em;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
   order: 2;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 40px;
-  padding-right: 40px;
+  margin: 10px;
+  font-size: 20pt;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 46px;
+  padding-right: 46px;
   align-items: center;
   justify-content: center;
  
@@ -227,24 +212,23 @@ color: white;
 
 .leaderboardText {
   display: flex;
-  background: cream;
-  color: #255364;
-  font-size: 15pt;
-  border-radius: 1em;
+  background: transparent;
+  border: 2px solid;
+  border-color: grey;
+  color: white;
   padding: 1em;
   order: 4;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 80px;
-  padding-right: 80px;
+  font-size: 20pt;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin:10px;
   align-items: center;
   justify-content: center;
 
 }
-.titleText h2 {
-  margin: 100; 
-}
-
 // --- Leaderboard Page --- //
 
 .leftBanner {
