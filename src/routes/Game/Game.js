@@ -70,10 +70,11 @@ export default class Game extends Component {
   // }
 
   render () {
+    let gameState = this.props.game.state
     let handCard;
     handCard = [[0],[0],[0],[0]];
-    if(this.props.game.state.started)
-      handCard = this.props.game.state.hand;
+    if(gameState.started)
+      handCard = gameState.hand;
 
     let loggedOutMessage = <div>
       <h1>You aren't logged in right now!</h1>
@@ -95,19 +96,19 @@ export default class Game extends Component {
         <button onClick={this.startGame}>start game</button>
 
         <Opponents/>
-        <Piles piles={this.props.game.state.peekPiles} clickedPile={this.placeCardOnPile}/>
+        <Piles piles={gameState.peekPiles} clickedPile={this.placeCardOnPile}/>
         <PlayerSection card1={handCard[0]}
           card2={handCard[1]}
           card3={handCard[2]}
           card4={handCard[3]}
-          decks={this.props.game && this.props.game.state.decks ? this.props.game.state.decks : {}}
+          decks={this.props.game && gameState.decks ? gameState.decks : {}}
           clickedHand={this.combineHands}
           selectedHand={this.state.selectedHand}/>
 
 
         </div>);
 
-    let lobbyNames = this.props.game.state.clients ? this.props.game.state.clients.map(c=><tr>
+    let lobbyNames = gameState.clients ? gameState.clients.map(c=><tr>
       <td>{c}</td>
       <td>✅</td>
     </tr>): '';
@@ -129,7 +130,7 @@ export default class Game extends Component {
       </div>
     );
 
-    let loggedInView = this.props.game.state.started ? gameView : lobbyView;
+    let loggedInView = gameState.started ? gameView : lobbyView;
     return (
       <div>
         {this.props.user.authenticated ? loggedInView : loggedOutMessage}
