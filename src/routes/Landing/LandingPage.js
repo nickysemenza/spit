@@ -4,7 +4,7 @@ class LandingPage extends Component {
   render () {
     return (
       <div className="container-fluid">
-        <LandingContainer />
+        <LandingContainer routerProps={this.props}/>
       </div>
     );
   }

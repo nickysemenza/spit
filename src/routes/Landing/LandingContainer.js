@@ -11,7 +11,10 @@ function mapStateToProps (state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  goToLeaderboard: () => {
+    ownProps.routerProps.router.push("/leaderboard");
+  },
   loadLeaderboard: () => {
     dispatch(fetchLeaderboard());
   },
