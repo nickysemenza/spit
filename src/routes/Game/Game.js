@@ -107,6 +107,11 @@ export default class Game extends Component {
 
         </div>);
 
+    let lobbyNames = this.props.game.state.clients ? this.props.game.state.clients.map(c=><tr>
+      <td>{c}</td>
+      <td>✅</td>
+    </tr>): '';
+
     let lobbyView = (
       <div>
         <img className="leftBanner" src="../../assets/Sidebar.png" />
@@ -116,22 +121,7 @@ export default class Game extends Component {
             <h1>Lobby</h1>
 
             <table className="lobby flex-vertical">
-              <tr>
-                <td>Nicky</td>
-                <td>✅</td>
-              </tr>
-              <tr>
-                <td>Byron</td>
-                <td>✅</td>
-              </tr>
-              <tr>
-                <td>Nick</td>
-                <td>✅</td>
-              </tr>
-              <tr>
-                <td>Marty</td>
-                <td>✅</td>
-              </tr>
+              {lobbyNames}
             </table>
             <span onClick={this.startGame} className="readyUp">Ready Up</span>
           </div>
