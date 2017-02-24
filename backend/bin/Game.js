@@ -193,8 +193,8 @@ class Game {
       else{
         let done=0;
         topHand.forEach((c2)=>{
-          for (var key in this.gameState.piles){
-              var c3 = this.gameState.piles[key];
+          for (let key in this.gameState.piles){
+              let c3 = this.gameState.piles[key];
               if((c2==((c3[c3.length-1]-1)%13)||c2==((c3[c3.length-1]+1)%13))&&!done){
                 this.validMoves[c.name]=1;
                 done=1;
@@ -240,8 +240,8 @@ class Game {
     });
     if(!shouldSpit){
       let end=0;
-      for (var key in this.gameState.decks){
-        var d = this.gameState.decks[key];
+      for (let key in this.gameState.decks){
+        let d = this.gameState.decks[key];
         end+=d.length;
       }
       console.log(end);
@@ -284,7 +284,7 @@ class Game {
     //or if force start
 
     if(shouldStart)
-      start();
+      this.start();
 
 
   }

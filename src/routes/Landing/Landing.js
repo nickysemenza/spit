@@ -30,7 +30,7 @@ export default class Dashboard extends Component {
 
         <div className="landingContain">
 
-          <img src="../../assets/logo.png" className="logoIMG" alt="SpitON.US Logo"></img>
+          <img src="../../assets/logo.png" className="logoIMG" alt="SpitON.US Logo" />
         </div>
         <div className="landingContain">
 

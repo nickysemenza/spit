@@ -70,16 +70,16 @@ export default class Game extends Component {
   // }
 
   render () {
-    let gameState = this.props.game.state
+    let gameState = this.props.game.state;
     let handCard;
     handCard = [[0],[0],[0],[0]];
     if(gameState.started)
       handCard = gameState.hand;
 
-    let loggedOutMessage = <div>
+    let loggedOutMessage = (<div>
       <h1>You aren't logged in right now!</h1>
       <h1><Link to="/">Go register</Link></h1>
-    </div>
+    </div>);
 
     let gameView = (
         <div>
