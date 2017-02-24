@@ -34,9 +34,10 @@ export default class Dashboard extends Component {
         </div>
         <div className="landingContain">
 
-          {this.props.user.authenticated ?
-          <h1>Hello, {this.props.user.username}</h1>
-          : <input type="text" className="usernameInput" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
+          {this.props.user.authenticated ? 
+          <input type="text" className="usernameInput" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
+          : <h1>Hello, {this.props.user.username}</h1>
+          
           }
           {!this.props.user.authenticated ? <button className="playNowBttn" onClick={this.registerUser}>Register</button> : ''}
           {this.props.user.authenticated ? <button className="playNowBttn" disabled={!this.props.user.authenticated} onClick={this.joinRandomGame}>Play Now</button> : ''}
