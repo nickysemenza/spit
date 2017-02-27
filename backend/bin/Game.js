@@ -89,6 +89,10 @@ class Game {
     console.log(`playCard: hand: ${handCard} to ${dest}`);
 
     let pile = this.gameState.piles[dest];
+    if(pile===undefined) {
+      console.log('trying to play card out of range');
+      return;
+    }
     let destPileCard = pile[pile.length-1];
     if(utils.areCardsSequential(handCard,destPileCard) || destPileCard==0) {
       //push it on
