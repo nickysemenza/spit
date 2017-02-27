@@ -34,7 +34,7 @@ export default class Dashboard extends Component {
         </div>
         <div className="landingContain">
 
-          {this.props.user.authenticated ? 
+          {!this.props.user.authenticated ?
           <input type="text" className="usernameInput" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
           : <h1>Hello, {this.props.user.username}</h1>
           
