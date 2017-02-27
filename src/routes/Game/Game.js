@@ -10,7 +10,7 @@ export default class Game extends Component {
     super(props);
     this.state = {
       moveBox: "",
-      selectedHand: null
+      selectedHand: 1
     };
     this.handleMoveBoxChange = this.handleMoveBoxChange.bind(this);
     this.sendCommandDebug = this.sendCommandDebug.bind(this);

@@ -74,7 +74,7 @@ class Game {
    * command: PLAY-CARD index1 index2
    * @param client
    * @param src the index of your hand
-   * @param dest the index of the piles array
+   * @param dest the namedindex of the piles array
    */
   playCard(client,src,dest) {
     //moves a card from self.gameState.hands[username][loc]
