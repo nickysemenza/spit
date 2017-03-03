@@ -17,6 +17,7 @@ class Game {
     self.id = id;
     self.started = false;
     self.clients = [];
+    self.spectators = [];
     self.gameState = {
       hands: {},//the 4x cards
       piles: {},
@@ -213,7 +214,7 @@ class Game {
   }
   makeMove(client, moveCmd) {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
-    if(!this.started) {
+    if(!this.started || this.spectators.includes(client.name)) {
       //can't make a move yet
       return;
     }
@@ -260,21 +261,30 @@ class Game {
   addPlayer(client) {
     //todo: check eligibility
     let eligible = true;
-    if (this.started)//can't join a started game
+    let spectator = false;
+    if (this.started){//can't join a started game
       eligible = false;
-    if(this.clients.length >= 4)//full game
+      spectator = true;
+    }
+    if(this.clients.length >= 4){//full game
       eligible = false;
-
+      spectator = true;
+    }
     this.clients.forEach((c) => {
       if (c.name == client.name) {
         //user is already in game
         console.log(c.name + " is already in this game");
         eligible = false;
+        spectator = false;
       }
     });
     if (eligible) {
       console.log(client.name + ' joining game ' + this.id);
       this.clients.push(client);
+    }
+    else if (spectator) {
+      console.log(client.name + ' spectating game '+this.id);
+      this.spectators.push(client.name);
     }
   }
   startIfReady() {
@@ -297,6 +307,8 @@ class Game {
    * Starts a game, removing it from the lobby list
    */
   start() {
+    if(this.started)
+      return;
     console.log("time to start game "+this.id);
     this.started=true;
     delete lobby[this.id];//remove from active lobby
@@ -327,12 +339,14 @@ class Game {
     return this.shuffle(cards.slice(0));
   }
   getGameState(username) {
+    if(this.spectators.includes(username))
+      username=this.clients[0].name;
     // console.log(username);
     //todo: make sure user is in game
     let clients = this.clients.map((c)=>c.name);
 
-    if(!clients.includes(username) || username=="anon")
-      return {error: "not in game"};
+    //if(!clients.includes(username) || username=="anon")
+    //  return {error: "not in game"};
 
     let state = {
       clients,
