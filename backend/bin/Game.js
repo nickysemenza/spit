@@ -2,6 +2,7 @@ let gameList = {};
 let lobby = {};
 let utils = require('./utils');
 let gameSchema = require('../models/game.js');
+let User = require('../models/user.js');
 let mongoose = require('mongoose');
 //var opts = { server: { auto_reconnect: false }, user: 'username', pass: 'mypassword' }
 // let db = mongoose.createConnection('localhost', 'games', 27017);
@@ -36,10 +37,10 @@ class Game {
     //save this.gameState, this.id, etc
     let gameJSON = new gameSchema({
       id: this.id,
-      //url: this.url,
-      //players: self.clients.names
+      url: this.url,
+      players: self.clients.names,
       totalMoves: this.stateSnapshots.length,
-      //winner: this.winner,
+      winner: this.winner,
       state: this.stateSnapshots
     });
 
@@ -47,6 +48,15 @@ class Game {
       if (err) return console.error(err);
     });
   }
+
+  updateUser(){
+
+    User.findOneAndUpdate({'username':req.user.username}, req.newData, {upsert:true}, function(err, doc){
+      if (err) return console.log(500, { error: err });
+      return console.log("succesfully saved");
+    });
+  }
+
 
   /**
    * Takes a snapshot of the game state
@@ -156,7 +166,7 @@ class Game {
     });
   }
   endGame(client){
-    console.log("END GAME");
+    this.saveGave();
   }
   updateValidMoves(){
     this.clients.forEach((c)=>{
