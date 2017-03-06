@@ -31,12 +31,29 @@ export default class Game extends Component {
       }
       else if(split[0]=="AUTH-OK")
         this.websocket.send('JOIN-GAME '+this.props.game_id);
+      else if(split[0]=="EXECUTED")
+        this.doAnimation(split[1],split[2],split[3]);
       else
         console.log(event.data);
     };
     this.websocket.onopen = () => {
       this.websocket.send('AUTH '+this.props.user.token);
     };
+  }
+  doAnimation(playerName, handNum, deckName) {
+    handNum++;//sad, 0->1 indexing switch
+    let pileNum;
+    let pilesTemp = this.props.game.state.peekPiles;
+    if(Object.keys(pilesTemp)[0]==deckName)
+      pileNum = 1;
+    if(Object.keys(pilesTemp)[1]==deckName)
+      pileNum = 2;
+    if(Object.keys(pilesTemp)[2]==deckName)
+      pileNum = 3;
+    if(Object.keys(pilesTemp)[3]==deckName)
+      pileNum = 4;
+    let fromOwnHand = this.props.user.username == playerName;
+    console.log(`need to animate from ${playerName}'s hand num ${handNum} to ${deckName}'s pile (pile #${pileNum}). fromOwnHand = ${fromOwnHand}`);
   }
   handleMoveBoxChange(event) {
     this.setState({moveBox: event.target.value});

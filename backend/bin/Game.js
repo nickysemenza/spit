@@ -99,6 +99,10 @@ class Game {
       //push it on
       this.gameState.piles[dest].push(handCard);
       this.gameState.hands[client.name][src].pop();//pop off the handcard
+
+      this.clients.forEach(c=>{
+        c.sendMoveUpdate(client.name,src,dest);
+      })
     }
     else {
       console.log('cant play that card');

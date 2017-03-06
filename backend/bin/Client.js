@@ -117,6 +117,9 @@ class Client {
       // this.game.saveGame();
     }
   }
+  sendMoveUpdate(player, hand, deck) {
+    this.sendMessage(`EXECUTED ${player} ${hand} ${deck}`)
+  }
 }
 
 module.exports = {
