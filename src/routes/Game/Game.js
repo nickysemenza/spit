@@ -67,7 +67,7 @@ export default class Game extends Component {
       console.log(`Trigger Ah${handNum}p${pileNum}`);
       this.state["cardAnimationState"][handNum - 1] = `Ah${handNum}p${pileNum}`;
       setTimeout(function() {
-        this.state["cardAnimationState"][handNum - 1] = "hiddoen";
+        this.state["cardAnimationState"][handNum - 1] = "hidden";
         console.log("TIMEOUT !!!! :) :) :) ");
         }.bind(this), 1000
       );
