@@ -5,12 +5,20 @@ import Opponents from './Opponents';
 import Piles from './Piles';
 import PlayerSection from './PlayerSection';
 import { Link } from 'react-router';
+
+const gameboardstyle = {
+  position: 'relative',
+  width: '935px',
+  margin: 'auto'
+};
+
 export default class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
       moveBox: "",
-      selectedHand: 1
+      selectedHand: 1,
+      cardAnimationState: ["hidden", "hidden", "hidden", "hidden"]
     };
     this.handleMoveBoxChange = this.handleMoveBoxChange.bind(this);
     this.sendCommandDebug = this.sendCommandDebug.bind(this);
@@ -32,7 +40,7 @@ export default class Game extends Component {
       else if(split[0]=="AUTH-OK")
         this.websocket.send('JOIN-GAME '+this.props.game_id);
       else if(split[0]=="EXECUTED-MOVE")
-        this.doAnimation(split[1],split[2],split[3]);
+        this.doAnimation(split[1], split[2], split[3]);
       else
         console.log(event.data);
     };
@@ -54,6 +62,16 @@ export default class Game extends Component {
       pileNum = 4;
     let fromOwnHand = this.props.user.username == playerName;
     console.log(`need to animate from ${playerName}'s hand num ${handNum} to ${deckName}'s pile (pile #${pileNum}). fromOwnHand = ${fromOwnHand}`);
+
+    if (fromOwnHand) {
+      console.log(`Trigger Ah${handNum}p${pileNum}`);
+      this.state["cardAnimationState"][handNum - 1] = `Ah${handNum}p${pileNum}`;
+      setTimeout(function() {
+        this.state["cardAnimationState"][handNum - 1] = "hiddoen";
+        console.log("TIMEOUT !!!! :) :) :) ");
+        }.bind(this), 1000
+      );
+    }
   }
   handleMoveBoxChange(event) {
     this.setState({moveBox: event.target.value});
@@ -98,6 +116,12 @@ export default class Game extends Component {
       <h1><Link to="/">Go register</Link></h1>
     </div>);
 
+
+    let card1 = (handCard[0] && handCard[0].length !=0) ? handCard[0][handCard[0].length-1] : 0;
+    let card2 = (handCard[1] && handCard[1].length !=0) ? handCard[1][handCard[1].length-1] : 0;
+    let card3 = (handCard[2] && handCard[2].length !=0) ? handCard[2][handCard[2].length-1] : 0;
+    let card4 = (handCard[3] && handCard[3].length !=0) ? handCard[3][handCard[3].length-1] : 0;
+
     let gameView = (
         <div>
         <h2>Game #{this.props.game_id}. Hello, {this.props.user.username}</h2>
@@ -112,17 +136,23 @@ export default class Game extends Component {
         <button onClick={this.sendCommandDebug}>send command</button>
         <button onClick={this.startGame}>start game</button>
 
-        <Opponents/>
+          <div style={gameboardstyle}>
+            <img className={`cardimg ${this.state["cardAnimationState"][0]}`} src={`../../assets/cards/${card1}.png`} />
+            <img className={`cardimg ${this.state["cardAnimationState"][1]}`} src={`../../assets/cards/${card2}.png`} />
+            <img className={`cardimg ${this.state["cardAnimationState"][2]}`} src={`../../assets/cards/${card3}.png`} />
+            <img className={`cardimg ${this.state["cardAnimationState"][3]}`} src={`../../assets/cards/${card4}.png`} />
+
+            <Opponents/>
         <Piles piles={gameState.peekPiles} clickedPile={this.placeCardOnPile}/>
-        <PlayerSection card1={handCard[0]}
-          card2={handCard[1]}
-          card3={handCard[2]}
-          card4={handCard[3]}
+        <PlayerSection card1={card1}
+          card2={card2}
+          card3={card3}
+          card4={card4}
           decks={this.props.game && gameState.decks ? gameState.decks : {}}
           clickedHand={this.combineHands}
           selectedHand={this.state.selectedHand}/>
 
-
+          </div>
         </div>);
 
     let lobbyNames = gameState.clients ? gameState.clients.map(c=><tr>

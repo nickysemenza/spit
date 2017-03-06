@@ -3,7 +3,25 @@ $secondary-font: 'Copperplate';
 $background-color: #255364;
 $card-color: #E5E6DA;
 
+// Animation Variables
+$deck-left: 20px;
 
+$hand1-left: 180px;
+$hand2-left: 320px;
+$hand3-left: 460px;
+$hand4-left: 600px;
+
+$hand-bottom: 50px;
+
+$pile1-left: 257px;
+$pile2-left: 397px;
+$pile3-left: 397px;
+$pile4-left: 537px;
+
+$pile1-bottom: 327px;
+$pile2-bottom: 409px;
+$pile3-bottom: 245px;
+$pile4-bottom: 327px;
 
 
 * {
@@ -59,7 +77,7 @@ h1 {
 
 
 .piles {
-  height: 450px;
+  height: 390px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -106,6 +124,10 @@ h1 {
   width: 100px;
   height: 144px;
   margin: 0px 20px 20px 20px;
+}
+
+.cardimg:hover {
+  border: 1px solid rebeccapurple;
 }
 
 .cardButton {
@@ -303,3 +325,246 @@ table.lobby > tr > th {
   font-size: 28px;
   text-align: left;
 }
+
+
+// --- Card Animations --- //
+
+// Classes
+.hidden {
+  visibility: hidden;  
+}
+
+.animatingCard {
+  position: absolute;
+}
+
+// Hands
+.Ah1p1, .Ah1p2, .Ah1p1, .Ah1p4,
+.Ah2p1, .Ah2p2, .Ah2p3, .Ah2p4,
+.Ah3p1, .Ah3p2, .Ah3p3, .Ah3p4,
+.Ah4p1, .Ah4p2, .Ah4p3, .Ah4p4
+{
+  position: absolute;
+  bottom: $hand-bottom;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+}
+
+.Ah1p1, .Ah1p2, .Ah1p1, .Ah1p4 {
+  left: $hand1-left;
+}
+
+.Ah2p1, .Ah2p2, .Ah2p1, .Ah2p4 {
+  left: $hand2-left;
+}
+
+.Ah3p1, .Ah3p2, .Ah3p1, .Ah3p4 {
+  left: $hand3-left;
+}
+
+.Ah4p1, .Ah4p2, .Ah4p1, .Ah4p4 {
+  left: $hand4-left;
+}
+
+
+// Hand 1
+.Ah1p1 {
+  animation-name: h1p1;
+}
+
+.Ah1p2 {
+  animation-name: h1p2;
+}
+
+.Ah1p3 {
+  animation-name: h1p3;
+}
+
+.Ah1p4 {
+  animation-name: h1p4;
+}
+
+// Hand 2
+.Ah2p1 {
+  animation-name: h2p1;
+}
+
+.Ah2p2 {
+  animation-name: h2p2;
+}
+
+.Ah2p3 {
+  animation-name: h2p3;
+}
+
+.Ah2p4 {
+  animation-name: h2p4;
+}
+
+// Hand 3
+.Ah3p1 {
+  animation-name: h3p1;
+}
+
+.Ah3p2 {
+  animation-name: h3p2;
+}
+
+.Ah3p3 {
+  animation-name: h3p3;
+}
+
+.Ah3p4 {
+  animation-name: h3p4;
+}
+
+// Hand 4
+.Ah4p1 {
+  animation-name: h4p1;
+}
+
+.Ah4p2 {
+  animation-name: h4p2;
+}
+
+.Ah4p3 {
+  animation-name: h4p3;
+}
+
+.Ah4p4 {
+  animation-name: h4p4;
+}
+
+// Deck
+.Adh1, .Adh2, .Adh3, .Adh4 {
+  position: absolute;
+  bottom: $hand-bottom;
+  left: $deck-left;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+.Adh1 {
+  animation-name: dh1;
+}
+
+.Adh2 {
+  animation-name: dh2;
+}
+
+.Adh3 {
+  animation-name: dh3;
+}
+
+.Adh4 {
+  animation-name: dh4;
+}
+
+
+
+// Deck
+@keyframes dh1 {
+  0%   { bottom: $hand-bottom; left: $deck-left; }
+  100% { bottom: $hand-bottom; left: $hand1-left; }
+}
+
+@keyframes dh2 {
+  0%   { bottom: $hand-bottom; left: $deck-left; }
+  100% { bottom: $hand-bottom; left: $hand2-left; }
+}
+
+@keyframes dh3 {
+  0%   { bottom: $hand-bottom; left: $deck-left; }
+  100% { bottom: $hand-bottom; left: $hand3-left; }
+}
+
+@keyframes dh4 {
+  0%   { bottom: $hand-bottom; left: $deck-left; }
+  100% { bottom: $hand-bottom; left: $hand4-left; }
+}
+
+// Hand 1
+@keyframes h1p1 {
+  0%   { bottom: $hand-bottom; left: $hand1-left;}
+  100% { bottom: $pile1-bottom; left: $pile1-left;}
+}
+
+@keyframes h1p2 {
+  0%   { bottom: $hand-bottom; left: $hand1-left;}
+  100% { bottom: $pile2-bottom; left: $pile2-left;}
+}
+
+@keyframes h1p3 {
+  0%   { bottom: $hand-bottom; left: $hand1-left;}
+  100% { bottom: $pile3-bottom; left: $pile3-left;}
+}
+
+@keyframes h1p4 {
+  0%   { bottom: $hand-bottom; left: $hand1-left;}
+  100% { bottom: $pile4-bottom; left: $pile4-left;}
+}
+
+// Hand 2
+@keyframes h2p1 {
+  0%   { bottom: $hand-bottom; left: $hand2-left;}
+  100% { bottom: $pile1-bottom; left: $pile1-left;}
+}
+
+@keyframes h2p2 {
+  0%   { bottom: $hand-bottom; left: $hand2-left;}
+  100% { bottom: $pile2-bottom; left: $pile2-left;}
+}
+
+@keyframes h2p3 {
+  0%   { bottom: $hand-bottom; left: $hand2-left;}
+  100% { bottom: $pile3-bottom; left: $pile3-left;}
+}
+
+@keyframes h2p4 {
+  0%   { bottom: $hand-bottom; left: $hand2-left;}
+  100% { bottom: $pile4-bottom; left: $pile4-left;}
+}
+
+// Hand 3
+@keyframes h3p1 {
+  0%   { bottom: $hand-bottom; left: $hand3-left;}
+  100% { bottom: $pile1-bottom; left: $pile1-left;}
+}
+
+@keyframes h3p2 {
+  0%   { bottom: $hand-bottom; left: $hand3-left;}
+  100% { bottom: $pile2-bottom; left: $pile2-left;}
+}
+
+@keyframes h3p3 {
+  0%   { bottom: $hand-bottom; left: $hand3-left;}
+  100% { bottom: $pile3-bottom; left: $pile3-left;}
+}
+
+@keyframes h3p4 {
+  0%   { bottom: $hand-bottom; left: $hand3-left;}
+  100% { bottom: $pile4-bottom; left: $pile4-left;}
+}
+
+// Hand 4
+@keyframes h4p1 {
+  0%   { bottom: $hand-bottom; left: $hand4-left;}
+  100% { bottom: $pile1-bottom; left: $pile1-left;}
+}
+
+@keyframes h4p2 {
+  0%   { bottom: $hand-bottom; left: $hand4-left;}
+  100% { bottom: $pile2-bottom; left: $pile2-left;}
+}
+
+@keyframes h4p3 {
+  0%   { bottom: $hand-bottom; left: $hand4-left;}
+  100% { bottom: $pile3-bottom; left: $pile3-left;}
+}
+
+@keyframes h4p4 {
+  0%   { bottom: $hand-bottom; left: $hand4-left;}
+  100% { bottom: $pile4-bottom; left: $pile4-left;}
+}
+
