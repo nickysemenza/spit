@@ -31,7 +31,7 @@ export default class Game extends Component {
       }
       else if(split[0]=="AUTH-OK")
         this.websocket.send('JOIN-GAME '+this.props.game_id);
-      else if(split[0]=="EXECUTED")
+      else if(split[0]=="EXECUTED-MOVE")
         this.doAnimation(split[1],split[2],split[3]);
       else
         console.log(event.data);
