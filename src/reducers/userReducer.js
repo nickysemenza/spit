@@ -1,5 +1,6 @@
 import {
   CREATED_USER,
+  LOGOUT
 } from '../actions/userActions';
 
 const INITIAL_STATE = {
@@ -20,6 +21,8 @@ export default function (state = INITIAL_STATE, action) {
         username: action.data.username,
         authenticated: true
       };
+    case LOGOUT:
+      return INITIAL_STATE;
     default:
       return state;
   }

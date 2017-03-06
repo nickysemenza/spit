@@ -45,6 +45,8 @@ export default class Dashboard extends Component {
 
 
             <button className="leaderboardBttn" onClick={this.props.goToLeaderboard}>leaderboard</button>
+
+          <button onClick={this.props.logout}>test logout</button>
         </div>
       </div>
     );

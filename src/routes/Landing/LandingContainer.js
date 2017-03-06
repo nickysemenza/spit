@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchLeaderboard } from '../../actions/leaderboardActions';
-import { createUser } from '../../actions/userActions';
+import { createUser, logout } from '../../actions/userActions';
 import { joinLobbyGame } from '../../actions/gameActions';
 import Landing from './Landing';
 
@@ -17,6 +17,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   loadLeaderboard: () => {
     dispatch(fetchLeaderboard());
+  },
+  logout: () => {
+    console.log("hi");
+    dispatch(logout());
   },
   createUser: (username) => {
     dispatch(createUser(username));
