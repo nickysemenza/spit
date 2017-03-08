@@ -18,6 +18,7 @@ class Game {
     self.id = id;
     self.started = false;
     self.clients = [];
+    self.spectators = [];
     self.gameState = {
       hands: {},//the 4x cards
       piles: {},
@@ -84,7 +85,7 @@ class Game {
    * command: PLAY-CARD index1 index2
    * @param client
    * @param src the index of your hand
-   * @param dest the index of the piles array
+   * @param dest the namedindex of the piles array
    */
   playCard(client,src,dest) {
     //moves a card from self.gameState.hands[username][loc]
@@ -99,11 +100,19 @@ class Game {
     console.log(`playCard: hand: ${handCard} to ${dest}`);
 
     let pile = this.gameState.piles[dest];
+    if(pile===undefined) {
+      console.log('trying to play card out of range');
+      return;
+    }
     let destPileCard = pile[pile.length-1];
     if(utils.areCardsSequential(handCard,destPileCard) || destPileCard==0) {
       //push it on
       this.gameState.piles[dest].push(handCard);
       this.gameState.hands[client.name][src].pop();//pop off the handcard
+
+      this.clients.forEach(c=>{
+        c.sendMoveUpdate(client.name,src,dest);
+      })
     }
     else {
       console.log('cant play that card');
@@ -203,8 +212,8 @@ class Game {
       else{
         let done=0;
         topHand.forEach((c2)=>{
-          for (var key in this.gameState.piles){
-              var c3 = this.gameState.piles[key];
+          for (let key in this.gameState.piles){
+              let c3 = this.gameState.piles[key];
               if((c2==((c3[c3.length-1]-1)%13)||c2==((c3[c3.length-1]+1)%13))&&!done){
                 this.validMoves[c.name]=1;
                 done=1;
@@ -219,7 +228,7 @@ class Game {
   }
   makeMove(client, moveCmd) {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
-    if(!this.started) {
+    if(!this.started || this.spectators.includes(client.name)) {
       //can't make a move yet
       return;
     }
@@ -250,8 +259,8 @@ class Game {
     });
     if(!shouldSpit){
       let end=0;
-      for (var key in this.gameState.decks){
-        var d = this.gameState.decks[key];
+      for (let key in this.gameState.decks){
+        let d = this.gameState.decks[key];
         end+=d.length;
       }
       console.log(end);
@@ -266,21 +275,30 @@ class Game {
   addPlayer(client) {
     //todo: check eligibility
     let eligible = true;
-    if (this.started)//can't join a started game
+    let spectator = false;
+    if (this.started){//can't join a started game
       eligible = false;
-    if(this.clients.length >= 4)//full game
+      spectator = true;
+    }
+    if(this.clients.length >= 4){//full game
       eligible = false;
-
+      spectator = true;
+    }
     this.clients.forEach((c) => {
       if (c.name == client.name) {
         //user is already in game
         console.log(c.name + " is already in this game");
         eligible = false;
+        spectator = false;
       }
     });
     if (eligible) {
       console.log(client.name + ' joining game ' + this.id);
       this.clients.push(client);
+    }
+    else if (spectator) {
+      console.log(client.name + ' spectating game '+this.id);
+      this.spectators.push(client.name);
     }
   }
   startIfReady() {
@@ -294,7 +312,7 @@ class Game {
     //or if force start
 
     if(shouldStart)
-      start();
+      this.start();
 
 
   }
@@ -303,6 +321,8 @@ class Game {
    * Starts a game, removing it from the lobby list
    */
   start() {
+    if(this.started)
+      return;
     console.log("time to start game "+this.id);
     this.started=true;
     delete lobby[this.id];//remove from active lobby
@@ -333,12 +353,14 @@ class Game {
     return this.shuffle(cards.slice(0));
   }
   getGameState(username) {
+    if(this.spectators.includes(username))
+      username=this.clients[0].name;
     // console.log(username);
     //todo: make sure user is in game
     let clients = this.clients.map((c)=>c.name);
 
-    if(!clients.includes(username) || username=="anon")
-      return {error: "not in game"};
+    //if(!clients.includes(username) || username=="anon")
+    //  return {error: "not in game"};
 
     let state = {
       clients,

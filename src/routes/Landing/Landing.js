@@ -29,16 +29,24 @@ export default class Dashboard extends Component {
       <div>
 
         <div className="landingContain">
-        <img src="../../assets/Logo.png" className="logoIMG"></img>
+
+          <img src="../../assets/logo.png" className="logoIMG" alt="SpitON.US Logo" />
         </div>
         <div className="landingContain">
 
-          <input type="text" className="nickNameText" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
-          <button className="lobby1Text" onClick={this.registerUser}>Play Now</button>
-          <button className="lobby2Text" onClick={this.registerUser}>New Lobby</button>
+          {!this.props.user.authenticated ?
+          <input type="text" className="usernameInput" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
+          : <h1>Hello, {this.props.user.username}</h1>
+          
+          }
+          {!this.props.user.authenticated ? <button className="playNowBttn" onClick={this.registerUser}>Register</button> : ''}
+          {this.props.user.authenticated ? <button className="playNowBttn" disabled={!this.props.user.authenticated} onClick={this.joinRandomGame}>Play Now</button> : ''}
+          {this.props.user.authenticated ? <button className="newLobbyBttn" disabled={!this.props.user.authenticated} onClick={this.joinRandomGame}>New Lobby</button> : ''}
 
 
-            <button className="leaderboardText" onClick={this.registerUser}>leaderboard</button>
+            <button className="leaderboardBttn" onClick={this.props.goToLeaderboard}>leaderboard</button>
+
+          <button onClick={this.props.logout}>test logout</button>
         </div>
       </div>
     );

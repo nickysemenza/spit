@@ -14,7 +14,8 @@ function configureStoreProd(initialState) {
   ];
 
   return createStore(rootReducer, initialState, compose(
-    applyMiddleware(...middlewares)
+    applyMiddleware(...middlewares),
+    persistState(['user'])
     )
   );
 }

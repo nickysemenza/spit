@@ -28,3 +28,11 @@ function createdUser (json) {
     receivedAt: Date.now()
   };
 }
+
+export const LOGOUT = 'LOGOUT';
+export function logout () {
+  return {
+    type: LOGOUT,
+    receivedAt: Date.now()
+  };
+}

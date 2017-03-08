@@ -9,10 +9,11 @@ import React, {Component, PropTypes} from 'react';
 export default class PlayerSection extends Component {
 
   render() {
-    let card1 = (this.props.card1 && this.props.card1.length !=0) ? this.props.card1[this.props.card1.length-1] : 0;
-    let card2 = (this.props.card2 && this.props.card2.length !=0) ? this.props.card2[this.props.card2.length-1] : 0;
-    let card3 = (this.props.card3 && this.props.card3.length !=0) ? this.props.card3[this.props.card3.length-1] : 0;
-    let card4 = (this.props.card4 && this.props.card4.length !=0) ? this.props.card4[this.props.card4.length-1] : 0;
+    let card1 = this.props.card1;
+    let card2 = this.props.card2;
+    let card3 = this.props.card3;
+    let card4 = this.props.card4;
+
     let hand0=0;
     let hand1=1;
     let hand2=2;

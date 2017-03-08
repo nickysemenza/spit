@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '../config';
-import { push } from 'react-router-redux'
+import { push } from 'react-router-redux';
 
 export const RECEIVE_GAME_STATE = 'RECEIVE_GAME_STATE';
 
