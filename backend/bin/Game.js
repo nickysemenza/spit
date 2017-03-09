@@ -34,12 +34,12 @@ class Game {
   /**
    * Persists the game to mongoDB
    */
-  saveGame() {
+  saveGave() {
     //save this.gameState, this.id, etc
     let gameJSON = new gameSchema({
       id: this.id,
       url: this.url,
-      players: this.clients.names,
+      players: self.clients.names,
       totalMoves: this.stateSnapshots.length,
       winner: this.winner,
       state: this.stateSnapshots
@@ -50,21 +50,12 @@ class Game {
     });
   }
 
-  updateWinner(){
-    User.findOneAndUpdate({'username': 'Nicholas'}, {$inc: { gamesWon: 1} }, {upsert:true}, function(err, doc){
+  updateUser(){
+
+    User.findOneAndUpdate({'username':req.user.username}, req.newData, {upsert:true}, function(err, doc){
       if (err) return console.log(500, { error: err });
       return console.log("succesfully saved");
     });
-  }
-
-  updateUsers(){
-    this.clients.forEach((c) => {
-      User.findOneAndUpdate({'username': c.name}, {$inc: { gamesPlayed: 1} }, {upsert:true}, function(err, doc){
-        if (err) return console.log(500, { error: err });
-        return console.log("succesfully saved");
-      });
-    });
-
   }
 
 
@@ -184,10 +175,7 @@ class Game {
     });
   }
   endGame(client){
-    console.log('endGame');
-    //this.saveGame();
-    //this.updateWinner();
-    //this.updateUsers();
+    this.saveGave();
   }
   updateValidMoves(){
     this.clients.forEach((c)=>{

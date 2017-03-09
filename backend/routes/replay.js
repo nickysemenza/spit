@@ -4,7 +4,7 @@ let mongoose = require('mongoose');
 let game = require('../models/game.js');
 
 
-router.get('/:id', (req, res) => {
+router.get('/replay/:id', (req, res) => {
   game.find({'id': req.params.id}).select('players winner state').exec(function (err, game) {
     if (err) {
       console.log(err);
