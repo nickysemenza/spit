@@ -27,7 +27,8 @@ class Game {
     gameList[id] = self;
     lobby[id] = self;
     self.stateSnapshots = [];
-    self.validMoves={}; //1 if still has moves, 0 if no valid moves
+    self.validMoves = {}; //1 if still has moves, 0 if no valid moves
+    self.winner = [];
   }
 
   /**
@@ -81,10 +82,6 @@ class Game {
     //moves a card from self.gameState.hands[username][loc]
     //to self.piles[loc2]
 
-    //if(src.length>1&&((src[src.length-1]%13==(dest[dest.length-1]-1)%13)||(src[src.length-1]%13==(dest[dest.length-1]+1)%13))){
-    //  dest.push(src.pop());
-
-
     //let handCard = this.gameState.hands[client.name][src][0];//todo: [0]??
     let handCard = this.gameState.hands[client.name][src][this.gameState.hands[client.name][src].length-1];
     console.log(`playCard: hand: ${handCard} to ${dest}`);
@@ -99,6 +96,11 @@ class Game {
       //push it on
       this.gameState.piles[dest].push(handCard);
       this.gameState.hands[client.name][src].pop();//pop off the handcard
+
+      let cli = this.gameState.hands[client.name];
+      if(cli[0].length+cli[1].length+cli[2].length+cli[3].length==4&&this.gameState.decks[client.name].length==0){
+        this.winner.push(client.name);
+      }
 
       this.clients.forEach(c=>{
         c.sendMoveUpdate(client.name,src,dest);
@@ -166,6 +168,10 @@ class Game {
   }
   endGame(client){
     console.log("END GAME");
+
+
+
+    console.log(this.winner);
   }
   updateValidMoves(){
     this.clients.forEach((c)=>{
