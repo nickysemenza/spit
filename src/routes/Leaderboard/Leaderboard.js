@@ -18,8 +18,8 @@ export default class Leaderboard extends Component {
     let list = ranking.map(row=><tr key={row.username}>
       <td>{rank++}</td>
       <td>{row.username}</td>
-      <td>{row.win}</td>
-      <td>{row.loss}</td>
+      <td>{row.gamesWon}</td>
+      <td>{row.gamesPlayed - row.gamesWon}</td>
 
     </tr>);
     return (
