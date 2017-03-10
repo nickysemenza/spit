@@ -24,6 +24,32 @@ $pile3-bottom: 245px;
 $pile4-bottom: 327px;
 
 
+@font-face {
+  font-family: 'Copperplate';
+  src: url('fonts/Copperplate.eot');
+  src: url('fonts/Copperplate.woff2') format('woff2'),
+  url('fonts/Copperplate.woff') format('woff'),
+  url('fonts/Copperplate.ttf') format('truetype'),
+  url('fonts/Copperplate.svg#Copperplate') format('svg'),
+  url('fonts/Copperplate.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SignPainter';
+  src: url('fonts/SignPainter-HouseScript.eot');
+  src: url('fonts/SignPainter-HouseScript.woff2') format('woff2'),
+  url('fonts/SignPainter-HouseScript.woff') format('woff'),
+  url('fonts/SignPainter-HouseScript.ttf') format('truetype'),
+  url('fonts/SignPainter-HouseScript.svg#SignPainter-HouseScript') format('svg'),
+  url('fonts/SignPainter-HouseScript.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 * {
   font-family: "Copperplate";
   color: $card-color;
@@ -331,7 +357,7 @@ table.lobby > tr > th {
 
 // Classes
 .hidden {
-  visibility: hidden;  
+  visibility: hidden;
 }
 
 .animatingCard {
