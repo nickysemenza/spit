@@ -25,33 +25,7 @@ describe('<Landing />', () => {
     expect(actual).to.have.length(1);
     expect(actual2).to.have.length(1);
   });
-  //
-  // it('should display loss when savings don\'t exist', () => {
-  //   const savings = {
-  //     monthly: '-10',
-  //     annual: '-120',
-  //     threeYear: '-360'
-  //   };
-  //
-  //   const wrapper = shallow(<FuelSavingsResults savings={savings}/>);
-  //
-  //   const actual = wrapper.find('.fuel-savings-label').text();
-  //   const expected = 'Loss';
-  //
-  //   expect(actual).toEqual(expected);
-  // });
-  //
-  // it('should give values a \'loss\' class when savings don\'t exist', () => {
-  //   const savings = {
-  //     monthly: '-10',
-  //     annual: '-120',
-  //     threeYear: '-360'
-  //   };
-  //
-  //   const wrapper = shallow(<FuelSavingsResults savings={savings}/>);
-  //   const actual = wrapper.find('.loss').length;
-  //   const expected = 3;
-  //
-  //   expect(actual).toEqual(expected);
-  // });
+
 });
+
+
