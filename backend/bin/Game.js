@@ -166,10 +166,31 @@ class Game {
       }
     });
   }
-  endGame(client){
+  endGame(){
     console.log("END GAME");
 
+    var remainingCards = {};
+    this.clients.forEach((c)=>{
+      remainingCards[c.name]=this.gameState.decks[c.name].length+this.gameState.hands[c.name][0].length+this.gameState.hands[c.name][1].length+this.gameState.hands[c.name][2].length+this.gameState.hands[c.name][3].length-4;
+    });
+    var s = JSON.stringify(remainingCards);
+    //console.log("remainingCards: "+s);
 
+    var sortedWinners = [];
+    for (var key in remainingCards){
+      sortedWinners.push([key,remainingCards[key]]);
+    }
+    sortedWinners.sort(function(a,b){
+      return a[1]-b[1];
+    });
+    //console.log(sortedWinners);
+
+    var i;
+    for (i=0;i<sortedWinners.length;i++){
+      if(!this.winner.includes(sortedWinners[i][0])){
+        this.winner.push(sortedWinners[i][0]);
+      }
+    }
 
     console.log(this.winner);
   }

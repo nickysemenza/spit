@@ -86,7 +86,10 @@ class Client {
         this.game.makeMove(client, movecmd);
         break;
       }
-
+      case "END-GAME":{
+        this.game.endGame();
+        break;
+      }
       case "AUTH": {
         let token = parts[1];
         let decoded = jwt.decode(token, {complete: true});
