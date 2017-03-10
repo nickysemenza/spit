@@ -20,7 +20,7 @@ export default class PlayerSection extends Component {
     let hand3=3;
 
     let pageTime = Date.now();
-    let gameTime = Date.now();
+    let gameTime = this.props.startTime;
 
     let decks = this.props.decks ? this.props.decks : {};
     let gameLB = Object.keys(decks).map(k=>
@@ -61,7 +61,8 @@ export default class PlayerSection extends Component {
 
         <div className="mainLB">
           <table className="gameLeaderboard">
-          <CountUp start={gameTime-pageTime} prefix={"Game Time: "} suffix=" seconds" end={1000000} duration={1000000-(gameTime-pageTime)} useEasing={false}> </CountUp>
+            {Math.floor((pageTime-gameTime)/1000)} seconds
+          {/*<CountUp start={gameTime-pageTime} prefix={"Game Time: "} suffix=" seconds" end={1000} duration={1000-(gameTime-pageTime)} useEasing={false}> </CountUp>*/}
             {gameLB}
           </table>
         </div>

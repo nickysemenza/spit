@@ -17,6 +17,7 @@ class Game {
     let self = this;
     self.id = id;
     self.started = false;
+    self.startTime = null;
     self.clients = [];
     self.spectators = [];
     self.gameState = {
@@ -365,6 +366,7 @@ class Game {
       return;
     console.log("time to start game "+this.id);
     this.started=true;
+    this.startTime = Date.now();
     delete lobby[this.id];//remove from active lobby
     this.seed();
   }
@@ -432,6 +434,7 @@ class Game {
       numMoves: this.stateSnapshots.length,
       clients,
       started: this.started,
+      startTime: this.startTime,
       piles: this.gameState.piles,
       peekPiles,
       deck: {

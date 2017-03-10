@@ -149,6 +149,7 @@ export default class Game extends Component {
           card3={card3}
           card4={card4}
           decks={this.props.game && gameState.decks ? gameState.decks : {}}
+          startTime={gameState.startTime}
           clickedHand={this.combineHands}
           selectedHand={this.state.selectedHand}/>
 
