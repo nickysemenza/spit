@@ -17,6 +17,7 @@ class Game {
     let self = this;
     self.id = id;
     self.started = false;
+    self.finished = true;
     self.startTime = null;
     self.clients = [];
     self.spectators = [];
@@ -188,6 +189,7 @@ class Game {
   }
   endGame(){
     console.log("END GAME");
+    this.finished = true;
 
     var remainingCards = {};
     this.clients.forEach((c)=>{
@@ -212,9 +214,9 @@ class Game {
       }
     }
 
-    //this.saveGame();
-    //this.updateWinner();
-    //this.updateUsers()
+    this.saveGame();
+    this.updateWinner();
+    this.updateUsers();
     console.log(this.winner);
 
   }
@@ -269,7 +271,7 @@ class Game {
   }
   makeMove(client, moveCmd) {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
-    if(!this.started || this.spectators.includes(client.name)) {
+    if(!this.started || !this.finished || this.spectators.includes(client.name)) {
       //can't make a move yet
       return;
     }
@@ -391,7 +393,7 @@ class Game {
     // console.log(this.gameState.decks);
   }
   getShuffledDeck() {
-    let cards = [...Array(52).keys()].map(x => ++x);
+    let cards = [...Array(10).keys()].map(x => ++x);
     return this.shuffle(cards.slice(0));
   }
   getGameState(username) {
