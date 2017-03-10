@@ -214,9 +214,9 @@ class Game {
       }
     }
 
-    //this.saveGame();
-    //this.updateWinner();
-    //this.updateUsers()
+    this.saveGame();
+    this.updateWinner();
+    this.updateUsers();
     console.log(this.winner);
 
   }
