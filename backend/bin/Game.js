@@ -360,6 +360,11 @@ class Game {
     this.started=true;
     this.startTime = Date.now();
     delete lobby[this.id];//remove from active lobby
+    do{
+      module.exports.currentLobby++;
+    }
+    while (gameList[module.exports.currentLobby]!=undefined)
+    console.log("GAME.JS "+module.exports.currentLobby);
     this.seed();
   }
   seed() {
@@ -466,5 +471,6 @@ class Game {
 module.exports = {
   Game,
   gameList,
-  lobby
+  lobby,
+  currentLobby:0
 };

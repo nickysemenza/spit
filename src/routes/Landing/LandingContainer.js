@@ -8,7 +8,8 @@ var shortid = require('shortid');
 function mapStateToProps (state) {
   return {
     leaderboard: state.leaderboard,
-    user: state.user
+    user: state.user,
+    lobby: state
   };
 }
 
@@ -27,7 +28,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(createUser(username));
   },
   joinLobbyGame: () => {
-    dispatch(joinLobbyGame());
+    //dispatch(joinLobbyGame());
+    dispatch(joinLobbyGame()).then(function(result){
+      ownProps.routerProps.router.push("/game/"+result.lobby);
+    });
   },
   createRandomLobby: () => {
     ownProps.routerProps.router.push("/game/"+shortid.generate());

@@ -24,7 +24,7 @@ export default class Dashboard extends Component {
     this.props.joinLobbyGame();
   }
   createLobby(){
-    console.log("test");
+    //console.log("test");
     this.props.createRandomLobby();
   }
 

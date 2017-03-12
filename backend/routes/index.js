@@ -19,7 +19,7 @@ router.get('/clients', (req, res) => {
   res.json(clients);
 });
 router.get('/lobbymatch', (req, res) => {
-  res.json({game_id: 513});
+  res.json({game_id: require('../bin/Game').currentLobby});
 });
 
 module.exports = router;
