@@ -3,6 +3,7 @@ import { fetchLeaderboard } from '../../actions/leaderboardActions';
 import { createUser, logout } from '../../actions/userActions';
 import { joinLobbyGame } from '../../actions/gameActions';
 import Landing from './Landing';
+var shortid = require('shortid');
 
 function mapStateToProps (state) {
   return {
@@ -27,6 +28,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   joinLobbyGame: () => {
     dispatch(joinLobbyGame());
+  },
+  createRandomLobby: () => {
+    ownProps.routerProps.router.push("/game/"+shortid.generate());
   }
 });
 

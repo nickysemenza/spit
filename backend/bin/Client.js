@@ -39,7 +39,7 @@ class Client {
   sendMessage(message) {
     // console.log("Sending message to socket <"+this.name+">\n\t"+message);
     if(this.killed) {
-      console.log("socket " + this.uid + " is dead");
+      //console.log("socket " + this.uid + " is dead");
       return;
     }
     this.socket.send(message, (err) => {
@@ -66,6 +66,16 @@ class Client {
         game.addPlayer(this);
         this.game = game;
         //user wants to join game
+        break;
+      }
+      case "LEAVE-GAME": {
+        const game_id = parts[1];
+        let game = gameList[game_id];
+        if(game == undefined){
+          return;
+        }
+        game.removePlayer(this);
+        this.game=game;
         break;
       }
       case "START-GAME": {

@@ -8,6 +8,7 @@ export default class Dashboard extends Component {
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.joinRandomGame = this.joinRandomGame.bind(this);
+    this.createLobby = this.createLobby.bind(this);
   }
   componentDidMount () {
     this.props.loadLeaderboard();
@@ -21,6 +22,10 @@ export default class Dashboard extends Component {
   }
   joinRandomGame() {
     this.props.joinLobbyGame();
+  }
+  createLobby(){
+    console.log("test");
+    this.props.createRandomLobby();
   }
 
   render () {
@@ -41,7 +46,7 @@ export default class Dashboard extends Component {
           }
           {!this.props.user.authenticated ? <button className="playNowBttn" onClick={this.registerUser}>Register</button> : ''}
           {this.props.user.authenticated ? <button className="playNowBttn" disabled={!this.props.user.authenticated} onClick={this.joinRandomGame}>Play Now</button> : ''}
-          {this.props.user.authenticated ? <button className="newLobbyBttn" disabled={!this.props.user.authenticated} onClick={this.joinRandomGame}>New Lobby</button> : ''}
+          {this.props.user.authenticated ? <button className="newLobbyBttn" disabled={!this.props.user.authenticated} onClick={this.createLobby}>New Lobby</button> : ''}
 
 
             <button className="leaderboardBttn" onClick={this.props.goToLeaderboard}>leaderboard</button>
