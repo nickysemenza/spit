@@ -33,10 +33,12 @@ export default class Game extends Component {
     this.cardForPile = this.cardForPile.bind(this);
     this.playerForPile = this.playerForPile.bind(this);
 
+    this.onUnload=this.onUnload.bind(this);
   }
 
 
   componentDidMount () {
+    window.addEventListener("beforeunload",this.onUnload);
     this.websocket = new WebSocket(`ws://${SOCKET_ADDRESS}`);
     this.websocket.onmessage = (event) => {
       let split = event.data.split(" ");
@@ -55,6 +57,12 @@ export default class Game extends Component {
     this.websocket.onopen = () => {
       this.websocket.send('AUTH '+this.props.user.token);
     };
+  }
+  componentWillUnmount(){
+    window.removeEventListener("beforeunload",this.onUnload);
+  }
+  onUnload(event){
+    this.websocket.send('LEAVE-GAME '+this.props.game_id);
   }
   doAnimation(playerName, handNum, deckName) {
     handNum++;//sad, 0->1 indexing switch

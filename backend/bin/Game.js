@@ -17,7 +17,7 @@ class Game {
     let self = this;
     self.id = id;
     self.started = false;
-    self.finished = true;
+    self.finished = false;
     self.startTime = null;
     self.clients = [];
     self.spectators = [];
@@ -25,7 +25,6 @@ class Game {
       hands: {},//the 4x cards
       piles: {},
       decks: {}
-      //cardsLeft = decks.length+hands[1-4].length-4
     };
     gameList[id] = self;
     lobby[id] = self;
@@ -167,19 +166,6 @@ class Game {
 
     let done = false;//only want to pop once
 
-    // myHands.forEach((hand,index)=>{
-    //   if(hand==0 && !done) {
-    //     this.gameState.hands[client.name][index] = [topCard];
-    //     this.gameState.decks[client.name].pop();
-    //     done = true;
-    //   }
-    //   else if(utils.areCardsSameNumber(hand[0],topCard) && !done) {
-    //     this.gameState.hands[client.name][index].push(topCard);
-    //     this.gameState.decks[client.name].pop();
-    //     done = true;
-    //   }
-    // });
-
     myHands.forEach((hand)=>{
       if(hand[hand.length-1]==0 && !done){
         hand.push(this.gameState.decks[client.name].pop());
@@ -271,7 +257,7 @@ class Game {
   }
   makeMove(client, moveCmd) {
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
-    if(!this.started || !this.finished || this.spectators.includes(client.name)) {
+    if(!this.started || this.finished || this.spectators.includes(client.name)) {
       //can't make a move yet
       return;
     }
@@ -345,7 +331,7 @@ class Game {
     }
   }
   startIfReady() {
-    console.log("tryna start if ready");
+    //console.log("tryna start if ready");
     if(this.started)
       return;
     let shouldStart = false;
@@ -356,10 +342,14 @@ class Game {
 
     if(shouldStart)
       this.start();
-
-
   }
-
+  removePlayer(client){
+    //console.log(client);
+   
+    this.clients.splice(this.clients.lastIndexOf(client),1);
+    //console.log(this.clients.lastIndexOf(client));
+    //console.log(this.clients);
+  }
   /**
    * Starts a game, removing it from the lobby list
    */
@@ -370,6 +360,11 @@ class Game {
     this.started=true;
     this.startTime = Date.now();
     delete lobby[this.id];//remove from active lobby
+    do{
+      module.exports.currentLobby++;
+    }
+    while (gameList[module.exports.currentLobby]!=undefined)
+    console.log("GAME.JS "+module.exports.currentLobby);
     this.seed();
   }
   seed() {
@@ -403,8 +398,8 @@ class Game {
     //todo: make sure user is in game
     let clients = this.clients.map((c)=>c.name);
 
-    //if(!clients.includes(username) || username=="anon")
-    //  return {error: "not in game"};
+    if((!clients.includes(username)&&!this.spectators.includes(username)) || username=="anon")
+      return {error: "not in game"};
 
     let state = {
       clients,
@@ -431,6 +426,7 @@ class Game {
       peekPiles[c.name] = pile[pile.length-1];
     });
     let myDeck = this.gameState.decks[username];
+    //console.log('USERNAME: '+username);
     return {
       id: this.id,
       numMoves: this.stateSnapshots.length,
@@ -475,5 +471,6 @@ class Game {
 module.exports = {
   Game,
   gameList,
-  lobby
+  lobby,
+  currentLobby:0
 };

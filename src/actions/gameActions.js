@@ -4,6 +4,7 @@ import { push } from 'react-router-redux';
 export const RECEIVE_GAME_STATE = 'RECEIVE_GAME_STATE';
 
 export function receiveGameState (json) {
+  console.log(json);
   return {
     type: RECEIVE_GAME_STATE,
     state: json,
@@ -32,12 +33,14 @@ function requestJoinLobbyGame () {
 function receiveJoinLobbyGame (json) {
   console.log(json.game_id);
   // dispatch(push("/hi"));
-  return (dispatch) => {
-    dispatch(push("/hi"));
+  //return (dispatch) => {
+  //  dispatch(push("/hi"));
+  //};
+
+  return {
+    type: RECEIVE_JOIN_LOBBY_GAME,
+    //leaderboard: json,
+    lobby:json.game_id,
+    receivedAt: Date.now()
   };
-  // return {
-  //   type: RECEIVE_JOIN_LOBBY_GAME,
-  //   leaderboard: json,
-  //   receivedAt: Date.now()
-  // };
 }
