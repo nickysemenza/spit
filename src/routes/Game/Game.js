@@ -30,6 +30,9 @@ export default class Game extends Component {
     this.placeCardOnPile = this.placeCardOnPile.bind(this);
     this.combineHands = this.combineHands.bind(this);
     this.cardForHand = this.cardForHand.bind(this);
+    this.cardForPile = this.cardForPile.bind(this);
+    this.playerForPile = this.playerForPile.bind(this);
+
   }
 
 
@@ -73,10 +76,13 @@ export default class Game extends Component {
       this.state["cardAnimationState"][handNum - 1] = `Ah${handNum}p${pileNum}`;
       this.state["animatingCards"][handNum - 1] = this.cardForHand(handNum - 1);
       this.state["handCards"][handNum - 1] = null;
+
+      // post animation actions
       setTimeout(function() {
-        this.state["cardAnimationState"][handNum - 1] = "hidden";
-        this.state["handCards"][handNum - 1] = this.cardForHand(handNum - 1);
-        }.bind(this), 1000
+          let player = this.playerForPile(pileNum - 1);
+          this.state["handCards"][handNum - 1] = this.cardForHand(handNum - 1);
+          this.state["cardAnimationState"][handNum - 1] = "hidden";
+        }.bind(this), 250
       );
     }
   }
@@ -114,6 +120,12 @@ export default class Game extends Component {
     }
     return 0;
   }
+  playerForPile(pile) {
+    return this.props.game.state.peekPiles ? Object.keys(this.props.game.state.peekPiles)[pile] : null;
+  }
+  cardForPile(player) {
+    return player ? this.props.game.state.peekPiles[player] : 0;
+  }
 
   render () {
     let gameState = this.props.game.state;
@@ -123,14 +135,12 @@ export default class Game extends Component {
       <h1><Link to="/">Go register</Link></h1>
     </div>);
 
-
-    let card1 = this.cardForHand(0);
-    let card2 = this.cardForHand(1);
-    let card3 = this.cardForHand(2);
-    let card4 = this.cardForHand(3);
+    let cards = [this.cardForHand(0), this.cardForHand(1), this.cardForHand(2), this.cardForHand(3)];
+    let players = [this.playerForPile(0), this.playerForPile(1), this.playerForPile(2), this.playerForPile(3)];
+    let piles = [this.cardForPile(players[0]), this.cardForPile(players[1]), this.cardForPile(players[2]), this.cardForPile(players[3])];
 
     let gameView = (
-        <div>
+      <div>
         <h2>Game #{this.props.game_id}. Hello, {this.props.user.username}</h2>
         <KeyHandler keyEventName={KEYPRESS} keyValue="1" onKeyHandle={()=>{this.changeSelectedHand(1);}} />
         <KeyHandler keyEventName={KEYPRESS} keyValue="2" onKeyHandle={()=>{this.changeSelectedHand(2);}} />
@@ -143,31 +153,31 @@ export default class Game extends Component {
         <button onClick={this.sendCommandDebug}>send command</button>
         <button onClick={this.startGame}>start game</button>
 
-          <div style={gameboardstyle}>
-            <img className={`cardimg ${this.state["cardAnimationState"][0]}`} src={`../../assets/cards/${this.state.animatingCards[0]}.png`} />
-            <img className={`cardimg ${this.state["cardAnimationState"][1]}`} src={`../../assets/cards/${this.state.animatingCards[1]}.png`} />
-            <img className={`cardimg ${this.state["cardAnimationState"][2]}`} src={`../../assets/cards/${this.state.animatingCards[2]}.png`} />
-            <img className={`cardimg ${this.state["cardAnimationState"][3]}`} src={`../../assets/cards/${this.state.animatingCards[3]}.png`} />
+        <div style={gameboardstyle}>
+          <img className={`cardimg ${this.state["cardAnimationState"][0]}`} src={`../../assets/cards/${this.state.animatingCards[0]}.png`} />
+          <img className={`cardimg ${this.state["cardAnimationState"][1]}`} src={`../../assets/cards/${this.state.animatingCards[1]}.png`} />
+          <img className={`cardimg ${this.state["cardAnimationState"][2]}`} src={`../../assets/cards/${this.state.animatingCards[2]}.png`} />
+          <img className={`cardimg ${this.state["cardAnimationState"][3]}`} src={`../../assets/cards/${this.state.animatingCards[3]}.png`} />
 
-            <Opponents/>
-        <Piles piles={gameState.peekPiles} clickedPile={this.placeCardOnPile}/>
-        <PlayerSection
-          card1={this.state.handCards[0] ? this.state.handCards[0] : card1}
-          card2={this.state.handCards[1] ? this.state.handCards[1] : card2}
-          card3={this.state.handCards[2] ? this.state.handCards[2] : card3}
-          card4={this.state.handCards[3] ? this.state.handCards[3] : card4}
-          decks={this.props.game && gameState.decks ? gameState.decks : {}}
-          startTime={gameState.startTime}
-          clickedHand={this.combineHands}
-          selectedHand={this.state.selectedHand}/>
+          <Opponents/>
+          <Piles players={players} piles={piles} clickedPile={this.placeCardOnPile}/>
+          <PlayerSection
+            card1={this.state.handCards[0] ? this.state.handCards[0] : cards[0]}
+            card2={this.state.handCards[1] ? this.state.handCards[1] : cards[1]}
+            card3={this.state.handCards[2] ? this.state.handCards[2] : cards[2]}
+            card4={this.state.handCards[3] ? this.state.handCards[3] : cards[3]}
+            decks={this.props.game && gameState.decks ? gameState.decks : {}}
+            startTime={gameState.startTime}
+            clickedHand={this.combineHands}
+            selectedHand={this.state.selectedHand}/>
 
-          </div>
-        </div>);
+        </div>
+      </div>);
 
     let lobbyNames = gameState.clients ? gameState.clients.map(c=><tr>
-      <td>{c}</td>
-      <td>✅</td>
-    </tr>): '';
+        <td>{c}</td>
+        <td>✅</td>
+      </tr>): '';
 
     let lobbyView = (
       <div>
