@@ -4,8 +4,6 @@
 
 
 import React, {Component, PropTypes} from 'react';
-import CountUp from 'react-CountUp';
-
 export default class PlayerSection extends Component {
 
   render() {
@@ -62,7 +60,6 @@ export default class PlayerSection extends Component {
         <div className="mainLB">
           <table className="gameLeaderboard">
             {Math.floor((pageTime-gameTime)/1000)} seconds
-          {/*<CountUp start={gameTime-pageTime} prefix={"Game Time: "} suffix=" seconds" end={1000} duration={1000-(gameTime-pageTime)} useEasing={false}> </CountUp>*/}
             {gameLB}
           </table>
         </div>
