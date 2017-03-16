@@ -51,6 +51,8 @@ export default class Game extends Component {
         this.websocket.send('JOIN-GAME '+this.props.game_id);
       else if(split[0]=="EXECUTED-MOVE")
         this.doAnimation(split[1], split[2], split[3]);
+      else if(split[0]=="EXECUTED-SPIT")
+        this.spitHappened();
       else
         console.log(event.data);
     };
@@ -63,6 +65,10 @@ export default class Game extends Component {
   }
   onUnload(event){
     this.websocket.send('LEAVE-GAME '+this.props.game_id);
+  }
+  spitHappened() {
+    //TODO @marty
+    console.log("spit happened")
   }
   doAnimation(playerName, handNum, deckName) {
     handNum++;//sad, 0->1 indexing switch

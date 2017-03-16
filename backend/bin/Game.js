@@ -88,6 +88,7 @@ class Game {
       if(pCard!= undefined) {
         this.gameState.piles[c.name].push(pCard);
       }
+      c.sendSpitUpdate();
     });
   }
 
