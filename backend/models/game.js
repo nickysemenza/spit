@@ -6,12 +6,20 @@ let mongoose = require('mongoose')
   ,Schema = mongoose.Schema;
 
 let gameSchema = new Schema({
-    id: {type: Number, required: false, unique: true},
-    url: {type: String, required: false, unique: true},
-    players: [{type: Schema.Types.ObjectId, ref: 'User' , required: false}],
+    id: {type: String, required: true, unique: true},
+    players: [{type: String , required: false}],
     totalMoves: {type: Number},
-    winner: {type: Schema.Types.ObjectId, ref: 'User'},
+    winner: {type: String, required: false},
     state: [{}]
 });
 
 module.exports = mongoose.model('Game', gameSchema);
+
+
+/*let gameSchema = new Schema({
+    id: {type: Number, required: true},
+    players: [{type: Schema.Types.ObjectId, ref: 'User', required: false}],
+    totalMoves: {type: Number},
+    winner: {type: Schema.Types.ObjectId, ref: 'User', required: false},
+    state: [{}]
+});*/

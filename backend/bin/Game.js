@@ -40,20 +40,23 @@ class Game {
     //save this.gameState, this.id, etc
     let gameJSON = new gameSchema({
       id: this.id,
-      url: this.url,
-      players: this.clients.names,
       totalMoves: this.stateSnapshots.length,
-      winner: this.winner,
+      winner: this.winner[0],
       state: this.stateSnapshots
     });
 
+    this.clients.forEach((c)=>{
+      gameJSON.players.push(c.name);
+    });
+
+    console.log(gameJSON);
     gameJSON.save((err, g) => {
       if (err) return console.error(err);
-    });
+   });    
   }
 
   updateWinner(){
-    User.findOneAndUpdate({'username': 'Nicholas'}, {$inc: { gamesWon: 1} }, {upsert:true}, (err, doc) => {
+    User.findOneAndUpdate({'username': this.winner[0]}, {$inc: { gamesWon: 1} }, {upsert:true}, function(err, doc){
       if (err) return console.log(500, { error: err });
       return console.log("succesfully saved");
     });
@@ -202,8 +205,8 @@ class Game {
     }
 
     this.saveGame();
-    this.updateWinner();
     this.updateUsers();
+    this.updateWinner();
     console.log(this.winner);
 
   }
@@ -389,7 +392,7 @@ class Game {
     // console.log(this.gameState.decks);
   }
   getShuffledDeck() {
-    let cards = [...Array(52).keys()].map(x => ++x);
+    let cards = [...Array(10).keys()].map(x => ++x);
     return this.shuffle(cards.slice(0));
   }
   getGameState(username) {
