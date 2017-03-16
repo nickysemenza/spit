@@ -3,7 +3,7 @@ import { fetchLeaderboard } from '../../actions/leaderboardActions';
 import { createUser, logout } from '../../actions/userActions';
 import { joinLobbyGame } from '../../actions/gameActions';
 import Landing from './Landing';
-var shortid = require('shortid');
+import  shortid from 'shortid';
 
 function mapStateToProps (state) {
   return {
@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   joinLobbyGame: () => {
     //dispatch(joinLobbyGame());
-    dispatch(joinLobbyGame()).then(function(result){
+    dispatch(joinLobbyGame()).then((result) => {
       ownProps.routerProps.router.push("/game/"+result.lobby);
     });
   },

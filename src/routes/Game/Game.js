@@ -50,6 +50,8 @@ export default class Game extends Component {
         this.websocket.send('JOIN-GAME '+this.props.game_id);
       else if(split[0]=="EXECUTED-MOVE")
         this.doAnimation(split[1], split[2], split[3]);
+      else if(split[0]=="EXECUTED-SPIT")
+        this.spitHappened();
       else
         console.log(event.data);
     };
@@ -62,6 +64,10 @@ export default class Game extends Component {
   }
   onUnload(event){
     this.websocket.send('LEAVE-GAME '+this.props.game_id);
+  }
+  spitHappened() {
+    //TODO @marty
+    console.log("spit happened");
   }
   doAnimation(playerName, handNum, deckName) {
     handNum++;//sad, 0->1 indexing switch
@@ -84,10 +90,10 @@ export default class Game extends Component {
       this.state["animatingCards"][handNum - 1] = this.cardForHand(handNum - 1);
 
       // post animation actions
-      setTimeout(function() {
+      setTimeout(() => {
           this.state["cardAnimationState"][handNum - 1] = "hidden";
-        }.bind(this), 250
-      );
+        }, 250
+      ).bind(this);
     }
   }
   handleMoveBoxChange(event) {
@@ -178,7 +184,7 @@ export default class Game extends Component {
         </div>
       </div>);
 
-    let lobbyNames = gameState.clients ? gameState.clients.map(c=><tr>
+    let lobbyNames = gameState.clients ? gameState.clients.map(c=><tr key={c.name}>
         <td>{c}</td>
         <td>✅</td>
       </tr>): '';

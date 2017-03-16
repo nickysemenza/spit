@@ -131,7 +131,10 @@ class Client {
     }
   }
   sendMoveUpdate(player, hand, deck) {
-    this.sendMessage(`EXECUTED-MOVE ${player} ${hand} ${deck}`)
+    this.sendMessage(`EXECUTED-MOVE ${player} ${hand} ${deck}`);
+  }
+  sendSpitUpdate() {
+    this.sendMessage('EXECUTED-SPIT');
   }
 }
 
