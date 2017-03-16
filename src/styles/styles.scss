@@ -373,7 +373,7 @@ table.lobby > tr > th {
 {
   position: absolute;
   bottom: $hand-bottom;
-  animation-duration: 1s;
+  animation-duration: .25s;
   animation-timing-function: ease-out;
 }
 
@@ -467,7 +467,7 @@ table.lobby > tr > th {
   position: absolute;
   bottom: $hand-bottom;
   left: $deck-left;
-  animation-duration: 1s;
+  animation-duration: .5s;
   animation-timing-function: ease-out;
   animation-iteration-count: infinite;
 }

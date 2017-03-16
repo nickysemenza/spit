@@ -12,7 +12,6 @@ export default class Opponents extends Component {
       <div className="opponents">
         <div className="opponent" />
         <div className="rotateleft">
-          <img className="opdeckimg" src="https://goo.gl/II2O3o" />
 
           <div className="hands">
             <div className="card">
@@ -34,7 +33,6 @@ export default class Opponents extends Component {
         </div>
 
         <div>
-          <img className="opdeckimg" src="https://goo.gl/II2O3o" />
           <div className="hands">
             <div className="card">
               <img className="opcardimg" src="https://goo.gl/DfIK1m" />
@@ -55,7 +53,6 @@ export default class Opponents extends Component {
         </div>
 
         <div className="rotateright">
-          <img className="opdeckimg" src="https://goo.gl/II2O3o" />
 
           <div className="hands">
             <div className="card">
