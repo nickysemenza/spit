@@ -49,6 +49,7 @@ class Game {
       gameJSON.players.push(c.name);
     });
 
+    console.log(gameJSON);
     gameJSON.save((err, g) => {
       if (err) return console.error(err);
    });    

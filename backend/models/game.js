@@ -6,7 +6,7 @@ let mongoose = require('mongoose')
   ,Schema = mongoose.Schema;
 
 let gameSchema = new Schema({
-    id: {type: Number, required: true},
+    id: {type: String, required: true, unique: true},
     players: [{type: String , required: false}],
     totalMoves: {type: Number},
     winner: {type: String, required: false},
