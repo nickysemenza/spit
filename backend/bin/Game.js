@@ -345,8 +345,8 @@ class Game {
   }
   removePlayer(client){
     //console.log(client);
-   
-    this.clients.splice(this.clients.lastIndexOf(client),1);
+    if(!this.started)
+      this.clients.splice(this.clients.lastIndexOf(client),1);
     //console.log(this.clients.lastIndexOf(client));
     //console.log(this.clients);
   }
