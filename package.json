@@ -66,7 +66,7 @@
     "sequelize": "^3.30.0",
     "sequelize-cli": "^2.5.1",
     "serve-favicon": "^2.3.2",
-    "shortid": "2.2.8",
+    "shortid": "^2.2.8",
     "ws": "^2.0.2"
   },
   "devDependencies": {

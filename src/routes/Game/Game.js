@@ -19,8 +19,7 @@ export default class Game extends Component {
       moveBox: "",
       selectedHand: 1,
       cardAnimationState: ["hidden", "hidden", "hidden", "hidden"],
-      animatingCards: [0, 0, 0, 0],
-      handCards: [null, null, null, null]
+      animatingCards: [0, 0, 0, 0]
     };
     this.handleMoveBoxChange = this.handleMoveBoxChange.bind(this);
     this.sendCommandDebug = this.sendCommandDebug.bind(this);
@@ -51,6 +50,8 @@ export default class Game extends Component {
         this.websocket.send('JOIN-GAME '+this.props.game_id);
       else if(split[0]=="EXECUTED-MOVE")
         this.doAnimation(split[1], split[2], split[3]);
+      else if(split[0]=="EXECUTED-SPIT")
+        this.spitHappened();
       else
         console.log(event.data);
     };
@@ -63,6 +64,10 @@ export default class Game extends Component {
   }
   onUnload(event){
     this.websocket.send('LEAVE-GAME '+this.props.game_id);
+  }
+  spitHappened() {
+    //TODO @marty
+    console.log("spit happened");
   }
   doAnimation(playerName, handNum, deckName) {
     handNum++;//sad, 0->1 indexing switch
@@ -83,15 +88,12 @@ export default class Game extends Component {
       console.log(`Trigger Ah${handNum}p${pileNum}`);
       this.state["cardAnimationState"][handNum - 1] = `Ah${handNum}p${pileNum}`;
       this.state["animatingCards"][handNum - 1] = this.cardForHand(handNum - 1);
-      this.state["handCards"][handNum - 1] = null;
 
       // post animation actions
-      setTimeout(function() {
-          let player = this.playerForPile(pileNum - 1);
-          this.state["handCards"][handNum - 1] = this.cardForHand(handNum - 1);
+      setTimeout(() => {
           this.state["cardAnimationState"][handNum - 1] = "hidden";
-        }.bind(this), 250
-      );
+        }, 250
+      ).bind(this);
     }
   }
   handleMoveBoxChange(event) {
@@ -170,10 +172,10 @@ export default class Game extends Component {
           <Opponents/>
           <Piles players={players} piles={piles} clickedPile={this.placeCardOnPile}/>
           <PlayerSection
-            card1={this.state.handCards[0] ? this.state.handCards[0] : cards[0]}
-            card2={this.state.handCards[1] ? this.state.handCards[1] : cards[1]}
-            card3={this.state.handCards[2] ? this.state.handCards[2] : cards[2]}
-            card4={this.state.handCards[3] ? this.state.handCards[3] : cards[3]}
+            card1={cards[0]}
+            card2={cards[1]}
+            card3={cards[2]}
+            card4={cards[3]}
             decks={this.props.game && gameState.decks ? gameState.decks : {}}
             startTime={gameState.startTime}
             clickedHand={this.combineHands}
@@ -182,7 +184,7 @@ export default class Game extends Component {
         </div>
       </div>);
 
-    let lobbyNames = gameState.clients ? gameState.clients.map(c=><tr>
+    let lobbyNames = gameState.clients ? gameState.clients.map(c=><tr key={c.name}>
         <td>{c}</td>
         <td>✅</td>
       </tr>): '';
