@@ -53,7 +53,7 @@ class Game {
   }
 
   updateWinner(){
-    User.findOneAndUpdate({'username': 'Nicholas'}, {$inc: { gamesWon: 1} }, {upsert:true}, function(err, doc){
+    User.findOneAndUpdate({'username': 'Nicholas'}, {$inc: { gamesWon: 1} }, {upsert:true}, (err, doc) => {
       if (err) return console.log(500, { error: err });
       return console.log("succesfully saved");
     });
@@ -61,7 +61,7 @@ class Game {
 
   updateUsers(){
     this.clients.forEach((c) => {
-      User.findOneAndUpdate({'username': c.name}, {$inc: { gamesPlayed: 1} }, {upsert:true}, function(err, doc){
+      User.findOneAndUpdate({'username': c.name}, {$inc: { gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
         if (err) return console.log(500, { error: err });
         return console.log("succesfully saved");
       });
@@ -125,7 +125,7 @@ class Game {
 
       this.clients.forEach(c=>{
         c.sendMoveUpdate(client.name,src,dest);
-      })
+      });
     }
     else {
       console.log('cant play that card');
@@ -178,23 +178,23 @@ class Game {
     console.log("END GAME");
     this.finished = true;
 
-    var remainingCards = {};
+    let remainingCards = {};
     this.clients.forEach((c)=>{
       remainingCards[c.name]=this.gameState.decks[c.name].length+this.gameState.hands[c.name][0].length+this.gameState.hands[c.name][1].length+this.gameState.hands[c.name][2].length+this.gameState.hands[c.name][3].length-4;
     });
-    var s = JSON.stringify(remainingCards);
+    let s = JSON.stringify(remainingCards);
     //console.log("remainingCards: "+s);
 
-    var sortedWinners = [];
-    for (var key in remainingCards){
+    let sortedWinners = [];
+    for (let key in remainingCards){
       sortedWinners.push([key,remainingCards[key]]);
     }
-    sortedWinners.sort(function(a,b){
+    sortedWinners.sort((a,b) => {
       return a[1]-b[1];
     });
     //console.log(sortedWinners);
 
-    var i;
+    let i;
     for (i=0;i<sortedWinners.length;i++){
       if(!this.winner.includes(sortedWinners[i][0])){
         this.winner.push(sortedWinners[i][0]);
@@ -364,7 +364,7 @@ class Game {
     do{
       module.exports.currentLobby++;
     }
-    while (gameList[module.exports.currentLobby]!=undefined)
+    while (gameList[module.exports.currentLobby]!=undefined);
     console.log("GAME.JS "+module.exports.currentLobby);
     this.seed();
   }

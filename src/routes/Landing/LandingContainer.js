@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   joinLobbyGame: () => {
     //dispatch(joinLobbyGame());
-    dispatch(joinLobbyGame()).then(function(result){
+    dispatch(joinLobbyGame()).then((result) => {
       ownProps.routerProps.router.push("/game/"+result.lobby);
     });
   },

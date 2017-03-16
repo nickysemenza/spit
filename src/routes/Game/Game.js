@@ -68,7 +68,7 @@ export default class Game extends Component {
   }
   spitHappened() {
     //TODO @marty
-    console.log("spit happened")
+    console.log("spit happened");
   }
   doAnimation(playerName, handNum, deckName) {
     handNum++;//sad, 0->1 indexing switch
@@ -92,11 +92,11 @@ export default class Game extends Component {
       this.state["handCards"][handNum - 1] = null;
 
       // post animation actions
-      setTimeout(function() {
+      setTimeout(() => {
           let player = this.playerForPile(pileNum - 1);
           this.state["handCards"][handNum - 1] = this.cardForHand(handNum - 1);
           this.state["cardAnimationState"][handNum - 1] = "hidden";
-        }.bind(this), 250
+        }, 250
       );
     }
   }
@@ -188,7 +188,7 @@ export default class Game extends Component {
         </div>
       </div>);
 
-    let lobbyNames = gameState.clients ? gameState.clients.map(c=><tr>
+    let lobbyNames = gameState.clients ? gameState.clients.map(c=><tr key={c.name}>
         <td>{c}</td>
         <td>✅</td>
       </tr>): '';
