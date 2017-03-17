@@ -141,6 +141,10 @@ h1 {
   float: right;
 }
 
+.absolute {
+  position: absolute;
+}
+
 .card {
   // put button under card
   flex-direction: column;
@@ -150,10 +154,11 @@ h1 {
   width: 100px;
   height: 144px;
   margin: 0px 20px 20px 20px;
+  border: 3px solid transparent;
 }
 
 .cardimg:hover {
-  border: 1px solid rebeccapurple;
+  border: 3px solid rebeccapurple;
 }
 
 .cardButton {

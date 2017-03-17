@@ -151,25 +151,19 @@ export default class Game extends Component {
 
     let gameView = (
       <div>
-        <h2>Game #{this.props.game_id}. Hello, {this.props.user.username}</h2>
         <KeyHandler keyEventName={KEYPRESS} keyValue="1" onKeyHandle={()=>{this.changeSelectedHand(1);}} />
         <KeyHandler keyEventName={KEYPRESS} keyValue="2" onKeyHandle={()=>{this.changeSelectedHand(2);}} />
         <KeyHandler keyEventName={KEYPRESS} keyValue="3" onKeyHandle={()=>{this.changeSelectedHand(3);}} />
         <KeyHandler keyEventName={KEYPRESS} keyValue="4" onKeyHandle={()=>{this.changeSelectedHand(4);}} />
         <KeyHandler keyEventName={KEYPRESS} keyValue=" " onKeyHandle={this.popDeck} />
 
-
-        <input type="text" value={this.state.moveBox} onChange={this.handleMoveBoxChange} />
-        <button onClick={this.sendCommandDebug}>send command</button>
-        <button onClick={this.startGame}>start game</button>
-
         <div style={gameboardstyle}>
-          <img className={`cardimg ${this.state["cardAnimationState"][0]}`} src={`../../assets/cards/${this.state.animatingCards[0]}.png`} />
-          <img className={`cardimg ${this.state["cardAnimationState"][1]}`} src={`../../assets/cards/${this.state.animatingCards[1]}.png`} />
-          <img className={`cardimg ${this.state["cardAnimationState"][2]}`} src={`../../assets/cards/${this.state.animatingCards[2]}.png`} />
-          <img className={`cardimg ${this.state["cardAnimationState"][3]}`} src={`../../assets/cards/${this.state.animatingCards[3]}.png`} />
+          <img className={`absolute cardimg ${this.state["cardAnimationState"][0]}`} src={`../../assets/cards/${this.state.animatingCards[0]}.png`} />
+          <img className={`absolute cardimg ${this.state["cardAnimationState"][1]}`} src={`../../assets/cards/${this.state.animatingCards[1]}.png`} />
+          <img className={`absolute cardimg ${this.state["cardAnimationState"][2]}`} src={`../../assets/cards/${this.state.animatingCards[2]}.png`} />
+          <img className={`absolute cardimg ${this.state["cardAnimationState"][3]}`} src={`../../assets/cards/${this.state.animatingCards[3]}.png`} />
 
-          <Opponents/>
+          <Opponents hands={gameState.hands}/>
           <Piles players={players} piles={piles} clickedPile={this.placeCardOnPile}/>
           <PlayerSection
             card1={cards[0]}
