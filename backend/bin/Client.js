@@ -15,6 +15,7 @@ class Client {
     self.game = null;
     self.authenticated = false;
     self.killed = false;
+    self.mongoID = null;
 
 
     socket.on('message', (message) => {
@@ -109,6 +110,7 @@ class Client {
               this.authenticated = true;
               this.name = user.username;
               this.sendMessage("AUTH-OK");
+              this.mongoID = user._id;
               //todo: set userid, check in DB, etc
             }
             else {
