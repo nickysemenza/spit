@@ -3,7 +3,8 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      usernameBox: ""
+      usernameBox: "",
+      attempt: false
     };
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.registerUser = this.registerUser.bind(this);
@@ -29,6 +30,7 @@ export default class Dashboard extends Component {
   }
 
   render () {
+    let {attempt} = this.state;
 
     return (
       <div>
@@ -44,13 +46,19 @@ export default class Dashboard extends Component {
           : <h1>Hello, {this.props.user.username}</h1>
           
           }
+
           {!this.props.user.authenticated ? <button className="playNowBttn" onClick={this.registerUser}>Register</button> : ''}
           {this.props.user.authenticated ? <button className="playNowBttn" disabled={!this.props.user.authenticated} onClick={this.joinRandomGame}>Play Now</button> : ''}
           {this.props.user.authenticated ? <button className="newLobbyBttn" disabled={!this.props.user.authenticated} onClick={this.createLobby}>New Lobby</button> : ''}
 
 
             <button className="leaderboardBttn" onClick={this.props.goToLeaderboard}>leaderboard</button>
-
+            <button className="leaderboardBttn" onClick={this.props.goToInstructions}>Instructions</button>
+            {this.props.user.attempted_auth ?
+             <button className="leaderboardBttn" onClick={()=>{this.setState({attempt: false});}}>true</button> :
+             <button className="leaderboardBttn" onClick={()=>{this.setState({attempt: true});}}>false</button>
+           }
+            
           <button onClick={this.props.logout}>test logout</button>
         </div>
       </div>

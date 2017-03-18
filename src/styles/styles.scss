@@ -294,6 +294,73 @@ table.gameLeaderboard > tr > td {
   background: #204859
 }
 
+// --- Instruction Page --- //
+
+.layoutIMG {
+  align-items: center;
+  width: 50%;
+  height: 20%;
+  justify-content: center
+}
+.playIMG {
+  align-items: center;
+  width: 80%;
+  height: 10%;
+  justify-content: center
+}
+
+.infoContain {
+  color: white;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sects {
+  font-size: 32pt;
+  align-items: center;
+  justify-content: center;
+  order: 1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 20px;
+}
+.minisects {
+  font-size: 32pt;
+  align-items: center;
+  justify-content: center;
+  order: 1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.gifsects {
+  font-size: 32pt;
+  align-items: center;
+  justify-content: center;
+  order: 1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 50px;
+}
+
+.descContain {
+  color: white;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: left;
+  
+}
+
+ol {
+  font-size: 12pt;
+}
 
 // --- Leaderboard Page --- //
 
