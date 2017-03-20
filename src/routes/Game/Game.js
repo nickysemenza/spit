@@ -19,7 +19,9 @@ export default class Game extends Component {
       moveBox: "",
       selectedHand: 1,
       cardAnimationState: ["hidden", "hidden", "hidden", "hidden"],
-      animatingCards: [0, 0, 0, 0]
+      animatingCards: [0, 0, 0, 0],
+      countdown: true,
+      timer: 3
     };
     this.handleMoveBoxChange = this.handleMoveBoxChange.bind(this);
     this.sendCommandDebug = this.sendCommandDebug.bind(this);
@@ -31,12 +33,16 @@ export default class Game extends Component {
     this.cardForHand = this.cardForHand.bind(this);
     this.cardForPile = this.cardForPile.bind(this);
     this.playerForPile = this.playerForPile.bind(this);
+    this.swch = this.swch.bind(this);
+    this.cdStart = this.cdStart.bind(this);
+    this.cdfalse = this.cdfalse.bind(this);
 
     this.onUnload=this.onUnload.bind(this);
   }
 
 
   componentDidMount () {
+    let intervalId = setInterval(this.swch, 1000);
     window.addEventListener("beforeunload",this.onUnload);
     this.websocket = new WebSocket(`ws://${SOCKET_ADDRESS}`);
     this.websocket.onmessage = (event) => {
@@ -106,6 +112,22 @@ export default class Game extends Component {
   startGame() {
     this.sendCommand("START-GAME "+this.props.game_id);
   }
+  cdStart() {
+    this.setState({countdown: true});
+  }
+  cdfalse() {
+    this.state.countdown = false;
+  }
+  swch() {
+    let down = this.state.timer;
+    if (this.state.countdown && this.props.game.state.started) {
+        down--;
+    }
+    if(this.state.timer < 1) {
+      this.cdfalse();
+    }
+    this.setState({timer: down});
+  }
   sendCommand(move) {
     console.log("SENDING CMD: ",move);
     this.websocket.send(move);
@@ -149,7 +171,7 @@ export default class Game extends Component {
     let players = [this.playerForPile(0), this.playerForPile(1), this.playerForPile(2), this.playerForPile(3)];
     let piles = [this.cardForPile(players[0]), this.cardForPile(players[1]), this.cardForPile(players[2]), this.cardForPile(players[3])];
 
-    let gameView = (
+    let gameView = !(this.state.countdown && gameState.started) ? (
       <div>
         <KeyHandler keyEventName={KEYPRESS} keyValue="1" onKeyHandle={()=>{this.changeSelectedHand(1);}} />
         <KeyHandler keyEventName={KEYPRESS} keyValue="2" onKeyHandle={()=>{this.changeSelectedHand(2);}} />
@@ -176,6 +198,17 @@ export default class Game extends Component {
             selectedHand={this.state.selectedHand}/>
 
         </div>
+      </div>) 
+      : 
+      (<div>
+      <img className="leftBanner" src="../../assets/Sidebar.png" />
+      <img className="rightBanner" src="../../assets/Sidebar.png" />
+      <div style={{textAlign: "center"}}>
+            <h1>Lobby</h1>
+            <h1 className="countdowntxt">Joining game in: </h1>
+            <button className="timeBttn" onClick={this.cdStart}> {this.state.timer} </button>
+            
+      </div>
       </div>);
 
     let lobbyNames = gameState.clients ? gameState.clients.map(c=><tr key={c.name}>
@@ -195,10 +228,12 @@ export default class Game extends Component {
               {lobbyNames}
             </table>
             <span onClick={this.startGame} className="readyUp">Ready Up</span>
+            
           </div>
         </div>
       </div>
     );
+
 
     let loggedInView = gameState.started ? gameView : lobbyView;
     return (

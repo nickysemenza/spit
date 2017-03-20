@@ -294,6 +294,44 @@ table.gameLeaderboard > tr > td {
   justify-content: center;
 
 }
+.countdowntxt {
+  margin-top: 180px;
+}
+.timeBttn {
+  background: transparent;
+  border: 2px solid;
+  border-color: transparent;
+  color: white;
+  padding: 1em;
+  font-size: 100pt;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 80px;
+  padding-right: 80px;
+  margin:20px;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.cdDebugBttn {
+  background: transparent;
+  border: 2px solid;
+  border-color: grey;
+  color: white;
+  padding: 1em;
+  font-size: 20pt;
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin:10px;
+  align-items: center;
+  justify-content: center;
+
+}
 
 .newLobbyBttn:hover, .playNowBttn:hover, .leaderboardBttn:hover, .usernameInput:hover{
   background: #204859
