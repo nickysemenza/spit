@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { IndexLink } from 'react-router';
 export default class Instructs extends Component {
   constructor(props) {
     super(props);
@@ -70,7 +71,7 @@ export default class Instructs extends Component {
       		<img src="../../assets/Instructions/playingCards.gif" className="playIMG" alt="PlayingCards" />
       	</ul>
       	<div className="sects">
-      	<button className="leaderboardBttn" onclick={() => {this.router.push("/");}}> Back </button>
+      	<button className="leaderboardBttn"><IndexLink to="/" activeClassName="active">Home</IndexLink></button>
       	</div>
       </div>
     );
