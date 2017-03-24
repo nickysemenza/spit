@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from './components/App';
 import GamePage from './routes/Game/GamePage';
+import ReplayPage from './routes/Game/ReplayPage';
 import LandingPage from './routes/Landing/LandingPage';
 import Instructions from './routes/Landing/Instructions';
 import LeaderboardPage from './routes/Leaderboard/LeaderboardPage';
@@ -14,6 +15,7 @@ export default (
     <Route path="leaderboard" component={LeaderboardPage}/>
     <Route path="Instructions" component={Instructions}/>
     <Route path="game/:game_id" component={GamePage}/>
+    <Route path="replay/:game_id" component={ReplayPage}/>
     <Route path="*" component={NotFoundPage}/>
   </Route>
 );

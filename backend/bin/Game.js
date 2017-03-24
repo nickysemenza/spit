@@ -42,17 +42,19 @@ class Game {
       id: this.id,
       totalMoves: this.stateSnapshots.length,
       winner: this.winner[0],
-      state: this.stateSnapshots
+      state: this.stateSnapshots,
+      finished: this.finished
     });
 
     this.clients.forEach((c)=>{
       gameJSON.players.push(c.name);
     });
 
+    // gameJSON.isNew = false;
     console.log(gameJSON);
     gameJSON.save((err, g) => {
       if (err) return console.error(err);
-   });    
+   });
   }
 
   updateWinner(){
@@ -77,7 +79,12 @@ class Game {
    * Takes a snapshot of the game state
    */
   snapshot() {
-    this.stateSnapshots.push(this.gameState);
+    let t = this.gameState;
+    t.started = this.started;
+    t.startTime = this.startTime;
+    // t.clients = this.clients;
+    // t.peekPiles = this.getGameState(this.clients[0].name).peekPiles;
+    this.stateSnapshots.push(t);
   }
 
   /**
@@ -260,6 +267,7 @@ class Game {
     });
   }
   makeMove(client, moveCmd) {
+    // this.saveGame();
     console.log(`[MOVE] \n\tgame:${this.id}\n\tmove: ${moveCmd} \n\tclient:${client.name}`);
     if(!this.started || this.finished || this.spectators.includes(client.name)) {
       //can't make a move yet
