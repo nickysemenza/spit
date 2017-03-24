@@ -54,10 +54,6 @@ export default class Dashboard extends Component {
 
             <button className="leaderboardBttn" onClick={this.props.goToLeaderboard}>leaderboard</button>
             <button className="leaderboardBttn" onClick={this.props.goToInstructions}>Instructions</button>
-            {this.props.user.attempted_auth ?
-             <button className="leaderboardBttn" onClick={()=>{this.setState({attempt: false});}}>true</button> :
-             <button className="leaderboardBttn" onClick={()=>{this.setState({attempt: true});}}>false</button>
-           }
             
           <button onClick={this.props.logout}>test logout</button>
         </div>

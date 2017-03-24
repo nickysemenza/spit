@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { IndexLink } from 'react-router';
 export default class Leaderboard extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +21,7 @@ export default class Leaderboard extends Component {
       <td>{row.username}</td>
       <td>{row.gamesWon}</td>
       <td>{row.gamesPlayed - row.gamesWon}</td>
+      <td>{row.totalScore}</td>
 
     </tr>);
     return (
@@ -28,7 +30,7 @@ export default class Leaderboard extends Component {
         <img className="leftBanner" src="../../assets/Sidebar.png" />
         <img className="rightBanner" src="../../assets/Sidebar.png" />
         <div className="flex-leaderboard">
-          <div>
+          <div className="infoContain">
             <h1>Leaderboard</h1>
             <table className="leaderboard flex-vertical">
               <tr>
@@ -36,11 +38,14 @@ export default class Leaderboard extends Component {
                 <th>ID</th>
                 <th>W</th>
                 <th>L</th>
+                <th>Score</th>
               </tr>
               {list}
             </table>
+            <button className="leaderboardBttn"><IndexLink to="/" activeClassName="active">Home</IndexLink></button>
           </div>
         </div>
+
       </div>
     );
 

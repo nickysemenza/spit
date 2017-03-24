@@ -16,11 +16,11 @@ export default class Piles extends Component {
 
         <div className="card centercard">
           <img className="cardimg" onClick={()=>{this.props.clickedPile(this.props.players[1]);}} src={`../../assets/cards/${this.props.piles[1]}.png`} />
-          <img className="cardimg" onClick={()=>{this.props.clickedPile(this.props.piles[2]);}} src={`../../assets/cards/${this.props.piles[2]}.png`} />
+          <img className="cardimg" onClick={()=>{this.props.clickedPile(this.props.players[2]);}} src={`../../assets/cards/${this.props.piles[2]}.png`} />
         </div>
 
         <div className="card">
-          <img className="cardimg" onClick={()=>{this.props.clickedPile(this.props.piles[3]);}} src={`../../assets/cards/${this.props.piles[3]}.png`} />
+          <img className="cardimg" onClick={()=>{this.props.clickedPile(this.props.players[3]);}} src={`../../assets/cards/${this.props.piles[3]}.png`} />
         </div>
       </div>
     );
