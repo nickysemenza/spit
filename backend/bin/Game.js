@@ -422,7 +422,7 @@ class Game {
 
     let decks = {};
     this.clients.forEach((c)=>{
-        decks[c.name] = this.gameState.decks[c.name].length;
+        decks[c.name] = this.gameState.decks[c.name].length+this.gameState.hands[c.name][0].length+this.gameState.hands[c.name][1].length+this.gameState.hands[c.name][2].length+this.gameState.hands[c.name][3].length-4;
     });
 
     let hands = {};
@@ -444,6 +444,7 @@ class Game {
       numMoves: this.stateSnapshots.length,
       clients,
       started: this.started,
+      finished: this.finished,
       startTime: this.startTime,
       piles: this.gameState.piles,
       peekPiles,
@@ -455,6 +456,7 @@ class Game {
       hand: this.gameState.hands[username],
       hands,
       validMoves: this.validMoves[username],
+      winner:this.winner
     };
   }
 
