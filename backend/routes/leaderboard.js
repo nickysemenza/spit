@@ -5,7 +5,7 @@ let user = require('../models/user.js');
 
 
 router.get('/', (req, res) => {
-  user.find({ }).select('username gamesPlayed gamesWon').sort({gamesWon : -1}).exec((err, users) => {
+  user.find({ }).select('username gamesPlayed gamesWon totalScore').sort({gamesWon : -1}).exec((err, users) => {
     if (err) {
       console.log(err);
     }
