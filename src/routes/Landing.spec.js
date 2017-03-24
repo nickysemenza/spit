@@ -20,10 +20,10 @@ describe('<Landing />', () => {
     const wrapper = shallow(<Landing user={{authenticated: false}}/>);
 
     const actual = wrapper.find('.logoIMG');
-    const actual2 = wrapper.find('.leaderboardBttn');
+    const actual2 = wrapper.find('.homepageBttn');
 
     expect(actual).to.have.length(1);
-    expect(actual2).to.have.length(2);
+    expect(actual2).to.have.length(3);
   });
 
 });
