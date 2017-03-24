@@ -44,3 +44,30 @@ function receiveJoinLobbyGame (json) {
     receivedAt: Date.now()
   };
 }
+
+
+export const REQUEST_REPLAY = 'REQUEST_REPLAY';
+export const RECEIVE_REPLAY = 'RECEIVE_REPLAY';
+
+export function getReplay (id) {
+  return (dispatch) => {
+    dispatch(requestReplay());
+    return fetch(`${API_BASE_URL}/replay/${id}`)
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveReplay(json)));
+  };
+}
+
+function requestReplay () {
+  return {
+    type: REQUEST_REPLAY
+  };
+}
+
+function receiveReplay (json) {
+  return {
+    type: RECEIVE_REPLAY,
+    replay: json,
+    receivedAt: Date.now()
+  };
+}

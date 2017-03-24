@@ -23,7 +23,7 @@ describe('<Landing />', () => {
     const actual2 = wrapper.find('.leaderboardBttn');
 
     expect(actual).to.have.length(1);
-    expect(actual2).to.have.length(1);
+    expect(actual2).to.have.length(3);
   });
 
 });
