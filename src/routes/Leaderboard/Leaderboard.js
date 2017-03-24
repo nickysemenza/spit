@@ -40,7 +40,7 @@ export default class Leaderboard extends Component {
               </tr>
               {list}
             </table>
-            <button className="leaderboardBttn"><IndexLink to="/" activeClassName="active">Home</IndexLink></button>
+            <button className="homepageBttn"><IndexLink to="/" activeClassName="active">Home</IndexLink></button>
           </div>
         </div>
 
