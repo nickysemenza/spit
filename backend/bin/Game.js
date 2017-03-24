@@ -216,6 +216,10 @@ class Game {
     this.updateWinner();
     console.log(this.winner);
 
+    do{
+      module.exports.currentLobby++;
+    }
+    while (gameList[module.exports.currentLobby]!=undefined);
   }
   updateValidMoves(){
     this.clients.forEach((c)=>{
@@ -357,8 +361,8 @@ class Game {
   }
   removePlayer(client){
     //console.log(client);
-    if(!this.started)
-      this.clients.splice(this.clients.lastIndexOf(client),1);
+    //if(!this.started)
+    //  this.clients.splice(this.clients.lastIndexOf(client),1);
     //console.log(this.clients.lastIndexOf(client));
     //console.log(this.clients);
   }
@@ -372,10 +376,7 @@ class Game {
     this.started=true;
     this.startTime = Date.now();
     delete lobby[this.id];//remove from active lobby
-    do{
-      module.exports.currentLobby++;
-    }
-    while (gameList[module.exports.currentLobby]!=undefined);
+    
     console.log("GAME.JS "+module.exports.currentLobby);
     this.seed();
   }
