@@ -16,6 +16,7 @@ export default class Replay extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      replayFrame: 0,
       moveBox: "",
       selectedHand: 1,
       cardAnimationState: ["hidden", "hidden", "hidden", "hidden"],
@@ -43,6 +44,11 @@ export default class Replay extends Component {
 
   componentDidMount () {
     this.props.getReplay(this.props.game_id);
+
+    setInterval(()=>{
+      this.setState({replayFrame: this.state.replayFrame+1});
+      console.log('next frame');
+    },1000)
   }
 
   handleMoveBoxChange(event) {
@@ -103,12 +109,14 @@ export default class Replay extends Component {
   }
 
   render () {
-    let gameState = this.props.replay[0].state[2];
+    let gameState = this.props.replay ? this.props.replay[0].state[this.state.replayFrame] : null;
 
 
+
+    let t = Object.keys(gameState.piles);
     let cards = [this.cardForHand(0), this.cardForHand(1), this.cardForHand(2), this.cardForHand(3)];
     let players = [this.playerForPile(0), this.playerForPile(1), this.playerForPile(2), this.playerForPile(3)];
-    let piles = [this.cardForPile(players[0]), this.cardForPile(players[1]), this.cardForPile(players[2]), this.cardForPile(players[3])];
+    let piles = [gameState.piles[t[0]].pop(), gameState.piles[t[0]] ? gameState.piles[t[0]].pop() : 0, gameState.piles[t[2]] ? gameState.piles[t[2]].pop() : 0, gameState.piles[t[3]] ? gameState.piles[t[3]].pop() : 0];
 
     let gameView = (
       <div>
@@ -125,12 +133,12 @@ export default class Replay extends Component {
           <img className={`absolute cardimg ${this.state["cardAnimationState"][3]}`} src={`../../assets/cards/${this.state.animatingCards[3]}.png`} />
 
           <Opponents hands={gameState.hands}/>
-          <Piles players={players} piles={piles} clickedPile={this.placeCardOnPile}/>
+          <Piles players={gameState.players} piles={piles} clickedPile={this.placeCardOnPile}/>
           <PlayerSection
-            card1={cards[0]}
-            card2={cards[1]}
-            card3={cards[2]}
-            card4={cards[3]}
+            card1={[cards[0]]}
+            card2={[cards[1]]}
+            card3={[cards[2]]}
+            card4={[cards[3]]}
             decks={this.props.game && gameState.decks ? gameState.decks : {}}
             startTime={gameState.startTime}
             clickedHand={this.combineHands}
