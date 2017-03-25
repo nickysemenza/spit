@@ -58,7 +58,7 @@ export default class Instructs extends Component {
         <ul className="sects"> How to stack </ul>
         <ul className="gifsects">
           <img src="../../assets/Instructions/cardStacking.gif" className="layoutIMG" alt="CardStacking" />
-          <ol> Use the corresponding number key to select a card. </ol>
+          <ol>  play a card of equal value on another card in your hand </ol>
         </ul>
         <ul className="sects"> How to pull from deck </ul>
         <ul className="gifsects">
