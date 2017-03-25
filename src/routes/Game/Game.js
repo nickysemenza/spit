@@ -5,6 +5,7 @@ import Opponents from './Opponents';
 import Piles from './Piles';
 import PlayerSection from './PlayerSection';
 import { Link } from 'react-router';
+import { IndexLink } from 'react-router';
 
 const gameboardstyle = {
   position: 'relative',
@@ -234,8 +235,32 @@ export default class Game extends Component {
       </div>
     );
 
+    let index=1;
+    let gameResult = gameState.winner ? gameState.winner.map(c=><tr key={c}>
+    <td>{c}</td>
+    <td>{index++}</td>
+    </tr>): '';
 
-    let loggedInView = gameState.started ? gameView : lobbyView;
+    let finishedView = (
+      <div>
+        <img className="leftBanner" src="../../assets/Sidebar.png" />
+        <img className="rightBanner" src="../../assets/Sidebar.png" />
+        <div className="flex-leaderboard">
+          <div style={{textAlign: "center"}}>
+            <h1>Game Results</h1>
+
+            <table className="lobby flex-vertical">
+              {gameResult}
+            </table>
+            <span className="readyUp"><IndexLink to="/" activeClassName="active">Home</IndexLink></span>
+            
+          </div>
+        </div>
+      </div>
+    );
+
+
+    let loggedInView = gameState.finished ? finishedView : gameState.started ? gameView : lobbyView;
     return (
       <div>
         {this.props.user.authenticated ? loggedInView : loggedOutMessage}

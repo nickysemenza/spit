@@ -3,7 +3,7 @@ import { fetchLeaderboard } from '../../actions/leaderboardActions';
 import { createUser, logout } from '../../actions/userActions';
 import { joinLobbyGame } from '../../actions/gameActions';
 import Landing from './Landing';
-
+import shortid from 'shortid';
 
 function mapStateToProps (state) {
   return {
@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     });
   },
   createRandomLobby: () => {
-    //ownProps.routerProps.router.push("/game/"+shortid.generate());
+    ownProps.routerProps.router.push("/game/"+shortid.generate());
   }
 });
 

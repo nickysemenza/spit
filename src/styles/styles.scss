@@ -275,7 +275,7 @@ table.gameLeaderboard > tr > td {
 
 }
 
-.leaderboardBttn {
+.homepageBttn {
   display: flex;
   background: transparent;
   border: 2px solid;
@@ -333,7 +333,7 @@ table.gameLeaderboard > tr > td {
 
 }
 
-.newLobbyBttn:hover, .playNowBttn:hover, .leaderboardBttn:hover, .usernameInput:hover{
+.newLobbyBttn:hover, .playNowBttn:hover, .homepageBttn:hover, .usernameInput:hover{
   background: #204859
 }
 
@@ -398,7 +398,7 @@ table.gameLeaderboard > tr > td {
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: left;
-  
+
 }
 
 ol {
