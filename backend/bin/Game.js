@@ -200,7 +200,7 @@ class Game {
       sortedWinners.push([key,remainingCards[key]]);
     }
     sortedWinners.sort((a,b) => {
-      return a[1]-b[1];
+      return b[1]-a[1];
     });
     //console.log(sortedWinners);
 
