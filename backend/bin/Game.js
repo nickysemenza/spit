@@ -58,7 +58,7 @@ class Game {
   }
 
   updateWinner(){
-    User.findOneAndUpdate({'username': this.winner[0]}, {$inc: { gamesWon: 2} }, {upsert:true}, function(err, doc){
+    User.findOneAndUpdate({'username': this.winner[1]}, {$inc: { gamesWon: 2} }, {upsert:true}, function(err, doc){
       if (err) return console.log(500, { error: err });
       return console.log("succesfully saved");
     });
