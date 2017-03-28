@@ -101,11 +101,11 @@ export default class Opponents extends Component {
         </div>
 
         <div>
-          {this.getHandDivs(this.handPlayerMap[1])}
+          { this.getHandDivs(this.handPlayerMap[1]) }
         </div>
 
         <div className="rotateright">
-          {this.getHandDivs(this.handPlayerMap[2])}
+          { this.emptyHand /* this.getHandDivs(this.handPlayerMap[2]) */}
         </div>
         <div className="opponent" />
       </div>
@@ -113,4 +113,5 @@ export default class Opponents extends Component {
     );
   }
 }
+
 
