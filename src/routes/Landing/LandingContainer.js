@@ -27,7 +27,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(fetchLeaderboard());
   },
   logout: () => {
-    console.log("hi");
     dispatch(logout());
   },
   createUser: (username) => {

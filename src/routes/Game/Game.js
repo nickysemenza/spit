@@ -50,7 +50,7 @@ export default class Game extends Component {
       let split = event.data.split(" ");
       if(split[0]=="GAME-STATE") {
         let data = JSON.parse(split[1]);
-        console.log(data);
+        //console.log(data);
         this.props.receiveGameState(data);
       }
       else if(split[0]=="AUTH-OK")
@@ -89,10 +89,8 @@ export default class Game extends Component {
     if(Object.keys(pilesTemp)[3]==deckName)
       pileNum = 4;
     let fromOwnHand = this.props.user.username == playerName;
-    console.log(`need to animate from ${playerName}'s hand num ${handNum} to ${deckName}'s pile (pile #${pileNum}). fromOwnHand = ${fromOwnHand}`);
 
     if (fromOwnHand) {
-      console.log(`Trigger Ah${handNum}p${pileNum}`);
       this.state["cardAnimationState"][handNum - 1] = `Ah${handNum}p${pileNum}`;
       this.state["animatingCards"][handNum - 1] = this.cardForHand(handNum - 1);
 
@@ -199,8 +197,8 @@ export default class Game extends Component {
             selectedHand={this.state.selectedHand}/>
 
         </div>
-      </div>) 
-      : 
+      </div>)
+      :
       (<div>
       <img className="leftBanner" src="../../assets/Sidebar.png" />
       <img className="rightBanner" src="../../assets/Sidebar.png" />
@@ -208,7 +206,7 @@ export default class Game extends Component {
             <h1>Lobby</h1>
             <h1 className="countdowntxt">Joining game in: </h1>
             <button className="timeBttn" onClick={this.cdStart}> {this.state.timer} </button>
-            
+
       </div>
       </div>);
 
@@ -225,11 +223,13 @@ export default class Game extends Component {
           <div style={{textAlign: "center"}}>
             <h1>Lobby</h1>
 
-            <table className="lobby flex-vertical">
+            <table>
+              <tbody className="lobby flex-vertical">
               {lobbyNames}
+              </tbody>
             </table>
             <span onClick={this.startGame} className="readyUp">Ready Up</span>
-            
+
           </div>
         </div>
       </div>
@@ -249,11 +249,13 @@ export default class Game extends Component {
           <div style={{textAlign: "center"}}>
             <h1>Game Results</h1>
 
-            <table className="lobby flex-vertical">
+            <table>
+              <tbody className="lobby flex-vertical">
               {gameResult}
+              </tbody>
             </table>
-            <span className="readyUp"><IndexLink to="/" activeClassName="active">Home</IndexLink></span>
-            
+            <a href="/"><span className="readyUp">Home</span></a>
+
           </div>
         </div>
       </div>

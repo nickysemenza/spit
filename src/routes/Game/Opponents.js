@@ -46,10 +46,7 @@ export default class Opponents extends Component {
 
     let handUser = this.names[hand];
     let allHands = this.props.hands;
-    console.log("handuser = " + handUser);
-    console.log("allhands = " + Object.keys(allHands));
     let handCards = allHands[handUser];
-    console.log("handCards = " + handCards);
     return (
       <div>
         {handUser}
@@ -91,7 +88,6 @@ export default class Opponents extends Component {
 
   render() {
     if (!this.handPlayerMap) this.mapPlayersToHands();
-    console.log(this.names);
 
     return (
       <div className="opponents">

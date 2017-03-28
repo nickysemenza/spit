@@ -13,7 +13,7 @@ export default class Leaderboard extends Component {
 
   render () {
     let ranking = this.props.leaderboard ? this.props.leaderboard.ranking : [];
-    if(ranking==undefined)
+    if(ranking==undefined || Object.keys(ranking).length == 0)
       ranking=[];
     let rank = 1;
     let list = ranking.map(row=><tr key={row.username}>
@@ -32,7 +32,8 @@ export default class Leaderboard extends Component {
         <div className="flex-leaderboard">
           <div className="infoContain">
             <h1>Leaderboard</h1>
-            <table className="leaderboard flex-vertical">
+            <table>
+              <tbody className="leaderboard flex-vertical">
               <tr>
                 <th />
                 <th>ID</th>
@@ -41,8 +42,9 @@ export default class Leaderboard extends Component {
                 <th>Score</th>
               </tr>
               {list}
+              </tbody>
             </table>
-            <button className="homepageBttn"><IndexLink to="/" activeClassName="active">Home</IndexLink></button>
+            <a href="/"><button className="homepageBttn">Home</button></a>
           </div>
         </div>
 

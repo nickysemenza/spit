@@ -185,12 +185,12 @@ h1 {
 }
 
 
-table.gameLeaderboard {
+tbody.gameLeaderboard {
   width: 220px;
   margin: 0 40px;
 }
 
-table.gameLeaderboard > tr > td {
+tbody.gameLeaderboard > tr > td {
   padding: 5px;
   font-size: 20px;
   color: #D8D8D8;
@@ -275,7 +275,7 @@ table.gameLeaderboard > tr > td {
 
 }
 
-.homepageBttn {
+.homepageBttn, .homepageBttn > IndexLink {
   display: flex;
   background: transparent;
   border: 2px solid;
@@ -429,10 +429,10 @@ ol {
   margin-top: 10%;
 }
 
-table.leaderboard > td,
-table.leaderboard > tr,
-table.leaderboard > tr > td,
-table.leaderboard > tr > th {
+tbody.leaderboard > td,
+tbody.leaderboard > tr,
+tbody.leaderboard > tr > td,
+tbody.leaderboard > tr > th {
   font-size: 28px;
   text-align: left;
   padding: 7px 30px 7px 25px;
@@ -454,9 +454,9 @@ table.leaderboard > tr > th {
   font-weight: normal;
 }
 
-table.lobby > th,
-table.lobby > tr > td,
-table.lobby > tr > th {
+tbody.lobby > th,
+tbody.lobby > tr > td,
+tbody.lobby > tr > th {
   padding: 3px 110px;
   color: $card-color;
   font-size: 28px;

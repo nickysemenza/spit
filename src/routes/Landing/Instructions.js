@@ -71,7 +71,7 @@ export default class Instructs extends Component {
           <img src="../../assets/Instructions/playingCards.gif" className="playIMG" alt="PlayingCards" />
         </ul>
         <div className="sects">
-          <button className="homepageBttn"><IndexLink to="/" activeClassName="active">Home</IndexLink></button>
+          <a href="/"><button className="homepageBttn">Home</button></a>
         </div>
       </div>
     );
