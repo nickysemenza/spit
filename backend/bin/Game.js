@@ -382,7 +382,7 @@ class Game {
     console.log("time to start game "+this.id);
     this.started=true;
     this.startTime = Date.now();
-    delete lobby[this.id];//remove from active lobby
+    //delete lobby[this.id];//remove from active lobby
     do{
       module.exports.currentLobby++;
     }
