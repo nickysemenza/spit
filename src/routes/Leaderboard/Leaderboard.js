@@ -35,8 +35,8 @@ export default class Leaderboard extends Component {
             <table>
               <tbody className="leaderboard flex-vertical">
               <tr>
-                <th />
-                <th>ID</th>
+                <th>Rank</th>
+                <th>Username</th>
                 <th>W</th>
                 <th>L</th>
                 <th>Score</th>
