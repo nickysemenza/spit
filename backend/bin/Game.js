@@ -68,10 +68,20 @@ class Game {
     this.clients.forEach((c) => {
       User.findOneAndUpdate({'username': c.name}, {$inc: { gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
         if (err) return console.log(500, { error: err });
-        return console.log("succesfully saved");
+        console.log(c.name + "updated games Played");
       });
     });
+  }
 
+  updateScores(){
+    let x = 15;
+    this.clients.forEach((c) => {
+      User.findOneAndUpdate({'username': c.name}, {$inc: { totalScore: x} }, {upsert:true}, (err, doc) => {
+        if (err) return console.log(500, { error: err });
+        console.log(c.name + "updated Total score");
+        x -= 5;
+      });
+    });
   }
 
 
@@ -214,6 +224,7 @@ class Game {
     this.saveGame();
     this.updateUsers();
     this.updateWinner();
+    this.updateScores();
     console.log(this.winner);
 
   }
