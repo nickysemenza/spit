@@ -1,6 +1,7 @@
 import { API_BASE_URL } from '../config';
 
 export const CREATED_USER = 'CREATED_USER';
+export const CREATED_USER_FAIL = 'CREATED_USER_FAIL';
 
 export function createUser (username) {
   return (dispatch) => {
@@ -22,6 +23,15 @@ export function createUser (username) {
 }
 
 function createdUser (json) {
+  console.log(json);
+  if("errors" in json || "errmsg" in json) {
+    console.log("fail");
+    return {
+      type: CREATED_USER_FAIL,
+      error: 'that username has been taken',
+      receivedAt: Date.now()
+    }
+  }
   return {
     type: CREATED_USER,
     data: json,

@@ -21,8 +21,11 @@ router.post('/signup', (req, res) => {
   //todo: check for unique
   new User({username}).save((err, user) => {
     if(err) res.json(err);
-    let token = jwt.sign({ id: user._id }, config.JWT_SECRET);
-    res.json({id: user._id, token, username});
+    else if(user == undefined) res.json({error: "error"});
+    else {
+      let token = jwt.sign({id: user._id}, config.JWT_SECRET);
+      res.json({id: user._id, token, username});
+    }
   });
 });
 
