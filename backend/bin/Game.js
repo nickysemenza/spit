@@ -349,7 +349,7 @@ class Game {
       if (c.name == client.name) {
         //user is already in game
         console.log(c.name + " is already in this game");
-        eligible = false;
+        eligible = true;//??
         spectator = false;
       }
     });
