@@ -111,6 +111,8 @@ export default class Replay extends Component {
   render () {
     let gameState = this.props.replay ? this.props.replay[0].state[this.state.replayFrame] : null;
 
+    if(gameState == null)
+      return (<div>loading</div>);
 
 
     let t = Object.keys(gameState.piles);
