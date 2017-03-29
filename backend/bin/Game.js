@@ -33,9 +33,10 @@ class Game {
     self.stateSnapshots = [];
     self.validMoves = {}; //1 if still has moves, 0 if no valid moves
     self.winner = [];
+   
     do{
       module.exports.customLobby=shortid.generate();
-    }while(gameList[module.exports.customLobby]!=undefined)
+    }while(gameList[module.exports.customLobby]!=undefined);
   }
 
   /**
@@ -43,23 +44,18 @@ class Game {
    */
   saveGame() {
     //save this.gameState, this.id, etc
-    let gameJSON = new gameSchema({
-      id: this.id,
-      totalMoves: this.stateSnapshots.length,
-      winner: this.winner[0],
-      state: this.stateSnapshots,
-      finished: this.finished
+    /*this.gameJSON.totalMoves = this.stateSnapshots.length;
+    this.gameJSON.winner = this.winner[0];
+    this.gameJSON.finished = this.finished;*/
+    gameSchema.update({id: this.id},
+        {$set: {
+          winner: this.winner[0],
+          finished: this.finished
+        }}, (err, g) => {
+          if (err) return console.error(err);
     });
-
-    this.clients.forEach((c)=>{
-      gameJSON.players.push(c.name);
-    });
-
     // gameJSON.isNew = false;
-    console.log(gameJSON);
-    gameJSON.save((err, g) => {
-      if (err) return console.error(err);
-   });
+    //console.log(gameJSON);
   }
 
   updateScores(){
@@ -92,6 +88,16 @@ class Game {
     // t.clients = this.clients;
     // t.peekPiles = this.getGameState(this.clients[0].name).peekPiles;
     this.stateSnapshots.push(t);
+
+    gameSchema.update({id: this.id},
+        {$addToSet: {
+          state: t
+        }}, (err, g) => {
+          if (err) return console.error(err);
+    });
+    //console.log(t);
+    //console.log(this.gameState.hands[this.clients[0].name]);
+    //fconsole.log(this.stateSnapshots);
   }
 
   /**
@@ -397,6 +403,21 @@ class Game {
     }
     while (gameList[module.exports.currentLobby]!=undefined);
     console.log("GAME.JS "+module.exports.currentLobby);
+    
+    let gameJSON = new gameSchema({
+        id: this.id,
+        totalMoves: 0,
+        winner: ""    
+    });
+
+    this.clients.forEach((c)=>{
+      gameJSON.players.push(c.name);
+    });
+
+    gameJSON.save((err, g) => {
+      if (err) return console.error(err);
+    });
+
     this.seed();
   }
   seed() {
@@ -420,7 +441,7 @@ class Game {
     // console.log(this.gameState.decks);
   }
   getShuffledDeck() {
-    let cards = [...Array(52).keys()].map(x => ++x);
+    let cards = [...Array(10).keys()].map(x => ++x);
     return this.shuffle(cards.slice(0));
   }
   getGameState(username) {
