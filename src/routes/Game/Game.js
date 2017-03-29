@@ -21,6 +21,7 @@ export default class Game extends Component {
       cardAnimationState: ["hidden", "hidden", "hidden", "hidden"],
       animatingCards: [0, 0, 0, 0],
       countdown: true,
+      startTime: Date.now(),
       timer: 3
     };
     this.handleMoveBoxChange = this.handleMoveBoxChange.bind(this);
@@ -64,6 +65,10 @@ export default class Game extends Component {
     this.websocket.onopen = () => {
       this.websocket.send('AUTH '+this.props.user.token);
     };
+
+    if(this.props.game.state.started) {
+      this.state.startTime = Date.now();
+    }
   }
   componentWillUnmount(){
     window.removeEventListener("beforeunload",this.onUnload);
@@ -113,7 +118,7 @@ export default class Game extends Component {
     this.sendCommand("START-GAME "+this.props.game_id);
   }
   cdStart() {
-    this.setState({countdown: true});
+    this.setState({startTime: Date.now(), countdown: true});
   }
   cdfalse() {
     this.state.countdown = false;
@@ -187,13 +192,14 @@ export default class Game extends Component {
 
           <Opponents hands={gameState.hands}/>
           <Piles players={players} piles={piles} clickedPile={this.placeCardOnPile}/>
-          <PlayerSection
+          {Math.floor((Date.now() - this.state.startTime)/1000) - 1}
+          <PlayerSection 
             card1={cards[0]}
             card2={cards[1]}
             card3={cards[2]}
             card4={cards[3]}
             decks={this.props.game && gameState.decks ? gameState.decks : {}}
-            startTime={gameState.startTime}
+            startTime={this.state.startTime}
             clickedHand={this.combineHands}
             selectedHand={this.state.selectedHand}/>
 
