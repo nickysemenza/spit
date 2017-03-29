@@ -34,9 +34,7 @@ export default class Instructs extends Component {
 
 
 
-        <ul className="sects">
-
-        </ul> <ul className="sects"> Moves </ul>
+        <ul className="sects" /> <ul className="sects"> Moves </ul>
         <ul className="minisects">
           <ol > There are only three moves possible in the game: </ol>
         </ul>

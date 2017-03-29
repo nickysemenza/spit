@@ -23,7 +23,7 @@ describe('<Landing />', () => {
     const actual2 = wrapper.find('.homepageBttn');
 
     expect(actual).to.have.length(1);
-    expect(actual2).to.have.length(3);
+    expect(actual2).to.have.length(2);
   });
 
 });

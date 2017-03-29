@@ -62,30 +62,22 @@ class Game {
    });
   }
 
-  updateWinner(){
-    User.findOneAndUpdate({'username': this.winner[0]}, {$inc: { gamesWon: 1} }, {upsert:true}, function(err, doc){
-      if (err) return console.log(500, { error: err });
-      return console.log("succesfully saved");
-    });
-  }
-
-  updateUsers(){
-    this.clients.forEach((c) => {
-      User.findOneAndUpdate({'username': c.name}, {$inc: { gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
-        if (err) return console.log(500, { error: err });
-        console.log(c.name + "updated games Played");
-      });
-    });
-  }
-
   updateScores(){
     let x = 15;
-    this.clients.forEach((c) => {
-      User.findOneAndUpdate({'username': c.name}, {$inc: { totalScore: x} }, {upsert:true}, (err, doc) => {
-        if (err) return console.log(500, { error: err });
-        console.log(c.name + "updated Total score");
-        x -= 5;
-      });
+    this.winner.forEach((name) => {
+      if(this.winner[0] == name){
+        User.findOneAndUpdate({'username': name}, {$inc: { gamesWon: 1, totalScore: x, gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
+          if (err) return console.log(500, { error: err });
+          console.log("updated" + name + " Data");
+        });
+      }
+      else{
+        User.findOneAndUpdate({'username': name}, {$inc: { totalScore: x, gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
+          if (err) return console.log(500, { error: err });
+          console.log("updated" + name + " Data");
+        });
+      }
+      x -= 5;
     });
   }
 
@@ -227,8 +219,6 @@ class Game {
     }
 
     this.saveGame();
-    this.updateUsers();
-    this.updateWinner();
     this.updateScores();
     console.log(this.winner);
 
@@ -341,6 +331,20 @@ class Game {
       eligible = false;
       spectator = true;
     }
+
+    //check to make sure they aren't in another game rn
+    Object.keys(gameList).forEach(gKey => {
+      let g = gameList[gKey];
+      g.clients.forEach(c=> {
+        if (c.name == client.name && !g.finished) {
+          console.log(c.name + " is already in ANOTHER game");
+          eligible = false;
+          spectator = false;
+        }
+      });
+    });
+
+
     this.clients.forEach((c) => {
       if (c.name == client.name) {
         //user is already in game
