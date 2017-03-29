@@ -194,7 +194,6 @@ export default class Game extends Component {
 
           <Opponents hands={gameState.hands}/>
           <Piles players={players} piles={piles} clickedPile={this.placeCardOnPile}/>
-          {Math.floor((Date.now() - this.state.startTime)/1000) - 1}
           <PlayerSection 
             card1={cards[0]}
             card2={cards[1]}
