@@ -21,11 +21,15 @@ export default class PlayerSection extends Component {
     let gameTime = this.props.startTime;
 
     let decks = this.props.decks ? this.props.decks : {};
-    let gameLB = Object.keys(decks).map(k=>
+
+    let gameLB = Object.keys(decks).sort((a,b) => {
+      return decks[a] - decks[b]
+    }).map(k=>
       <tr key={k}>
         <td>{k}</td>
-        <td>{this.props.decks[k]}</td>
+        <td>{decks[k]}</td>
       </tr>);
+    
     return (
       <div>
 
