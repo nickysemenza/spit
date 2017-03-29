@@ -109,7 +109,9 @@ export default class Game extends Component {
     this.sendCommand(move);
   }
   startGame() {
+    if (this.props.game.state.clients.length > 1) {
     this.sendCommand("START-GAME "+this.props.game_id);
+  }
   }
   cdStart() {
     this.setState({countdown: true});
