@@ -46,27 +46,27 @@ export default class Instructs extends Component {
         </ul>
         <ul className="sects"> How to play a card </ul>
         <ul className="gifsects">
-          <img src="../../assets/Instructions/cardSelect.gif" className="tempIMG" alt="CardSelect" />
+          <img src="../../assets/Instructions/CardSelect.gif" className="tempIMG" alt="CardSelect" />
           <ol> Use the corresponding number key to select a card. </ol>
         </ul>
         <ul className="gifsects">
-          <img src="../../assets/Instructions/playingCard.gif" className="layoutIMG" alt="PlayCard" />
+          <img src="../../assets/Instructions/PlayingCard.gif" className="layoutIMG" alt="PlayCard" />
           <ol> Click on a pile to place the selected card in the pile. </ol>
         </ul>
         <ul className="sects"> How to stack </ul>
         <ul className="gifsects">
-          <img src="../../assets/Instructions/cardStacking.gif" className="layoutIMG" alt="CardStacking" />
+          <img src="../../assets/Instructions/CardStacking.gif" className="layoutIMG" alt="CardStacking" />
           <ol>  play a card of equal value on another card in your hand </ol>
         </ul>
         <ul className="sects"> How to pull from deck </ul>
         <ul className="gifsects">
-          <img src="../../assets/Instructions/pullingDeck.gif" className="layoutIMG" alt="PullingDeck" />
+          <img src="../../assets/Instructions/PullingDeck.gif" className="layoutIMG" alt="PullingDeck" />
           <ol> Use the spacebar to pull a card from your deck. </ol>
         </ul>
 
         <ul className="sects"> Putting everything you learned together! </ul>
         <ul className="sects">
-          <img src="../../assets/Instructions/playingCards.gif" className="playIMG" alt="PlayingCards" />
+          <img src="../../assets/Instructions/PlayingCards.gif" className="playIMG" alt="PlayingCards" />
         </ul>
         <div className="sects">
           <a href="/"><button className="homepageBttn">Home</button></a>
