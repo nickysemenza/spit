@@ -49,6 +49,7 @@ class Game {
     this.gameJSON.finished = this.finished;*/
     gameSchema.update({id: this.id},
         {$set: {
+          totalMoves: this.stateSnapshots.length,
           winner: this.winner[0],
           finished: this.finished
         }}, (err, g) => {
@@ -441,7 +442,7 @@ class Game {
     // console.log(this.gameState.decks);
   }
   getShuffledDeck() {
-    let cards = [...Array(10).keys()].map(x => ++x);
+    let cards = [...Array(52).keys()].map(x => ++x);
     return this.shuffle(cards.slice(0));
   }
   getGameState(username) {
