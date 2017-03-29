@@ -77,6 +77,7 @@ export default class Game extends Component {
     console.log("spit happened");
   }
   doAnimation(playerName, handNum, deckName) {
+    console.log("@NICKY: THIS ISN'T BEING CALLED after refresh");
     handNum++;//sad, 0->1 indexing switch
     let pileNum;
     let pilesTemp = this.props.game.state.peekPiles;
@@ -93,6 +94,7 @@ export default class Game extends Component {
     if (fromOwnHand) {
       this.state["cardAnimationState"][handNum - 1] = `Ah${handNum}p${pileNum}`;
       this.state["animatingCards"][handNum - 1] = this.cardForHand(handNum - 1);
+      console.log("trigger animation");
 
       // post animation actions
       setTimeout(() => {

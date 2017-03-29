@@ -38,8 +38,6 @@ export default class Dashboard extends Component {
         <div className="landingContain">
 
           <img src="../../assets/logo.png" className="logoIMG" alt="SpitON.US Logo" />
-        </div>
-        <div className="landingContain">
 
           {!this.props.user.authenticated ?
           <input type="text" className="usernameInput" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
@@ -52,10 +50,10 @@ export default class Dashboard extends Component {
           {this.props.user.authenticated ? <button className="newLobbyBttn" disabled={!this.props.user.authenticated} onClick={this.createLobby}>New Lobby</button> : ''}
 
 
-            <button className="homepageBttn" onClick={this.props.goToLeaderboard}>leaderboard</button>
-            <button className="homepageBttn" onClick={this.props.goToInstructions}>Instructions</button>
+            <button className="homepageBttn lobbyBttn" onClick={this.props.goToLeaderboard}>leaderboard</button>
+            <button className="homepageBttn instructionBttn" onClick={this.props.goToInstructions}>Instructions</button>
 
-            {this.props.user.authenticated ? <button className="homepageBttn" onClick={this.props.logout}>Logout</button> : ''}
+            {this.props.user.authenticated ? <button className="homepageBttn logoutBttn" onClick={this.props.logout}>Logout</button> : ''}
         </div>
       </div>
     );

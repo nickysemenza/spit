@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 export const RECEIVE_GAME_STATE = 'RECEIVE_GAME_STATE';
 
 export function receiveGameState (json) {
-  console.log(json);
+  //console.log(json);
   return {
     type: RECEIVE_GAME_STATE,
     state: json,
