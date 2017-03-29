@@ -326,6 +326,20 @@ class Game {
       eligible = false;
       spectator = true;
     }
+
+    //check to make sure they aren't in another game rn
+    Object.keys(gameList).forEach(gKey => {
+      let g = gameList[gKey];
+      g.clients.forEach(c=> {
+        if (c.name == client.name && !g.finished) {
+          console.log(c.name + " is already in ANOTHER game");
+          eligible = false;
+          spectator = false;
+        }
+      })
+    });
+
+
     this.clients.forEach((c) => {
       if (c.name == client.name) {
         //user is already in game
