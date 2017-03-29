@@ -64,7 +64,7 @@ export default class PlayerSection extends Component {
           <div className="mainLB">
             <table>
               <tbody className="gameLeaderboard">
-              {Math.floor((pageTime-gameTime)/1000)} seconds
+              {Math.floor((pageTime-gameTime)/1000) - 3} seconds
               {gameLB}
               </tbody>
             </table>
