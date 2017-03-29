@@ -57,29 +57,21 @@ class Game {
    });
   }
 
-  updateWinner(){
-    User.findOneAndUpdate({'username': this.winner[0]}, {$inc: { gamesWon: 1} }, {upsert:true}, function(err, doc){
-      if (err) return console.log(500, { error: err });
-      return console.log("succesfully saved");
-    });
-  }
-
-  updateUsers(){
-    this.clients.forEach((c) => {
-      User.findOneAndUpdate({'username': c.name}, {$inc: { gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
-        if (err) return console.log(500, { error: err });
-        console.log(c.name + "updated games Played");
-      });
-    });
-  }
-
   updateScores(){
     let x = 15;
     this.winner.forEach((name) => {
-      User.findOneAndUpdate({'username': name}, {$inc: { totalScore: x, gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
-        if (err) return console.log(500, { error: err });
-        console.log(name + " updated User Data");
-      });
+      if(this.winner[0] == name){
+        User.findOneAndUpdate({'username': name}, {$inc: { gamesWon: 1, totalScore: x, gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
+          if (err) return console.log(500, { error: err });
+          console.log("updated" + name + " Data");
+        });
+      }
+      else{
+        User.findOneAndUpdate({'username': name}, {$inc: { totalScore: x, gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
+          if (err) return console.log(500, { error: err });
+          console.log("updated" + name + " Data");
+        });
+      }
       x -= 5;
     });
   }
@@ -222,8 +214,6 @@ class Game {
     }
 
     this.saveGame();
-    //this.updateUsers();
-    this.updateWinner();
     this.updateScores();
     console.log(this.winner);
 
