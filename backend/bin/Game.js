@@ -4,6 +4,8 @@ let utils = require('./utils');
 let gameSchema = require('../models/game.js');
 let User = require('../models/user.js');
 let mongoose = require('mongoose');
+let shortid = require('shortid');
+
 //var opts = { server: { auto_reconnect: false }, user: 'username', pass: 'mypassword' }
 // let db = mongoose.createConnection('localhost', 'games', 27017);
 //
@@ -31,6 +33,9 @@ class Game {
     self.stateSnapshots = [];
     self.validMoves = {}; //1 if still has moves, 0 if no valid moves
     self.winner = [];
+    do{
+      module.exports.customLobby=shortid.generate();
+    }while(gameList[module.exports.customLobby]!=undefined)
   }
 
   /**
@@ -497,5 +502,6 @@ module.exports = {
   Game,
   gameList,
   lobby,
-  currentLobby:0
+  currentLobby:0,
+  customLobby:shortid.generate()
 };

@@ -39,7 +39,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     });
   },
   createRandomLobby: () => {
-    ownProps.routerProps.router.push("/game/"+shortid.generate());
+    //ownProps.routerProps.router.push("/game/"+shortid.generate());
+    dispatch(joinLobbyGame()).then((result) => {
+      ownProps.routerProps.router.push("/game/"+result.clobby);
+    });
   }
 });
 
