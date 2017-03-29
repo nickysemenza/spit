@@ -75,12 +75,12 @@ class Game {
 
   updateScores(){
     let x = 15;
-    this.clients.forEach((c) => {
-      User.findOneAndUpdate({'username': c.name}, {$inc: { totalScore: x} }, {upsert:true}, (err, doc) => {
+    this.winner.forEach((name) => {
+      User.findOneAndUpdate({'username': name}, {$inc: { totalScore: x, gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
         if (err) return console.log(500, { error: err });
-        console.log(c.name + "updated Total score");
-        x -= 5;
+        console.log(name + " updated User Data");
       });
+      x -= 5;
     });
   }
 
@@ -222,7 +222,7 @@ class Game {
     }
 
     this.saveGame();
-    this.updateUsers();
+    //this.updateUsers();
     this.updateWinner();
     this.updateScores();
     console.log(this.winner);
