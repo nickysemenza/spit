@@ -336,7 +336,7 @@ class Game {
           eligible = false;
           spectator = false;
         }
-      })
+      });
     });
 
 

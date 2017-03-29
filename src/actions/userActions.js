@@ -30,7 +30,7 @@ function createdUser (json) {
       type: CREATED_USER_FAIL,
       error: 'that username has been taken',
       receivedAt: Date.now()
-    }
+    };
   }
   return {
     type: CREATED_USER,

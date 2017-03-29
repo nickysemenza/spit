@@ -18,7 +18,7 @@ export default class Dashboard extends Component {
     this.setState({usernameBox: event.target.value});
   }
   registerUser() {
-    let username = this.state.usernameBox.replace(/\s+/g, '');;
+    let username = this.state.usernameBox.replace(/\s+/g, '');
     if(username != '')
       this.props.createUser(username);
   }
