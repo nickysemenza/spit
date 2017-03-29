@@ -31,7 +31,7 @@ function requestJoinLobbyGame () {
 }
 
 function receiveJoinLobbyGame (json) {
-  console.log(json.game_id);
+  //console.log(json.game_id);
   // dispatch(push("/hi"));
   //return (dispatch) => {
   //  dispatch(push("/hi"));
@@ -41,6 +41,7 @@ function receiveJoinLobbyGame (json) {
     type: RECEIVE_JOIN_LOBBY_GAME,
     //leaderboard: json,
     lobby:json.game_id,
+    clobby:json.custom_id,
     receivedAt: Date.now()
   };
 }

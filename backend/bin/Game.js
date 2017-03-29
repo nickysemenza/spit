@@ -4,6 +4,8 @@ let utils = require('./utils');
 let gameSchema = require('../models/game.js');
 let User = require('../models/user.js');
 let mongoose = require('mongoose');
+let shortid = require('shortid');
+
 //var opts = { server: { auto_reconnect: false }, user: 'username', pass: 'mypassword' }
 // let db = mongoose.createConnection('localhost', 'games', 27017);
 //
@@ -31,6 +33,9 @@ class Game {
     self.stateSnapshots = [];
     self.validMoves = {}; //1 if still has moves, 0 if no valid moves
     self.winner = [];
+    do{
+      module.exports.customLobby=shortid.generate();
+    }while(gameList[module.exports.customLobby]!=undefined)
   }
 
   /**
@@ -57,21 +62,23 @@ class Game {
    });
   }
 
-  updateWinner(){
-    User.findOneAndUpdate({'username': this.winner[0]}, {$inc: { gamesWon: 1} }, {upsert:true}, function(err, doc){
-      if (err) return console.log(500, { error: err });
-      return console.log("succesfully saved");
+  updateScores(){
+    let x = 15;
+    this.winner.forEach((name) => {
+      if(this.winner[0] == name){
+        User.findOneAndUpdate({'username': name}, {$inc: { gamesWon: 1, totalScore: x, gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
+          if (err) return console.log(500, { error: err });
+          console.log("updated" + name + " Data");
+        });
+      }
+      else{
+        User.findOneAndUpdate({'username': name}, {$inc: { totalScore: x, gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
+          if (err) return console.log(500, { error: err });
+          console.log("updated" + name + " Data");
+        });
+      }
+      x -= 5;
     });
-  }
-
-  updateUsers(){
-    this.clients.forEach((c) => {
-      User.findOneAndUpdate({'username': c.name}, {$inc: { gamesPlayed: 1} }, {upsert:true}, (err, doc) => {
-        if (err) return console.log(500, { error: err });
-        return console.log("succesfully saved");
-      });
-    });
-
   }
 
 
@@ -212,8 +219,7 @@ class Game {
     }
 
     this.saveGame();
-    this.updateUsers();
-    this.updateWinner();
+    this.updateScores();
     console.log(this.winner);
 
   }
@@ -325,6 +331,20 @@ class Game {
       eligible = false;
       spectator = true;
     }
+
+    //check to make sure they aren't in another game rn
+    Object.keys(gameList).forEach(gKey => {
+      let g = gameList[gKey];
+      g.clients.forEach(c=> {
+        if (c.name == client.name && !g.finished) {
+          console.log(c.name + " is already in ANOTHER game");
+          eligible = false;
+          spectator = false;
+        }
+      });
+    });
+
+
     this.clients.forEach((c) => {
       if (c.name == client.name) {
         //user is already in game
@@ -371,7 +391,7 @@ class Game {
     console.log("time to start game "+this.id);
     this.started=true;
     this.startTime = Date.now();
-    delete lobby[this.id];//remove from active lobby
+    //delete lobby[this.id];//remove from active lobby
     do{
       module.exports.currentLobby++;
     }
@@ -486,5 +506,6 @@ module.exports = {
   Game,
   gameList,
   lobby,
-  currentLobby:0
+  currentLobby:0,
+  customLobby:shortid.generate()
 };

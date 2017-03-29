@@ -48,7 +48,7 @@ export default class Replay extends Component {
     setInterval(()=>{
       this.setState({replayFrame: this.state.replayFrame+1});
       console.log('next frame');
-    },1000)
+    },1000);
   }
 
   handleMoveBoxChange(event) {

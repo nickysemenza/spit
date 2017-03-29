@@ -18,8 +18,9 @@ export default class Dashboard extends Component {
     this.setState({usernameBox: event.target.value});
   }
   registerUser() {
-    let username = this.state.usernameBox;
-    this.props.createUser(username);
+    let username = this.state.usernameBox.replace(/\s+/g, '');
+    if(username != '')
+      this.props.createUser(username);
   }
   joinRandomGame() {
     this.props.joinLobbyGame();
@@ -44,6 +45,7 @@ export default class Dashboard extends Component {
           : <h1>Hello, {this.props.user.username}</h1>
 
           }
+          <h3>{this.props.user.error}</h3>
 
           {!this.props.user.authenticated ? <button className="playNowBttn" onClick={this.registerUser}>Register</button> : ''}
           {this.props.user.authenticated ? <button className="playNowBttn" disabled={!this.props.user.authenticated} onClick={this.joinRandomGame}>Play Now</button> : ''}

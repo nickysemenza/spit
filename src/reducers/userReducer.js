@@ -1,6 +1,7 @@
 import {
   CREATED_USER,
-  LOGOUT
+  LOGOUT,
+  CREATED_USER_FAIL
 } from '../actions/userActions';
 
 const INITIAL_STATE = {
@@ -9,7 +10,8 @@ const INITIAL_STATE = {
   token: null,
   id: null,
   lastUpdated: null,
-  loading: false
+  loading: false,
+  error: null
 };
 
 export default function (state = INITIAL_STATE, action) {
@@ -21,11 +23,17 @@ export default function (state = INITIAL_STATE, action) {
         token: action.data.token,
         username: action.data.username,
         authenticated: true,
-        attempted_auth: true
+        attempted_auth: true,
+        error: null
+      };
+    case CREATED_USER_FAIL:
+      return {
+        ...state,
+        error: action.error
       };
     case LOGOUT:
       return INITIAL_STATE;
-    default:    
+    default:
       return {
         ...state,
         attempted_auth: true
