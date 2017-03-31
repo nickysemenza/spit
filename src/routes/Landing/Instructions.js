@@ -68,6 +68,30 @@ export default class Instructs extends Component {
         <ul className="sects">
           <img src="../../assets/Instructions/PlayingCards.gif" className="playIMG" alt="PlayingCards" />
         </ul>
+        <ul className="sects"> Score </ul>
+        <ul className="minisects">
+        <ol> Score will be kept by ranking the players on who can play all cards first and when necessary, how many cards left.</ol>
+        </ul>
+        <ul className="minisects">
+        <div className="descContain" order="100">
+          <ol>First Place:  +15 </ol>
+          <ol>Second Place: +10  </ol>
+          <ol>Third Place:  +5  </ol>
+          <ol>Forth Place:   0  </ol>
+          
+        </div>
+        </ul>
+        <ul className="sects"> Replays! </ul>
+        <ul className="minisects">
+        <ol> Game Replays can be viewed by replacing "/game/" with "/replay/" </ol>
+        </ul>
+        <ul className="minisects">
+        <div className="descContain" >
+          <ol>Example:</ol>
+          <ol>Game: SpitOn.US/game/1021 </ol>
+          <ol>Replay: SpitOn.US/replay/1021 </ol>
+        </div>
+        </ul>
         <div className="sects">
           <a href="/"><button className="homepageBttn">Home</button></a>
         </div>
