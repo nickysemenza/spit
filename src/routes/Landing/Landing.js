@@ -40,6 +40,7 @@ export default class Dashboard extends Component {
           <img src="../../assets/logo.png" className="logoIMG" alt="SpitON.US Logo" />
         </div>
         <div className="landingContain">
+          <h3>note: defective version of site for CS 408 testing</h3>
 
           {!this.props.user.authenticated ?
           <input type="text" className="usernameInput" placeholder="Enter Username" value={this.state.usernameBox} onChange={this.handleUsernameChange} />
